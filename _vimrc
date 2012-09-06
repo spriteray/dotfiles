@@ -202,9 +202,6 @@ let OmniCpp_MayCompleteArrow = 1
 let OmniCpp_MayCompleteScope = 1 
 set completeopt=menuone,menu,longest
 
-" fencview
-let g:fencview_autodetec = 1
-
 " ============================================================================
 " Functions
 " ============================================================================
