@@ -23,7 +23,7 @@
 	dc = diff --cached
 	merges = merge --squash
 	commita = commit --amend
-	fetchp = fetch --prune
+	fetch = fetch --prune
 
 [merge]
 	tool = vimdiff3
