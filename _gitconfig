@@ -17,13 +17,13 @@
 	diff = 
 
 [alias]
+
 	glog = log --color --graph --pretty=oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cn:%ce, %ci)%Creset' --abbrev-commit --date=iso
 	llog = log --color --graph --pretty=fuller --abbrev-commit --date=iso -n 1
 	dw = diff
 	dc = diff --cached
 	merges = merge --squash
 	commita = commit --amend
-	fetch = fetch --prune
 
 [merge]
 	tool = vimdiff3
