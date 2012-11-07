@@ -17,7 +17,7 @@ filetype indent on
 " Editing related
 set number
 set tabstop=4
-set noexpandtab						" ²»Ê¹ÓÃ¿Õ¸ñ
+set noexpandtab						" ä¸ä½¿ç”¨ç©ºæ ¼
 set softtabstop=4
 set shiftwidth=4
 set cursorline
@@ -29,8 +29,8 @@ set selectmode=
 set mousemodel=popup
 set keymodel=
 set selection=inclusive
-set smartindent						" ×Ô¶¯Ëõ½ø
-set cindent							" CÑùÊ½µÄËõ½ø
+set smartindent						" è‡ªåŠ¨ç¼©è¿›
+set cindent							" Cæ ·å¼çš„ç¼©è¿›
 
 " Display related
 set ru
@@ -45,7 +45,7 @@ syntax on
 set laststatus=2
 set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
 
-" ´úÂëÕÛµş
+" ä»£ç æŠ˜å 
 set foldenable
 set foldmethod=indent
 set foldlevel=100
@@ -105,9 +105,9 @@ nmap <leader>fu :se ff=unix<CR>
 nmap <leader>fm :se ff=mac<CR>
 
 " Encoding relate
-set encoding=utf-8					" vimÄÚ²¿±àÂë
-set termencoding=utf-8				" ÖÕ¶ËÒÔ¼°ÏµÍ³±àÂë
-set fileencoding=utf-8				" Ä¬ÈÏÎÄ¼ş±àÂëutf-8
+set encoding=utf-8					" vimå†…éƒ¨ç¼–ç 
+set termencoding=utf-8				" ç»ˆç«¯ä»¥åŠç³»ç»Ÿç¼–ç 
+set fileencoding=utf-8				" é»˜è®¤æ–‡ä»¶ç¼–ç utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 if MyOS() == "windows"
 	set langmenu=zh_CN.UTF-8
@@ -116,8 +116,10 @@ if MyOS() == "windows"
 	language message zh_CN.UTF-8
 endif
 
-" ĞèÒªÊ¹ÓÃ·ÇUTF-8´ò¿ªµÄÏîÄ¿
+" éœ€è¦ä½¿ç”¨éUTF-8æ‰“å¼€çš„é¡¹ç›®
 autocmd BufNewFile,BufRead */server/*.{c,h,cpp,py},*/server/*Makefile* set fileencoding=cp936
+autocmd BufNewFile,BufRead */gameserver.git/*.{c,h,cpp,mk,conf},*/gameserver.git/*Makefile* set fileencoding=cp936
+autocmd BufNewFile,BufRead */webgame.git/*.{c,h,cpp,mk,conf},*/webgame.git/*Makefile* set fileencoding=cp936
 autocmd BufNewFile,BufRead */libevlite.git/*.{c,h,cpp},*/libevlite.git/*Makefile* set fileencoding=cp936
 
 "------------------------------
@@ -125,11 +127,11 @@ autocmd BufNewFile,BufRead */libevlite.git/*.{c,h,cpp},*/libevlite.git/*Makefile
 "------------------------------
 
 if has("gui_running")
-    set guioptions-=m	" Òş²Ø²Ëµ¥À¸
-    set guioptions-=T	" Òş²Ø¹¤¾ßÀ¸
-    set guioptions-=L	" Òş²Ø×ó²à¹ö¶¯Ìõ
-    set guioptions-=r	" Òş²ØÓÒ²à¹ö¶¯Ìõ
-    set guioptions-=b	" Òş²Øµ×²¿¹ö¶¯Ìõ
+    set guioptions-=m	" éšè—èœå•æ 
+    set guioptions-=T	" éšè—å·¥å…·æ 
+    set guioptions-=L	" éšè—å·¦ä¾§æ»šåŠ¨æ¡
+    set guioptions-=r	" éšè—å³ä¾§æ»šåŠ¨æ¡
+    set guioptions-=b	" éšè—åº•éƒ¨æ»šåŠ¨æ¡
 	"set showtabline=2
 	"set noantialias	" Mac Anti-Alias
 	set nowrap	
@@ -149,7 +151,7 @@ endif
 "------------------------------
 
 " Paste to Command Mode
-cmap	<C-p>	<C-r>"
+"cmap	<C-p>	<C-r>"
 " Save Tags
 map		<F5>	:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" <CR>
 " Explore Buffers
@@ -175,6 +177,8 @@ let g:defaultExplorer = 0
 let g:winManagerWidth = 40
 let g:winManagerWindowLayout='FileExplorer|TagList'
 map <silent> <F8> :WMToggle<CR> 
+nmap <leader>wf :FirstExplorerWindow<CR>
+nmap <leader>ws :BottomExplorerWindow<CR>
 
 " Grep
 let Grep_Find_Use_Xargs = 0
@@ -201,6 +205,13 @@ let OmniCpp_MayCompleteDot = 1
 let OmniCpp_MayCompleteArrow = 1
 let OmniCpp_MayCompleteScope = 1 
 set completeopt=menuone,menu,longest
+
+" CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 " ============================================================================
 " Functions
