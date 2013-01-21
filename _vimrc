@@ -10,7 +10,7 @@ set nocompatible
 
 set autoread
 set history=400
-colorscheme desert					" Theme
+colorscheme putty					" Theme
 filetype plugin on
 filetype indent on
 
