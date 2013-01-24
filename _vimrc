@@ -21,10 +21,12 @@ set incsearch
 set nowrapscan
 set hlsearch
 set t_Co=256
+set cc=80
 syntax enable 
 
 "colorscheme molokai					" Theme
 set background=dark
+let g:solarized_italic=0
 let g:solarized_termtrans=1
 let g:solarized_termcolors=256
 colorscheme solarized
@@ -142,12 +144,12 @@ if has("gui_running")
 	"set noantialias	" Mac Anti-Alias
 	set nowrap	
 	if MyOS() == "windows"
-		set guifont=Lucida\ Sans\ Typewriter:h11
+		set guifont=Inconsolata:h13
+		set guifontwide=YaHei_Mono:h11
 	else
 		set guifont=andale\ mono:h14
 		"set guifont=menlo:h14
 	endif
-	let psc_style='cool'
 else
 	set wrap
 endif
