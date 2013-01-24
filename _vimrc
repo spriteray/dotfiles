@@ -12,8 +12,22 @@ set autoread
 set history=400
 filetype plugin on
 filetype indent on
+
+" Display related
+set ru
+set sm
+set hls
+set incsearch
+set nowrapscan
+set hlsearch
 set t_Co=256
-colorscheme molokai					" Theme
+syntax enable 
+
+"colorscheme molokai					" Theme
+set background=dark
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
+colorscheme solarized
 
 " Editing related
 set number
@@ -32,15 +46,6 @@ set keymodel=
 set selection=inclusive
 set smartindent						" 自动缩进
 set cindent							" C样式的缩进
-
-" Display related
-set ru
-set sm
-set hls
-set incsearch
-set nowrapscan
-set hlsearch
-syntax on
 
 " statusline
 set laststatus=2
@@ -177,7 +182,7 @@ let Tlist_Exit_OnlyWindow = 1
 let g:defaultExplorer = 0
 let g:winManagerWidth = 40
 let g:winManagerWindowLayout='FileExplorer|TagList'
-map <silent> <F8> :WMToggle<CR> 
+map <silent> <F2> :WMToggle<CR> 
 nmap <leader>wf :FirstExplorerWindow<CR>
 nmap <leader>ws :BottomExplorerWindow<CR>
 
