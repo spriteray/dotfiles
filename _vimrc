@@ -21,15 +21,15 @@ set incsearch
 set nowrapscan
 set hlsearch
 set t_Co=256
-set cc=80
+"set cc=80
 syntax enable 
 
-"colorscheme molokai					" Theme
-set background=dark
-let g:solarized_italic=0
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
-colorscheme solarized
+colorscheme molokai					" Theme
+"set background=dark
+"let g:solarized_italic=0
+"let g:solarized_termtrans=1
+"let g:solarized_termcolors=256
+"colorscheme solarized
 
 " Editing related
 set number
@@ -161,11 +161,11 @@ endif
 " Paste to Command Mode
 "cmap	<C-p>	<C-r>"
 " Save Tags
-map		<F5>	:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" <CR>
+map		<F5>		:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" <CR>
 " Explore Buffers
-nmap	<Tab>	:buffers <CR>
+nmap	<leader>be	:buffers <CR>
 " Shutdown HighLight
-nmap <leader>c	:nohls <CR>
+nmap	<leader>c	:nohls <CR>
 
 " ============================================================================
 " => Plugins Settings
@@ -184,9 +184,9 @@ let Tlist_Exit_OnlyWindow = 1
 let g:defaultExplorer = 0
 let g:winManagerWidth = 40
 let g:winManagerWindowLayout='FileExplorer|TagList'
-map <silent> <F2> :WMToggle<CR> 
-nmap <leader>wf :FirstExplorerWindow<CR>
-nmap <leader>ws :BottomExplorerWindow<CR>
+map <silent> <F8> :WMToggle<CR> 
+nmap <leader>wu :FirstExplorerWindow<CR>
+nmap <leader>wd :BottomExplorerWindow<CR>
 
 " Grep
 let Grep_Find_Use_Xargs = 0
