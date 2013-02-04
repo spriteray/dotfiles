@@ -147,7 +147,7 @@ if has("gui_running")
 		set guifont=Inconsolata:h13
 		set guifontwide=YaHei_Mono:h11
 	else
-		set guifont=andale\ mono:h14
+		set guifont=Inconsolata:h15
 		"set guifont=menlo:h14
 	endif
 else
