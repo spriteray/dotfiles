@@ -77,6 +77,33 @@ function! MyOS()
     endif
 endfunction
 
+" Tab Page
+function! MyTabLine()
+	let s = ''
+	let t = tabpagenr()
+	let i = 1
+	while i <= tabpagenr('$')
+		let buflist = tabpagebuflist(i)
+		let winnr = tabpagewinnr(i)
+		let s .= '%' . i . 'T'
+		let s .= (i == t ? '%1*' : '%2*')
+		let s .= ' '
+		let s .= i . ')'
+		let s .= ' %*'
+		let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+		let file = bufname(buflist[winnr - 1])
+		let file = fnamemodify(file, ':p:t')
+		if file == ''
+			let file = '[No Name]'
+		endif
+		let s .= file
+		let i = i + 1
+	endwhile
+	let s .= '%T%#TabLineFill#%='
+	let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+	return s
+endfunction
+
 " VIM Tools Settings
 if MyOS() == "windows"
 	let $VIMBINFILES = $VIM.'\vimfiles\bin\'
@@ -140,19 +167,19 @@ if has("gui_running")
     set guioptions-=L	" 隐藏左侧滚动条
     set guioptions-=r	" 隐藏右侧滚动条
     set guioptions-=b	" 隐藏底部滚动条
-	"set showtabline=2
+    set guioptions-=e	" 隐藏底部滚动条
 	"set noantialias	" Mac Anti-Alias
 	set nowrap	
 	if MyOS() == "windows"
-		set guifont=Inconsolata:h13
-		set guifontwide=YaHei_Mono:h11
+		set guifont=Lucida\ Console:h11
 	else
-		set guifont=Inconsolata:h15
-		"set guifont=menlo:h14
+		set guifont=andale\ mono:h14
 	endif
 else
 	set wrap
 endif
+set showtabline=1
+set tabline=%!MyTabLine()
 
 "------------------------------
 " Global Keymap Settings
@@ -163,9 +190,13 @@ endif
 " Save Tags
 map		<F5>		:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" <CR>
 " Explore Buffers
-nmap	<leader>be	:buffers <CR>
+nmap	<leader>l	:buffers <CR>
 " Shutdown HighLight
 nmap	<leader>c	:nohls <CR>
+" Tab Page
+nmap	<leader>t	:tabnew %:p:h<CR>
+map     <S-Left>    :tabp<CR>
+map     <S-Right>   :tabn<CR>
 
 " ============================================================================
 " => Plugins Settings
