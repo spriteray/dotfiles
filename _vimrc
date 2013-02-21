@@ -189,14 +189,12 @@ set tabline=%!MyTabLine()
 "cmap	<C-p>	<C-r>"
 " Save Tags
 map		<F5>		:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" <CR>
-" Explore Buffers
-nmap	<leader>l	:buffers <CR>
 " Shutdown HighLight
 nmap	<leader>c	:nohls <CR>
 " Tab Page
 nmap	<leader>t	:tabnew %:p:h<CR>
-map     <S-Left>    :tabp<CR>
-map     <S-Right>   :tabn<CR>
+map     <leader><Left>    :tabp<CR>
+map     <leader><Right>   :tabn<CR>
 
 " ============================================================================
 " => Plugins Settings
@@ -251,6 +249,8 @@ let g:ctrlp_cmd = 'CtrlP'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_working_path_mode = ''
+let g:ctrlp_tabpage_position = 'ac'
 
 " ============================================================================
 " Functions
