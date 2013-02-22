@@ -175,9 +175,6 @@ if has("gui_running")
 	else
 		set guifont=andale\ mono:h14
 	endif
-	" GUI KepMaps
-	map     <S-Left>    :tabp<CR>
-	map     <S-Right>   :tabn<CR>
 else
 	set wrap
 endif
@@ -196,6 +193,8 @@ map		<F5>		:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q"
 nmap	<leader>c	:nohls <CR>
 " Tab Page
 nmap	<leader>t	:tabnew %:p:h<CR>
+map     <leader><Left>    :tabp<CR>
+map     <leader><Right>   :tabn<CR>
 
 " ============================================================================
 " => Plugins Settings
@@ -247,11 +246,10 @@ set completeopt=menuone,menu,longest
 " CtrlP
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = ''
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_working_path_mode = ''
-let g:ctrlp_tabpage_position = 'ac'
 
 " ============================================================================
 " Functions
