@@ -175,6 +175,9 @@ if has("gui_running")
 	else
 		set guifont=andale\ mono:h14
 	endif
+	" GUI KepMaps
+	map     <S-Left>    :tabp<CR>
+	map     <S-Right>   :tabn<CR>
 else
 	set wrap
 endif
@@ -193,8 +196,6 @@ map		<F5>		:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q"
 nmap	<leader>c	:nohls <CR>
 " Tab Page
 nmap	<leader>t	:tabnew %:p:h<CR>
-map     <leader><Left>    :tabp<CR>
-map     <leader><Right>   :tabn<CR>
 
 " ============================================================================
 " => Plugins Settings
