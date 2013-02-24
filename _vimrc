@@ -7,6 +7,7 @@ let mapleader=","
 let g:mapleader=","
 
 set nocompatible
+"set macmeta
 
 set autoread
 set history=400
