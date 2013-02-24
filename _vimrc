@@ -193,9 +193,7 @@ map		<F5>		:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q"
 " Shutdown HighLight
 nmap	<leader>c	:nohls <CR>
 " Tab Page
-nmap	<leader>t	:tabnew %:p:h<CR>
-map     <leader><Left>    :tabp<CR>
-map     <leader><Right>   :tabn<CR>
+nmap	<C-t>		:tabnew %:p:h<CR>
 
 " ============================================================================
 " => Plugins Settings
