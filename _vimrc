@@ -178,7 +178,7 @@ if has("gui_running")
 	"set noantialias	" Mac Anti-Alias
 	set nowrap	
 	if MyOS() == "windows"
-		set guifont=Lucida\ Console:h11
+		set guifont=Lucida\ Console:h10.5
 	else
 		set guifont=andale\ mono:h14
 	endif
@@ -218,9 +218,9 @@ let Tlist_Exit_OnlyWindow = 1
 let g:defaultExplorer = 0
 let g:winManagerWidth = 40
 let g:winManagerWindowLayout='FileExplorer|TagList'
-map <silent> <F8> :WMToggle<CR> 
-nmap <leader>wu :FirstExplorerWindow<CR>
-nmap <leader>wd :BottomExplorerWindow<CR>
+map <C-W><C-t>	:WMToggle<CR> 
+map <C-W><C-f>	:FirstExplorerWindow<CR>
+map <C-W><C-b> 	:BottomExplorerWindow<CR>
 
 " Grep
 let Grep_Find_Use_Xargs = 0
