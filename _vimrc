@@ -35,8 +35,6 @@ colorscheme molokai					" Theme
 " Editing related
 set number
 set tabstop=4
-set noexpandtab						" 不使用空格
-set softtabstop=4
 set shiftwidth=4
 set cursorline
 set showmatch
@@ -47,8 +45,10 @@ set selectmode=
 set mousemodel=popup
 set keymodel=
 set selection=inclusive
-set smartindent						" 自动缩进
-set cindent							" C样式的缩进
+set smartindent									" 自动缩进
+set cindent										" C样式的缩进
+autocmd FileType c 		set expandtab softtabstop=4	" C/C++ 扩展TAB 
+autocmd FileType cpp 	set expandtab softtabstop=4	" C/C++ 扩展TAB 
 
 " statusline
 set laststatus=2
@@ -157,6 +157,12 @@ autocmd BufNewFile,BufRead */server/*.{c,h,cpp,py},*/server/*Makefile* set filee
 autocmd BufNewFile,BufRead */gameserver.git/*.{c,h,cpp,mk,conf},*/gameserver.git/*Makefile* set fileencoding=cp936
 autocmd BufNewFile,BufRead */webgame.git/*.{c,h,cpp,mk,conf},*/webgame.git/*Makefile* set fileencoding=cp936
 autocmd BufNewFile,BufRead */libevlite.git/*.{c,h,cpp},*/libevlite.git/*Makefile* set fileencoding=cp936
+
+" Refresh Tags File
+autocmd BufWritePost *.{c,h,cpp,cc,hpp}	
+			\ if filewritable("tags") |
+			\	silent execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" |
+			\ endif 
 
 "------------------------------
 " GUI Settings
