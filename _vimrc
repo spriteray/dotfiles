@@ -1,76 +1,17 @@
 
-" =============================================================
-" => General
-" =============================================================
-
-let mapleader=","
-let g:mapleader=","
-
-set nocompatible
-"set macmeta
-
-set autoread
-set history=400
-filetype plugin on
-filetype indent on
-
-" Display related
-set ru
-set sm
-set hls
-set incsearch
-set nowrapscan
-set hlsearch
-set t_Co=256
-"set cc=80
-syntax enable 
-
-colorscheme molokai					" Theme
-"set background=dark
-"let g:solarized_italic=0
-"let g:solarized_termtrans=1
-"let g:solarized_termcolors=256
-"colorscheme solarized
-
-" Editing related
-set number
-set tabstop=4
-set shiftwidth=4
-set cursorline
-set showmatch
-set backspace=indent,eol,start
-set whichwrap=b,s,<,>,[,]
-set mouse=a
-set selectmode=
-set mousemodel=popup
-set keymodel=
-set selection=inclusive
-set smartindent									" 自动缩进
-set cindent										" C样式的缩进
-autocmd FileType c 		set expandtab softtabstop=4	" C/C++ 扩展TAB 
-autocmd FileType cpp 	set expandtab softtabstop=4	" C/C++ 扩展TAB 
-
-" statusline
-set laststatus=2
-set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
-
-" 代码折叠
-set foldenable
-set foldmethod=indent
-set foldlevel=100
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
-
-"------------------------------
-" Platform Dependent Settings
-"------------------------------
+" ==============================================================================
+" => Functions
+" ==============================================================================
 
 " OS Function
 function! MyOS()
 	if has("win32")
-        return "windows"
+        return "win"
     else
         let os=substitute(system('uname'), '\n', '', '')
-        if os == 'Darwin' || os == 'Mac' || os == 'FreeBSD'
+        if os == 'Darwin' || os == 'Mac'
+            return "mac" 
+        elseif os == 'FreeBSD'
             return "bsd"
         else
             return "unix"
@@ -105,8 +46,83 @@ function! MyTabLine()
 	return s
 endfunction
 
+" ==============================================================================
+" => General
+" ==============================================================================
+
+let mapleader=","
+let g:mapleader=","
+
+set autoread
+set history=400
+set nocompatible
+filetype plugin on
+filetype indent on
+
+" Display related
+set ru
+set sm
+set hls
+set wrap
+set incsearch
+set nowrapscan
+set hlsearch
+set t_Co=256
+"set cc=80
+syntax enable 
+
+" Editing related
+set number
+set tabstop=4
+set shiftwidth=4
+set cursorline
+set showmatch
+set backspace=indent,eol,start
+set whichwrap=b,s,<,>,[,]
+set mouse=a
+set selectmode=
+set mousemodel=popup
+set keymodel=
+set selection=inclusive
+set smartindent									" 自动缩进
+set cindent										" C样式的缩进
+autocmd FileType c 		set expandtab softtabstop=4	" C/C++ 扩展TAB 
+autocmd FileType cpp 	set expandtab softtabstop=4	" C/C++ 扩展TAB 
+
+" status line
+set laststatus=2
+set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
+
+" tab page
+set showtabline=1
+set tabline=%!MyTabLine()
+
+" 代码折叠
+set foldenable
+set foldmethod=indent
+set foldlevel=100
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
+
+" color scheme
+colorscheme molokai
+"set background=dark
+"let g:solarized_italic=0
+"let g:solarized_termtrans=1
+"let g:solarized_termcolors=256
+"colorscheme solarized
+
+" Auto-Refresh Tags File
+autocmd BufWritePost *.{c,h,cpp,cc,hpp}	
+			\ if filewritable("tags") |
+			\	silent execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" |
+			\ endif 
+
+"------------------------------
+" Platform Dependent Settings
+"------------------------------
+
 " VIM Tools Settings
-if MyOS() == "windows"
+if MyOS() == "win"
 	let $VIMBINFILES = $VIM.'\vimfiles\bin\'
 	let $CMD_CTAGS	= $VIMBINFILES.'ctags.exe'
 	let $CMD_GREP	= $VIMBINFILES.'grep.exe'
@@ -145,24 +161,12 @@ set encoding=utf-8					" vim内部编码
 set termencoding=utf-8				" 终端以及系统编码
 set fileencoding=utf-8				" 默认文件编码utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-if MyOS() == "windows"
-	set langmenu=zh_CN.UTF-8
-	source $VIMRUNTIME/delmenu.vim
-	source $VIMRUNTIME/menu.vim	
-	language message zh_CN.UTF-8
-endif
 
 " 需要使用非UTF-8打开的项目
 autocmd BufNewFile,BufRead */server/*.{c,h,cpp,py},*/server/*Makefile* set fileencoding=cp936
 autocmd BufNewFile,BufRead */gameserver.git/*.{c,h,cpp,mk,conf},*/gameserver.git/*Makefile* set fileencoding=cp936
 autocmd BufNewFile,BufRead */webgame.git/*.{c,h,cpp,mk,conf},*/webgame.git/*Makefile* set fileencoding=cp936
 autocmd BufNewFile,BufRead */libevlite.git/*.{c,h,cpp},*/libevlite.git/*Makefile* set fileencoding=cp936
-
-" Refresh Tags File
-autocmd BufWritePost *.{c,h,cpp,cc,hpp}	
-			\ if filewritable("tags") |
-			\	silent execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" |
-			\ endif 
 
 "------------------------------
 " GUI Settings
@@ -175,18 +179,20 @@ if has("gui_running")
     set guioptions-=r	" 隐藏右侧滚动条
     set guioptions-=b	" 隐藏底部滚动条
     set guioptions-=e	" 隐藏底部滚动条
-	"set noantialias	" Mac Anti-Alias
-	set nowrap	
-	if MyOS() == "windows"
-		set guifont=Lucida\ Console:h10.5
-	else
-		set guifont=andale\ mono:h14
-	endif
-else
-	set wrap
+    set nowrap	
+    " OS Gui Layout
+    if MyOS() == "win"
+        set langmenu=zh_CN.UTF-8
+        source $VIMRUNTIME/delmenu.vim
+        source $VIMRUNTIME/menu.vim	
+        language message zh_CN.UTF-8
+        set guifont=Lucida\ Console:h10.5   " 字体
+    elseif MyOS() == "mac"
+        set macmeta                         " Mac Alt-Key
+        set noantialias	                    " Mac Anti-Alias
+        set guifont=andale\ mono:h14        " 字体
+    endif
 endif
-set showtabline=1
-set tabline=%!MyTabLine()
 
 "------------------------------
 " Global Keymap Settings
@@ -218,7 +224,7 @@ let Tlist_Exit_OnlyWindow = 1
 let g:defaultExplorer = 0
 let g:winManagerWidth = 40
 let g:winManagerWindowLayout='FileExplorer|TagList'
-map <C-W><C-t>	:WMToggle<CR> 
+map <C-W><C-t>	:WMToggle<CR>
 map <C-W><C-f>	:FirstExplorerWindow<CR>
 map <C-W><C-b> 	:BottomExplorerWindow<CR>
 
@@ -233,7 +239,7 @@ let Grep_Skip_Dirs = '.svn .git'
 nnoremap <silent> <leader>f : Grep<CR>
 nnoremap <silent> <leader>F : Rgrep<CR>
 nmap <leader>cw :cw<CR>
-nmap <leader>cc :cclose<CR> 
+nmap <leader>cc :cclose<CR>
 
 " Omni
 let OmniCpp_DefaultNamespaces = ["std"]
@@ -255,8 +261,4 @@ let g:ctrlp_working_path_mode = ''
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe
-
-" ============================================================================
-" Functions
-" ============================================================================
 
