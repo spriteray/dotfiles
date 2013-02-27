@@ -1,0 +1,17 @@
+
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin
+LANG=zh_CN.UTF-8
+#LD_LIBRARY_PATH=/home/zhangl1/server/bin/Debug/lib:$LD_LIBRARY_PATH
+
+export PATH
+export LANG
+#export LD_LIBRARY_PATH
