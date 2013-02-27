@@ -1,7 +1,7 @@
 
 #!/bin/sh
 
-cp _bash_profile .bash_profile
+cp _bash_profile ~/.bash_profile
 
 mkdir ~/bin
 cp git-diff-wrapper ~/bin
