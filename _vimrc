@@ -110,12 +110,6 @@ colorscheme molokai
 "let g:solarized_termcolors=256
 "colorscheme solarized
 
-" Auto-Refresh Tags File
-autocmd BufWritePost *.{c,h,cpp,cc,hpp}	
-			\ if filewritable("tags") |
-			\	silent execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" |
-			\ endif 
-
 "------------------------------
 " Platform Dependent Settings
 "------------------------------
@@ -144,6 +138,15 @@ else
 	let $CMD_AGREP	= 'grep'
 	let $CMD_FIND	= 'find'
 endif
+
+" ctags cmd line
+let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q" 
+
+" Auto-Refresh Tags File
+autocmd BufWritePost *.{c,h,cpp,cc,hpp}	
+			\ if filewritable("tags") |
+			\	silent execute $CTAGS_CMD_LINE |
+			\ endif 
 
 "------------------------------
 " File Formats And Encodings
@@ -199,7 +202,7 @@ endif
 " Paste to Command Mode
 "cmap	<C-p>	<C-r>"
 " Save Tags
-map		<F5>		:execute '!'.$CMD_CTAGS." -R --c++-kinds=+p --fields=+iaS --extra=+q" <CR>
+map		<F5>		:execute $CTAGS_CMD_LINE<CR>
 " Shutdown HighLight
 nmap	<leader>c	:nohls <CR>
 " Tab Page
