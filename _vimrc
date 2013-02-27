@@ -63,7 +63,6 @@ filetype indent on
 set ru
 set sm
 set hls
-set wrap
 set incsearch
 set nowrapscan
 set hlsearch
@@ -179,7 +178,6 @@ if has("gui_running")
     set guioptions-=r	" 隐藏右侧滚动条
     set guioptions-=b	" 隐藏底部滚动条
     set guioptions-=e	" 隐藏底部滚动条
-    set nowrap	
     " OS Gui Layout
     if MyOS() == "win"
         set langmenu=zh_CN.UTF-8
@@ -189,7 +187,7 @@ if has("gui_running")
         set guifont=Lucida\ Console:h10.5   " 字体
     elseif MyOS() == "mac"
         set macmeta                         " Mac Alt-Key
-        set noantialias	                    " Mac Anti-Alias
+        "set noantialias	                " Mac Anti-Alias
         set guifont=andale\ mono:h14        " 字体
     endif
 endif
