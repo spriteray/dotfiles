@@ -208,6 +208,9 @@ map		<F5>		:execute $CTAGS_CMD_LINE<CR>
 nmap	<leader>c	:nohls <CR>
 " Tab Page
 nmap	<C-t>		:tabnew %:p:h<CR>
+" Ctrl-]
+map 	<C-]> 		:tselect <C-R>=expand("<cword>")<CR><CR>
+map 	<C-]> 		g<C-]>
 
 " ============================================================================
 " => Plugins Settings
