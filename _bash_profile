@@ -10,8 +10,12 @@ fi
 
 PATH=$PATH:$HOME/bin
 LANG=zh_CN.UTF-8
+GREP_OPTIONS='--color=auto'
+GREP_COLOR='01;04;32'
 #LD_LIBRARY_PATH=/home/zhangl1/server/bin/Debug/lib:$LD_LIBRARY_PATH
 
 export PATH
 export LANG
+export GREP_OPTIONS
+export GREP_COLOR
 #export LD_LIBRARY_PATH
