@@ -10,7 +10,7 @@ function! MyOS()
     else
         let os=substitute(system('uname'), '\n', '', '')
         if os == 'Darwin' || os == 'Mac'
-            return "mac" 
+            return "mac"
         elseif os == 'FreeBSD'
             return "bsd"
         else
@@ -46,6 +46,17 @@ function! MyTabLine()
 	return s
 endfunction
 
+" Remove trailing whitespace when writing a buffer
+function RemoveTrailingWhitespace()
+    if &ft != "diff"
+        let b:curcol = col(".")
+        let b:curline = line(".")
+        silent! %s/\s\+$//
+        silent! %s/\(\s*\n\)\+\%$//
+        call cursor(b:curline, b:curcol)
+    endif
+endfunction
+
 " ==============================================================================
 " => General
 " ==============================================================================
@@ -56,8 +67,10 @@ let g:mapleader=","
 set autoread
 set history=400
 set nocompatible
+filetype on
 filetype plugin on
 filetype indent on
+syntax on
 
 " Display related
 set ru
@@ -67,15 +80,14 @@ set incsearch
 set nowrapscan
 set hlsearch
 set t_Co=256
-"set cc=80
-syntax enable 
+set showmatch
 
 " Editing related
 set number
 set tabstop=4
 set shiftwidth=4
 set cursorline
-set showmatch
+set cursorcolumn			" 设置光标十字坐标，高亮当前列
 set backspace=indent,eol,start
 set whichwrap=b,s,<,>,[,]
 set mouse=a
@@ -83,10 +95,11 @@ set selectmode=
 set mousemodel=popup
 set keymodel=
 set selection=inclusive
-set smartindent									" 自动缩进
 set cindent										" C样式的缩进
-autocmd FileType c 		set expandtab softtabstop=4	" C/C++ 扩展TAB 
-autocmd FileType cpp 	set expandtab softtabstop=4	" C/C++ 扩展TAB 
+set autoindent
+set smartindent									" 自动缩进
+autocmd FileType c 		set expandtab softtabstop=4	" C/C++ 扩展TAB
+autocmd FileType cpp 	set expandtab softtabstop=4	" C/C++ 扩展TAB
 
 " status line
 set laststatus=2
@@ -109,6 +122,9 @@ colorscheme molokai
 "let g:solarized_termtrans=1
 "let g:solarized_termcolors=256
 "colorscheme solarized
+
+hi WhitespaceEOF ctermbg=100 guibg=100
+match WhitespaceEOF /\s\+$/
 
 "------------------------------
 " Platform Dependent Settings
@@ -140,13 +156,22 @@ else
 endif
 
 " ctags cmd line
-let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q" 
+let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q"
 
 " Auto-Refresh Tags File
-autocmd BufWritePost *.{c,h,cpp,cc,hpp}	
+autocmd BufWritePost *.{c,h,cpp,cc,hpp}
 			\ if filewritable("tags") |
 			\	silent execute $CTAGS_CMD_LINE |
-			\ endif 
+			\ endif
+
+" 跳到退出之前的光标处
+autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \ exe "normal! g`\"" |
+            \ endif
+
+" 自动去除行末空白
+autocmd BufWritePre * call RemoveTrailingWhitespace()
 
 "------------------------------
 " File Formats And Encodings
@@ -165,11 +190,11 @@ set fileencoding=utf-8				" 默认文件编码utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
 " 需要使用非UTF-8打开的项目
-autocmd BufNewFile,BufRead */server/*.{c,h,cpp,py},*/server/*Makefile* set fileencoding=cp936
-autocmd BufNewFile,BufRead */gameserver.git/*.{c,h,cpp,mk,conf},*/gameserver.git/*Makefile* set fileencoding=cp936
-autocmd BufNewFile,BufRead */webgame.git/*.{c,h,cpp,mk,conf},*/webgame.git/*Makefile* set fileencoding=cp936
-autocmd BufNewFile,BufRead */actgame.git/*.{c,h,cpp,mk,conf},*/actgame.git/*Makefile* set fileencoding=cp936
-autocmd BufNewFile,BufRead */libevlite.git/*.{c,h,cpp},*/libevlite.git/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */server/*.{c,h,cpp,py},*/server/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */gameserver.git/*.{c,h,cpp,mk,conf},*/gameserver.git/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */webgame.git/*.{c,h,cpp,mk,conf},*/webgame.git/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */actgame.git/*.{c,h,cpp,mk,conf},*/actgame.git/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */libevlite.git/*.{c,h,cpp},*/libevlite.git/*Makefile* set fileencoding=cp936
 
 "------------------------------
 " GUI Settings
@@ -186,7 +211,7 @@ if has("gui_running")
     if MyOS() == "win"
         set langmenu=zh_CN.UTF-8
         source $VIMRUNTIME/delmenu.vim
-        source $VIMRUNTIME/menu.vim	
+        source $VIMRUNTIME/menu.vim
         language message zh_CN.UTF-8
         set guifont=Lucida\ Console:h10.5   " 字体
     elseif MyOS() == "mac"
@@ -203,7 +228,7 @@ endif
 " Paste to Command Mode
 "cmap	<C-p>	<C-r>"
 " Save Tags
-map		<F5>		:execute $CTAGS_CMD_LINE<CR>
+"map		<F5>		:execute $CTAGS_CMD_LINE<CR>
 " Shutdown HighLight
 nmap	<leader>c	:nohls <CR>
 " Tab Page
@@ -250,13 +275,13 @@ nmap <leader>cc :cclose<CR>
 let OmniCpp_DefaultNamespaces = ["std"]
 let OmniCpp_GlobalScopeSearch = 1 " 0 or 1
 let OmniCpp_NamespaceSearch = 1 " 0 , 1 or 2
-let OmniCpp_DisplayMode = 1 
+let OmniCpp_DisplayMode = 1
 let OmniCpp_ShowScopeInAbbr = 0
-let OmniCpp_ShowPrototypeInAbbr = 1 
+let OmniCpp_ShowPrototypeInAbbr = 1
 let OmniCpp_ShowAccess = 0
 let OmniCpp_MayCompleteDot = 1
 let OmniCpp_MayCompleteArrow = 1
-let OmniCpp_MayCompleteScope = 1 
+let OmniCpp_MayCompleteScope = 1
 set completeopt=menuone,menu,longest
 
 " CtrlP
@@ -267,3 +292,17 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.d,*.o
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.d,*.o
 
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" YouCompleteMe
+Bundle 'Valloric/YouCompleteMe'
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '/home/zhangl1/fightgame/.ycm_extra_conf.py'
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:ycm_min_num_of_chars_for_completion = 0
+let g:ycm_autoclose_preview_window_after_insertion=1
+let g:ycm_autoclose_preview_window_after_completion = 1
