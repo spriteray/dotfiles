@@ -87,7 +87,7 @@ set number
 set tabstop=4
 set shiftwidth=4
 set cursorline
-set cursorcolumn			" 设置光标十字坐标，高亮当前列
+"set cursorcolumn			" 设置光标十字坐标，高亮当前列
 set backspace=indent,eol,start
 set whichwrap=b,s,<,>,[,]
 set mouse=a
@@ -100,6 +100,7 @@ set autoindent
 set smartindent									" 自动缩进
 autocmd FileType c 		set expandtab softtabstop=4	" C/C++ 扩展TAB
 autocmd FileType cpp 	set expandtab softtabstop=4	" C/C++ 扩展TAB
+autocmd FileType python set expandtab softtabstop=4	" Python扩展TAB
 
 " status line
 set laststatus=2
@@ -299,7 +300,8 @@ call vundle#rc()
 Bundle 'Valloric/YouCompleteMe'
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '/home/zhangl1/fightgame/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = '/home/zhangl1/fight/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '/home/zhangl1/fight.quest/.ycm_extra_conf.py'
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:syntastic_always_populate_loc_list = 0
