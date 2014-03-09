@@ -64,6 +64,9 @@ endfunction
 let mapleader=","
 let g:mapleader=","
 
+" pathogen
+call pathogen#infect()
+
 set autoread
 set history=400
 set nocompatible
@@ -251,10 +254,20 @@ let Tlist_Exit_OnlyWindow = 1
 "let g:miniBufExplMapCTabSwitchBufs = 1
 "let g:miniBufExplMapWindowNavArrows = 1
 
+" NERDTree
+let g:NERDTree_title='NERD Tree'
+let NERDTreeDirArrows = 0
+function! NERDTree_Start()
+	exec 'NERDTree'
+endfunction
+function! NERDTree_IsValid()
+	return 1
+endfunction
+
 " Window Manager
 let g:defaultExplorer = 0
 let g:winManagerWidth = 40
-let g:winManagerWindowLayout='FileExplorer|TagList'
+let g:winManagerWindowLayout='NERDTree|TagList'
 map <C-W><C-t>	:WMToggle<CR>
 map <C-W><C-f>	:FirstExplorerWindow<CR>
 map <C-W><C-b> 	:BottomExplorerWindow<CR>
@@ -293,11 +306,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.d,*.o
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.d,*.o
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
 " YouCompleteMe
-Bundle 'Valloric/YouCompleteMe'
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 let g:ycm_confirm_extra_conf = 0
 "let g:ycm_global_ycm_extra_conf = '/home/zhangl1/fight/.ycm_extra_conf.py'
