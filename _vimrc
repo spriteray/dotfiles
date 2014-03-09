@@ -305,15 +305,3 @@ let g:ctrlp_working_path_mode = ''
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.d,*.o
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.d,*.o
-
-" YouCompleteMe
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-let g:ycm_confirm_extra_conf = 0
-"let g:ycm_global_ycm_extra_conf = '/home/zhangl1/fight/.ycm_extra_conf.py'
-let g:ycm_global_ycm_extra_conf = '/home/zhangl1/fight.quest/.ycm_extra_conf.py'
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:syntastic_always_populate_loc_list = 0
-let g:ycm_min_num_of_chars_for_completion = 0
-let g:ycm_autoclose_preview_window_after_insertion=1
-let g:ycm_autoclose_preview_window_after_completion = 1
