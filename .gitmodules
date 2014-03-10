@@ -1,0 +1,21 @@
+[submodule "vimfiles/bundle/a.vim"]
+	path = vimfiles/bundle/a.vim
+	url = https://github.com/vim-scripts/a.vim
+[submodule "vimfiles/bundle/cpp-enhanced"]
+	path = vimfiles/bundle/cpp-enhanced
+	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
+[submodule "vimfiles/bundle/ctrlp"]
+	path = vimfiles/bundle/ctrlp
+	url = https://github.com/kien/ctrlp.vim
+[submodule "vimfiles/bundle/molokai"]
+	path = vimfiles/bundle/molokai
+	url = https://github.com/tomasr/molokai.git
+[submodule "vimfiles/bundle/nerdtree"]
+	path = vimfiles/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "vimfiles/bundle/taglist.vim"]
+	path = vimfiles/bundle/taglist.vim
+	url = https://github.com/vim-scripts/taglist.vim
+[submodule "vimfiles/bundle/winmanager"]
+	path = vimfiles/bundle/winmanager
+	url = https://github.com/vim-scripts/winmanager.git
