@@ -1,6 +1,6 @@
 [user]
-	name = spriteray 
-	email = spriteray@gmail.com
+	name = zhangl1
+	email = zhangl1@kingnet.com
 [color]
 	diff = auto
 	status = auto
@@ -11,19 +11,19 @@
 	pager = less -FRSX
 
 [diff]
-	external = git-diff-wrapper 
+	external = git-diff-wrapper
 
 [pager]
-	diff = 
+	diff =
 
 [alias]
-
-	glog = log --color --graph --pretty=oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cn:%ce, %ci)%Creset' --abbrev-commit --date=iso
-	llog = log --color --graph --pretty=fuller --abbrev-commit --date=iso -n 1
+	history = log --color --graph --pretty=oneline --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cn:%ce, %ci)%Creset' --abbrev-commit --date=iso
+	last = log --color --pretty=fuller --abbrev-commit --date=iso --name-status -n 1
 	dw = diff
 	dc = diff --cached
 	merges = merge --squash
 	commita = commit --amend
+	unstage = reset HEAD --
 
 [merge]
 	tool = vimdiff3
