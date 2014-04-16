@@ -19,3 +19,6 @@
 [submodule "vimfiles/bundle/winmanager"]
 	path = vimfiles/bundle/winmanager
 	url = https://github.com/vim-scripts/winmanager.git
+[submodule "vimfiles/bundle/grep.vim"]
+	path = vimfiles/bundle/grep.vim
+	url = https://github.com/vim-scripts/grep.vim
