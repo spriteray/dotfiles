@@ -127,8 +127,8 @@ colorscheme molokai
 "let g:solarized_termtrans=1
 "let g:solarized_termcolors=256
 "colorscheme solarized
-
-hi WhitespaceEOF ctermbg=100 guibg=100
+" 额外的配置
+hi WhitespaceEOF ctermbg=grey guibg=grey
 match WhitespaceEOF /\s\+$/
 
 "------------------------------
