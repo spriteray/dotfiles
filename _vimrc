@@ -47,7 +47,7 @@ function! MyTabLine()
 endfunction
 
 " Remove trailing whitespace when writing a buffer
-function RemoveTrailingWhitespace()
+function! RemoveTrailingWhitespace()
     if &ft != "diff"
         let b:curcol = col(".")
         let b:curline = line(".")
@@ -101,6 +101,7 @@ set selection=inclusive
 set cindent										" C样式的缩进
 set autoindent
 set smartindent									" 自动缩进
+" 4个SPACE替换TAB
 autocmd FileType c 		set expandtab softtabstop=4	" C/C++ 扩展TAB
 autocmd FileType cpp 	set expandtab softtabstop=4	" C/C++ 扩展TAB
 autocmd FileType python set expandtab softtabstop=4	" Python扩展TAB
