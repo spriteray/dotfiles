@@ -268,6 +268,7 @@ endfunction
 " Window Manager
 let g:defaultExplorer = 0
 let g:winManagerWidth = 40
+"let g:winManagerWindowLayout='FileExplorer|TagList'
 let g:winManagerWindowLayout='NERDTree|TagList'
 map <C-W><C-t>	:WMToggle<CR>
 map <C-W><C-f>	:FirstExplorerWindow<CR>
