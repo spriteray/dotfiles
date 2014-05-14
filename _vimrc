@@ -222,7 +222,7 @@ if has("gui_running")
     elseif MyOS() == "mac"
         set macmeta                         " Mac Alt-Key
         "set noantialias	                " Mac Anti-Alias
-        set guifont=andale\ mono:h14        " 字体
+        set guifont=Droid\ Sans\ Mono:h14	" 字体
     endif
 endif
 
@@ -256,20 +256,20 @@ let Tlist_Exit_OnlyWindow = 1
 "let g:miniBufExplMapWindowNavArrows = 1
 
 " NERDTree
-let g:NERDTree_title='NERD Tree'
-let NERDTreeDirArrows = 0
-function! NERDTree_Start()
-	exec 'NERDTree'
-endfunction
-function! NERDTree_IsValid()
-	return 1
-endfunction
+"let g:NERDTree_title='NERD Tree'
+"let NERDTreeDirArrows = 0
+"function! NERDTree_Start()
+"	exec 'NERDTree'
+"endfunction
+"function! NERDTree_IsValid()
+"	return 1
+"endfunction
 
 " Window Manager
 let g:defaultExplorer = 0
 let g:winManagerWidth = 40
-"let g:winManagerWindowLayout='FileExplorer|TagList'
-let g:winManagerWindowLayout='NERDTree|TagList'
+let g:winManagerWindowLayout='FileExplorer|TagList'
+"let g:winManagerWindowLayout='NERDTree|TagList'
 map <C-W><C-t>	:WMToggle<CR>
 map <C-W><C-f>	:FirstExplorerWindow<CR>
 map <C-W><C-b> 	:BottomExplorerWindow<CR>
