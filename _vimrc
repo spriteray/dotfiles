@@ -74,6 +74,7 @@ filetype on
 filetype plugin on
 filetype indent on
 syntax on
+set makeprg=make\ all
 
 " Display related
 set ru
