@@ -286,20 +286,8 @@ nnoremap <silent> <leader>F : Rgrep<CR>
 nmap <leader>cw :cw<CR>
 nmap <leader>cc :cclose<CR>
 
-" Omni
-let OmniCpp_DefaultNamespaces = ["std"]
-let OmniCpp_GlobalScopeSearch = 1 " 0 or 1
-let OmniCpp_NamespaceSearch = 1 " 0 , 1 or 2
-let OmniCpp_DisplayMode = 1
-let OmniCpp_ShowScopeInAbbr = 0
-let OmniCpp_ShowPrototypeInAbbr = 1
-let OmniCpp_ShowAccess = 0
-let OmniCpp_MayCompleteDot = 1
-let OmniCpp_MayCompleteArrow = 1
-let OmniCpp_MayCompleteScope = 1
-set completeopt=menuone,menu,longest
-
 " CtrlP
+set completeopt=menuone,menu,longest
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = ''
