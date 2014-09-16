@@ -103,7 +103,7 @@ set cindent										" C样式的缩进
 set autoindent
 set smartindent									" 自动缩进
 " 4个SPACE替换TAB
-autocmd FileType c,cpp,python 	set expandtab softtabstop=4		" C/C++/Python 扩展TAB
+autocmd FileType c,cpp,python 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
 
 " status line
 set laststatus=2
@@ -121,11 +121,6 @@ nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
 
 " color scheme
 colorscheme molokai
-"set background=dark
-"let g:solarized_italic=0
-"let g:solarized_termtrans=1
-"let g:solarized_termcolors=256
-"colorscheme solarized
 " 额外的配置
 hi WhitespaceEOF ctermbg=grey guibg=grey
 match WhitespaceEOF /\s\+$/
@@ -229,10 +224,6 @@ endif
 " Global Keymap Settings
 "------------------------------
 
-" Paste to Command Mode
-"cmap	<C-p>	<C-r>"
-" Save Tags
-"map		<F5>		:execute $CTAGS_CMD_LINE<CR>
 " Shutdown HighLight
 nmap	<leader>c	:nohls <CR>
 " Tab Page
@@ -240,6 +231,10 @@ nmap	<C-t>		:tabnew %:p:h<CR>
 " Ctrl-]
 map 	<C-]> 		:tselect <C-R>=expand("<cword>")<CR><CR>
 map 	<C-]> 		g<C-]>
+"
+nmap 	<leader>cw 	:cw<CR>
+nmap 	<leader>cc 	:cclose<CR>
+
 
 " ============================================================================
 " => Plugins Settings
@@ -249,10 +244,6 @@ map 	<C-]> 		g<C-]>
 let Tlist_Ctags_Cmd = $CMD_CTAGS
 let Tlist_Show_One_File = 1
 let Tlist_Exit_OnlyWindow = 1
-
-" Mini Buffer Explorer
-"let g:miniBufExplMapCTabSwitchBufs = 1
-"let g:miniBufExplMapWindowNavArrows = 1
 
 " NERDTree
 "let g:NERDTree_title='NERD Tree'
@@ -283,14 +274,20 @@ let Grep_Find_Path = $CMD_FIND
 let Grep_Skip_Dirs = '.svn .git'
 nnoremap <silent> <leader>f : Grep<CR>
 nnoremap <silent> <leader>F : Rgrep<CR>
-nmap <leader>cw :cw<CR>
-nmap <leader>cc :cclose<CR>
 
 " CtrlP
-set completeopt=menuone,menu,longest
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = ''
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.d,*.o
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.d,*.o
+
+"" YouCompleteMe
+"set completeopt=menuone,menu,longest
+"nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+"let g:ycm_confirm_extra_conf = 0
+"let g:ycm_collect_identifiers_from_comments_and_strings = 1
+"let g:ycm_seed_identifiers_with_syntax = 1
+"let g:syntastic_always_populate_loc_list = 0
+"let g:ycm_min_num_of_chars_for_completion = 0
