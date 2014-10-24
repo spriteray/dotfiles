@@ -68,6 +68,7 @@ let g:mapleader=","
 call pathogen#infect()
 
 set autoread
+set autowrite
 set history=400
 set nocompatible
 filetype on
@@ -100,6 +101,7 @@ set mousemodel=popup
 set keymodel=
 set selection=inclusive
 set cindent										" C样式的缩进
+set cinoptions=s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,g0,hs,N0,ps,ts,is,+s,c3,C0,/0,(2s,us,U0,w0,W0,k0,m0,j0,J0,)20,*70,#0
 set autoindent
 set smartindent									" 自动缩进
 " 4个SPACE替换TAB
@@ -119,8 +121,13 @@ set foldmethod=indent
 set foldlevel=100
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
 
-" color scheme
-colorscheme molokai
+" colorscheme
+" solarized
+set background=dark
+let g:solarized_termcolors=256
+colorscheme solarized
+" molokai
+" colorscheme molokai
 " 额外的配置
 hi WhitespaceEOF ctermbg=grey guibg=grey
 match WhitespaceEOF /\s\+$/
@@ -200,6 +207,7 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 "------------------------------
 
 if has("gui_running")
+	" GUI
     set guioptions-=m	" 隐藏菜单栏
     set guioptions-=T	" 隐藏工具栏
     set guioptions-=L	" 隐藏左侧滚动条
@@ -283,11 +291,12 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.d,*.o
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.d,*.o
 
-"" YouCompleteMe
-"set completeopt=menuone,menu,longest
-"nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_collect_identifiers_from_comments_and_strings = 1
-"let g:ycm_seed_identifiers_with_syntax = 1
-"let g:syntastic_always_populate_loc_list = 0
-"let g:ycm_min_num_of_chars_for_completion = 0
+" YouCompleteMe
+set completeopt=menuone,menu,longest
+nnoremap <F11> :YcmCompleter GoTo<CR>
+nnoremap <F12> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand(“<cword>”)<CR><CR> "
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:ycm_min_num_of_chars_for_completion = 0

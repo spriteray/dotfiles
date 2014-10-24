@@ -22,3 +22,6 @@
 [submodule "vimfiles/bundle/grep.vim"]
 	path = vimfiles/bundle/grep.vim
 	url = https://github.com/vim-scripts/grep.vim
+[submodule "vimfiles/bundle/vim-colors-solarized"]
+	path = vimfiles/bundle/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized
