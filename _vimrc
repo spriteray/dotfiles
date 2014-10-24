@@ -124,6 +124,7 @@ nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
 " colorscheme
 " solarized
 set background=dark
+" let g:solarized_termtrans = 1 " Mac上请打开
 let g:solarized_termcolors=256
 colorscheme solarized
 " molokai
