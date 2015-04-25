@@ -67,14 +67,11 @@ let g:mapleader=","
 " pathogen
 call pathogen#infect()
 
+set magic
 set autoread
 set autowrite
 set history=400
 set nocompatible
-filetype on
-filetype plugin on
-filetype indent on
-syntax on
 set makeprg=make\ all
 
 " Display related
@@ -85,10 +82,13 @@ set incsearch
 set nowrapscan
 set hlsearch
 set t_Co=256
-set showmatch
+set showmatch 				" 括号配对
+syntax on
+set formatoptions=tcqmM
 
 " Editing related
 set number
+set numberwidth=5
 set tabstop=4
 set shiftwidth=4
 set cursorline
@@ -104,8 +104,6 @@ set cindent										" C样式的缩进
 set cinoptions=s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,g0,hs,N0,ps,ts,is,+s,c3,C0,/0,(2s,us,U0,w0,W0,k0,m0,j0,J0,)20,*70,#0
 set autoindent
 set smartindent									" 自动缩进
-" 4个SPACE替换TAB
-autocmd FileType c,cpp,python 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
 
 " status line
 set laststatus=2
@@ -121,14 +119,17 @@ set foldmethod=indent
 set foldlevel=100
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
 
-" colorscheme
-" solarized
-set background=dark
-" let g:solarized_termtrans = 1 " Mac上请打开
-let g:solarized_termcolors=256
-colorscheme solarized
+filetype on
+filetype plugin on
+filetype indent on
+" 文件类型
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+autocmd BufRead,BufNewFile Makefile.* set filetype=makefile
+" 4个SPACE替换TAB
+autocmd FileType c,cpp,python 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
+
 " molokai
-" colorscheme molokai
+colorscheme molokai
 " 额外的配置
 hi WhitespaceEOF ctermbg=grey guibg=grey
 match WhitespaceEOF /\s\+$/
@@ -178,7 +179,7 @@ autocmd BufReadPost *
             \ endif
 
 " 自动去除行末空白
-autocmd BufWritePre * call RemoveTrailingWhitespace()
+autocmd BufWritePre *.{c,h,cc,cpp,cc,hpp,py} call RemoveTrailingWhitespace()
 
 "------------------------------
 " File Formats And Encodings
@@ -249,6 +250,10 @@ nmap 	<leader>cc 	:cclose<CR>
 " => Plugins Settings
 " ============================================================================
 
+" cpp-enhanced
+let g:cpp_class_scope_highlight = 0
+let g:cpp_experimental_template_highlight = 0
+
 " Tag List
 let Tlist_Ctags_Cmd = $CMD_CTAGS
 let Tlist_Show_One_File = 1
@@ -285,7 +290,7 @@ nnoremap <silent> <leader>f : Grep<CR>
 nnoremap <silent> <leader>F : Rgrep<CR>
 
 " CtrlP
-let g:ctrlp_map = '<c-p>'
+let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = ''
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
@@ -295,7 +300,7 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.d,*.o
 " YouCompleteMe
 set completeopt=menuone,menu,longest
 nnoremap <F11> :YcmCompleter GoTo<CR>
-nnoremap <F12> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand(“<cword>”)<CR><CR> "
+nnoremap <F12> :YcmCompleter GoToDefinition <CR>
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_seed_identifiers_with_syntax = 1
