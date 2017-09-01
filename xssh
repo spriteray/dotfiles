@@ -1,0 +1,113 @@
+#!/bin/bash
+
+# AUTO SSH - Auto Login SSH Server (expect-based)
+#
+# @category Main
+# @package  AutoSSH
+# @author   Feei <wufeifei@wufeifei.com>
+# @license  Copyright (C) 2015 Feei. All Rights Reserved
+# @link     http://github.com/wufeifei/autossh
+# @install
+#
+# $ git clone https://github.com/wufeifei/autossh.git
+# $ sudo cp autossh/autossh /usr/local/bin/
+# $ 'server name|192.168.1.1|root|password|22|0' > ~/.autosshrc
+#
+# @usage
+# $ autossh   // List Server
+# $ autossh 1 // Login Num n Server
+
+AUTO_SSH_CONFIG=`cat ~/.xsshrc`
+BORDER_LINE="\033[1;31m############################################################ \033[0m"
+echo -e $BORDER_LINE
+echo -e "\033[1;31m#                        [X SSH]                           # \033[0m"
+echo -e "\033[1;31m#                                                          # \033[0m"
+echo -e "\033[1;31m#                                                          # \033[0m"
+i=0;
+
+if [ "$AUTO_SSH_CONFIG" == "" ]; then
+	echo -e "\033[1;31m#              Config(~/.autosshrc) Not Found              # \033[0m";
+	echo -e "\033[1;31m#                                                          # \033[0m"
+	echo -e "\033[1;31m#                                                          # \033[0m"
+	echo -e $BORDER_LINE
+else
+	for server in $AUTO_SSH_CONFIG; do
+		i=`expr $i + 1`
+		SERVER=`echo $server | awk -F\| '{ print $1 }'`
+		IP=`echo $server | awk -F\| '{ print $2 }'`
+		NAME=`echo $server | awk -F\| '{ print $3 }'`
+		LINE="\033[1;31m#"\ [$i]\ $SERVER\ -\ $IP':'$NAME
+		MAX_LINE_LENGTH=`expr ${#BORDER_LINE}`
+		CURRENT_LINE_LENGTH=`expr "${#LINE}"`
+		DIS_LINE_LENGTH=`expr $MAX_LINE_LENGTH - $CURRENT_LINE_LENGTH - 9`
+		echo -e $LINE"\c"
+		for n in $(seq $DIS_LINE_LENGTH);
+		do
+		    echo -e " \c"
+		done
+		echo -e "# \033[0m"
+	done
+	echo -e "\033[1;31m#                                                          # \033[0m"
+	echo -e "\033[1;31m#                                                          # \033[0m"
+	echo -e $BORDER_LINE
+
+	# GET INPUT CHOSEN OR GET PARAM
+	if [ "$1" != "" ]; then
+	    no=$1
+	else
+	    no=0
+	    until [ $no -gt 0 -a $no -le $i ] 2>/dev/null
+	    do
+	        echo -e 'Server Number:\c'
+	        read no
+	    done
+	fi
+fi
+
+get_bastion()
+{
+	for server in $AUTO_SSH_CONFIG; do
+		SERVER=`echo $server | awk -F\| '{ print $1 }'`
+		if [ "$SERVER" == "$1" ]; then
+			IP=`echo $server | awk -F\| '{ print $2 }'`
+			NAME=`echo $server | awk -F\| '{ print $3 }'`
+			TYPE=`echo $server | awk -F\| '{ print $4 }'`
+			PASS=`echo $server | awk -F\| '{ print $5 }'`
+			PORT=`echo $server | awk -F\| '{ print $6 }'`
+			if [ "$TYPE" == "1" ]; then
+				echo "sshpass -p "$PASS" ssh -p $PORT -l $NAME $IP"
+			else
+				echo "ssh -i $PASS -p $PORT -l $NAME $IP"
+			fi
+			break;
+		fi
+	done
+}
+
+i=0
+for server in $AUTO_SSH_CONFIG; do
+	i=`expr $i + 1`
+	if [ $i -eq $no ] ; then
+		IP=`echo $server | awk -F\| '{ print $2 }'`
+		NAME=`echo $server | awk -F\| '{ print $3 }'`
+		TYPE=`echo $server | awk -F\| '{ print $4 }'`
+		PASS=`echo $server | awk -F\| '{ print $5 }'`
+		PORT=`echo $server | awk -F\| '{ print $6 }'`
+		BASTION=`echo $server | awk -F\| '{ print $7 }'`
+		proxycommand=$(get_bastion $BASTION)
+		if [ "$TYPE" == "1" ]; then
+			if [ "$proxycommand" == "" ]; then
+				sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -p $PORT -l $NAME $IP
+			else
+				sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -p $PORT -l $NAME $IP -o "ProxyCommand $proxycommand -W %h:%p"
+			fi
+		else
+			if [ "$proxycommand" == "" ]; then
+				ssh -o StrictHostKeyChecking=no -i $PASS -p $PORT -l $NAME $IP
+			else
+				ssh -o StrictHostKeyChecking=no -i $PASS -p $PORT -l $NAME $IP -o "ProxyCommand $proxycommand -W %h:%p"
+			fi
+		fi
+		break;
+	fi
+done
