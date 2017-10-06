@@ -1,6 +1,6 @@
 [user]
-	name = zhangl1
-	email = zhangl1@kingnet.com
+	name = spriteray
+	email = spriteray@gmail.com 
 [color]
 	diff = auto
 	status = auto
@@ -21,9 +21,10 @@
 	changes = log --color --pretty=fuller --abbrev-commit --date=iso --name-status -n 1
 	dw = diff
 	dc = diff --cached
-	merges = merge --squash
+	merges = merge --squash --allow-unrelated-histories
 	commita = commit --amend
 	unstage = reset HEAD --
+	st = status
 
 [merge]
 	tool = vimdiff3

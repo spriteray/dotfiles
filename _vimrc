@@ -83,7 +83,7 @@ set nowrapscan
 set hlsearch
 set t_Co=256
 set showmatch 				" 括号配对
-syntax on
+syntax enable
 set formatoptions=tcqmM
 
 " Editing related
@@ -129,7 +129,16 @@ autocmd BufRead,BufNewFile Makefile.* set filetype=makefile
 autocmd FileType c,cpp,python 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
 
 " molokai
-colorscheme molokai
+"colorscheme molokai
+
+" solarized
+let g:solarized_degrade=1
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
+let g:solarized_visibility='low'
+set background=light
+colorscheme solarized
+
 " 额外的配置
 hi WhitespaceEOF ctermbg=grey guibg=grey
 match WhitespaceEOF /\s\+$/
@@ -225,8 +234,7 @@ if has("gui_running")
         set guifont=Lucida\ Console:h10.5   " 字体
     elseif MyOS() == "mac"
         set macmeta                         " Mac Alt-Key
-        "set noantialias	                " Mac Anti-Alias
-        set guifont=Droid\ Sans\ Mono:h14	" 字体
+        set guifont=PragmataPro:h15
     endif
 endif
 
