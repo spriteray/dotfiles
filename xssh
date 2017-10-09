@@ -17,6 +17,8 @@
 # $ autossh   // List Server
 # $ autossh 1 // Login Num n Server
 
+SSH_PARAMS="-o GSSAPIAuthentication=no -o StrictHostKeyChecking=no"
+
 AUTO_SSH_CONFIG=`cat ~/.xsshrc`
 BORDER_LINE="\033[1;31m############################################################ \033[0m"
 echo -e $BORDER_LINE
@@ -97,15 +99,15 @@ for server in $AUTO_SSH_CONFIG; do
 		proxycommand=$(get_bastion $BASTION)
 		if [ "$TYPE" == "1" ]; then
 			if [ "$proxycommand" == "" ]; then
-				sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -p $PORT -l $NAME $IP
+				sshpass -p "$PASS" ssh $SSH_PARAMS -p $PORT -l $NAME $IP
 			else
-				sshpass -p "$PASS" ssh -o StrictHostKeyChecking=no -p $PORT -l $NAME $IP -o "ProxyCommand $proxycommand -W %h:%p"
+				sshpass -p "$PASS" ssh $SSH_PARAMS -p $PORT -l $NAME $IP -o "ProxyCommand $proxycommand -W %h:%p"
 			fi
 		else
 			if [ "$proxycommand" == "" ]; then
-				ssh -o StrictHostKeyChecking=no -i $PASS -p $PORT -l $NAME $IP
+				ssh $SSH_PARAMS -i $PASS -p $PORT -l $NAME $IP
 			else
-				ssh -o StrictHostKeyChecking=no -i $PASS -p $PORT -l $NAME $IP -o "ProxyCommand $proxycommand -W %h:%p"
+				ssh $SSH_PARAMS -i $PASS -p $PORT -l $NAME $IP -o "ProxyCommand $proxycommand -W %h:%p"
 			fi
 		fi
 		break;
