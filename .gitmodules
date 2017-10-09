@@ -28,3 +28,6 @@
 [submodule "vimfiles/bundle/vim-run-interactive"]
 	path = vimfiles/bundle/vim-run-interactive
 	url = https://github.com/christoomey/vim-run-interactive.git
+[submodule "sshpass"]
+	path = sshpass
+	url = https://github.com/kevinburke/sshpass.git
