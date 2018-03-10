@@ -57,6 +57,16 @@ function! RemoveTrailingWhitespace()
     endif
 endfunction
 
+" QuickfixFilenames
+function! QuickfixFilenames()
+	" Building a hash ensures we get each buffer only once
+	let buffer_numbers = {}
+	for quickfix_item in getqflist()
+		let buffer_numbers[quickfix_item.bufnr] = bufname(quickfix_item.bufnr)
+	endfor
+	return join(values(buffer_numbers))
+endfunction
+
 " ==============================================================================
 " => General
 " ==============================================================================
@@ -83,7 +93,7 @@ set nowrapscan
 set hlsearch
 set t_Co=256
 set showmatch 				" 括号配对
-syntax enable
+syntax on
 set formatoptions=tcqmM
 
 " Editing related
@@ -128,14 +138,15 @@ autocmd BufRead,BufNewFile Makefile.* set filetype=makefile
 " 4个SPACE替换TAB
 autocmd FileType c,cpp,python 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
 
-" molokai
-"colorscheme molokai
+" Qargs
+command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
 
-" solarized
-let g:solarized_degrade=1
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
-let g:solarized_visibility='low'
+" 删除不放入剪切板
+noremap <C-d> "_d
+
+" molokai
+" colorscheme molokai
+" colorscheme onedark
 set background=light
 colorscheme solarized
 
@@ -176,6 +187,7 @@ endif
 let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q"
 
 " Auto-Refresh Tags File
+set tags=tags;
 autocmd BufWritePost *.{c,h,cpp,cc,hpp}
 			\ if filewritable("tags") |
 			\	silent execute $CTAGS_CMD_LINE |
@@ -188,7 +200,7 @@ autocmd BufReadPost *
             \ endif
 
 " 自动去除行末空白
-autocmd BufWritePre *.{c,h,cc,cpp,cc,hpp,py} call RemoveTrailingWhitespace()
+autocmd BufWritePre *.{c,h,cc,cpp,hpp,py,lua} call RemoveTrailingWhitespace()
 
 "------------------------------
 " File Formats And Encodings
@@ -234,7 +246,8 @@ if has("gui_running")
         set guifont=Lucida\ Console:h10.5   " 字体
     elseif MyOS() == "mac"
         set macmeta                         " Mac Alt-Key
-        set guifont=PragmataPro:h15
+        "set noantialias	                " Mac Anti-Alias
+        set guifont=Droid\ Sans\ Mono:h14	" 字体
     endif
 endif
 
@@ -252,7 +265,6 @@ map 	<C-]> 		g<C-]>
 "
 nmap 	<leader>cw 	:cw<CR>
 nmap 	<leader>cc 	:cclose<CR>
-
 
 " ============================================================================
 " => Plugins Settings
@@ -308,9 +320,22 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.d,*.o
 " YouCompleteMe
 set completeopt=menuone,menu,longest
 nnoremap <F11> :YcmCompleter GoTo<CR>
-nnoremap <F12> :YcmCompleter GoToDefinition <CR>
+nnoremap <F12> :YcmCompleter GoToDeclaration<CR>
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:syntastic_always_populate_loc_list = 0
 let g:ycm_min_num_of_chars_for_completion = 0
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'qf' : 1,
+      \ 'notes' : 1,
+      \ 'markdown' : 1,
+      \ 'unite' : 1,
+      \ 'text' : 1,
+      \ 'vimwiki' : 1,
+      \ 'pandoc' : 1,
+      \ 'infolog' : 1,
+      \ 'gitcommit' : 1,
+      \ 'mail' : 1
+      \}
