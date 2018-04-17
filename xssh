@@ -20,17 +20,17 @@
 SSH_PARAMS="-o GSSAPIAuthentication=no -o StrictHostKeyChecking=no"
 
 AUTO_SSH_CONFIG=`cat ~/.xsshrc`
-BORDER_LINE="\033[1;31m############################################################ \033[0m"
+BORDER_LINE="\033[1;34m############################################################ \033[0m"
 echo -e $BORDER_LINE
-echo -e "\033[1;31m#                        [X SSH]                           # \033[0m"
-echo -e "\033[1;31m#                                                          # \033[0m"
-echo -e "\033[1;31m#                                                          # \033[0m"
+echo -e "\033[1;34m#                        [X SSH]                           # \033[0m"
+echo -e "\033[1;34m#                                                          # \033[0m"
+echo -e "\033[1;34m#                                                          # \033[0m"
 i=0;
 
 if [ "$AUTO_SSH_CONFIG" == "" ]; then
-	echo -e "\033[1;31m#              Config(~/.autosshrc) Not Found              # \033[0m";
-	echo -e "\033[1;31m#                                                          # \033[0m"
-	echo -e "\033[1;31m#                                                          # \033[0m"
+	echo -e "\033[1;34m#              Config(~/.autosshrc) Not Found              # \033[0m";
+	echo -e "\033[1;34m#                                                          # \033[0m"
+	echo -e "\033[1;34m#                                                          # \033[0m"
 	echo -e $BORDER_LINE
 else
 	for server in $AUTO_SSH_CONFIG; do
@@ -38,7 +38,7 @@ else
 		SERVER=`echo $server | awk -F\| '{ print $1 }'`
 		IP=`echo $server | awk -F\| '{ print $2 }'`
 		NAME=`echo $server | awk -F\| '{ print $3 }'`
-		LINE="\033[1;31m#"\ [$i]\ $SERVER\ -\ $IP':'$NAME
+		LINE="\033[1;34m#"\ [$i]\ $SERVER\ -\ $IP':'$NAME
 		MAX_LINE_LENGTH=`expr ${#BORDER_LINE}`
 		CURRENT_LINE_LENGTH=`expr "${#LINE}"`
 		DIS_LINE_LENGTH=`expr $MAX_LINE_LENGTH - $CURRENT_LINE_LENGTH - 9`
@@ -49,8 +49,8 @@ else
 		done
 		echo -e "# \033[0m"
 	done
-	echo -e "\033[1;31m#                                                          # \033[0m"
-	echo -e "\033[1;31m#                                                          # \033[0m"
+	echo -e "\033[1;34m#                                                          # \033[0m"
+	echo -e "\033[1;34m#                                                          # \033[0m"
 	echo -e $BORDER_LINE
 
 	# GET INPUT CHOSEN OR GET PARAM
@@ -77,9 +77,9 @@ get_bastion()
 			PASS=`echo $server | awk -F\| '{ print $5 }'`
 			PORT=`echo $server | awk -F\| '{ print $6 }'`
 			if [ "$TYPE" == "1" ]; then
-				echo "sshpass -p "$PASS" ssh -p $PORT -l $NAME $IP"
+				echo "sshpass -p "$PASS" ssh $SSH_PARAMS -p $PORT -l $NAME $IP"
 			else
-				echo "ssh -i $PASS -p $PORT -l $NAME $IP"
+				echo "ssh $SSH_PARAMS -i $PASS -p $PORT -l $NAME $IP"
 			fi
 			break;
 		fi
