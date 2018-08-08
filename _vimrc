@@ -147,7 +147,7 @@ noremap <C-d> "_d
 " molokai
 " colorscheme molokai
 " colorscheme onedark
-set background=light
+set background=dark
 colorscheme solarized
 
 " 额外的配置
@@ -246,6 +246,7 @@ if has("gui_running")
         set guifont=Lucida\ Console:h10.5   " 字体
     elseif MyOS() == "mac"
         set macmeta                         " Mac Alt-Key
+		set background=light
         "set noantialias	                " Mac Anti-Alias
         set guifont=Droid\ Sans\ Mono:h14	" 字体
     endif
