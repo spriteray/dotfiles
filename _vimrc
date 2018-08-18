@@ -271,6 +271,12 @@ nmap 	<leader>cc 	:cclose<CR>
 " => Plugins Settings
 " ============================================================================
 
+" air-line
+let g:airline_theme="solarized"
+"let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#buffer_nr_show = 1
+
 " cpp-enhanced
 let g:cpp_class_scope_highlight = 0
 let g:cpp_experimental_template_highlight = 0
