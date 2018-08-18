@@ -116,8 +116,8 @@ set autoindent
 set smartindent									" 自动缩进
 
 " status line
-set laststatus=2
-set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
+"set laststatus=2
+"set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
 
 " tab page
 set showtabline=1
