@@ -116,7 +116,7 @@ set autoindent
 set smartindent									" 自动缩进
 
 " status line
-"set laststatus=2
+set laststatus=2
 "set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
 
 " tab page
@@ -272,7 +272,7 @@ nmap 	<leader>cc 	:cclose<CR>
 " ============================================================================
 
 " air-line
-let g:airline_theme="solarized"
+let g:airline_theme='simple'
 "let g:airline_powerline_fonts = 1
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#buffer_nr_show = 1
