@@ -73,11 +73,39 @@ endfunction
 
 let mapleader=","
 let g:mapleader=","
+" VIMFILES
+let $VIMFILES="$HOME/.vim"
+
+" VIM Tools Settings
+if MyOS() == "win"
+	let $VIMFILES 	= $VIM.'\vimfiles'
+	let $VIMBINFILES= $VIMFILES.'\bin\'
+	let $CMD_CTAGS	= $VIMBINFILES.'ctags.exe'
+	let $CMD_GREP	= $VIMBINFILES.'grep.exe'
+	let $CMD_FGREP	= $VIMBINFILES.'fgrep.exe'
+	let $CMD_EGREP	= $VIMBINFILES.'egrep.exe'
+	let $CMD_AGREP	= $VIMBINFILES.'grep.exe'
+	let $CMD_FIND	= $VIMBINFILES.'find.exe'
+elseif MyOS() == "unix"
+	let $CMD_CTAGS	= 'ctags'
+	let $CMD_GREP	= 'grep'
+	let $CMD_FGREP	= 'fgrep'
+	let $CMD_EGREP	= 'egrep'
+	let $CMD_AGREP	= 'grep'
+	let $CMD_FIND	= 'find'
+else
+	let $CMD_CTAGS	= '/usr/local/bin/ctags'
+	let $CMD_GREP	= 'grep'
+	let $CMD_FGREP	= 'fgrep'
+	let $CMD_EGREP	= 'egrep'
+	let $CMD_AGREP	= 'grep'
+	let $CMD_FIND	= 'find'
+endif
 
 " vim-plug
-call plug#begin('~/.vim/bundle')
-Plug 'vim-scripts/a.vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
+call plug#begin($VIMFILES.'/bundle')
+Plug 'vim-scripts/a.vim', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+Plug 'octol/vim-cpp-enhanced-highlight', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
 Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/taglist.vim'
@@ -85,12 +113,11 @@ Plug 'vim-scripts/winmanager'
 Plug 'vim-scripts/grep.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'christoomey/vim-run-interactive'
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
 Plug 'Yggdroot/LeaderF'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'Valloric/YouCompleteMe', { 'dir':'ycm' }
-Plug '~/.vim/bundle/ycm'
+Plug $VIMFILES.'/bundle/ycm', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
 call plug#end()
 
 set magic
@@ -173,31 +200,6 @@ match WhitespaceEOF /\s\+$/
 "------------------------------
 " Platform Dependent Settings
 "------------------------------
-
-" VIM Tools Settings
-if MyOS() == "win"
-	let $VIMBINFILES = $VIM.'\vimfiles\bin\'
-	let $CMD_CTAGS	= $VIMBINFILES.'ctags.exe'
-	let $CMD_GREP	= $VIMBINFILES.'grep.exe'
-	let $CMD_FGREP	= $VIMBINFILES.'fgrep.exe'
-	let $CMD_EGREP	= $VIMBINFILES.'egrep.exe'
-	let $CMD_AGREP	= $VIMBINFILES.'grep.exe'
-	let $CMD_FIND	= $VIMBINFILES.'find.exe'
-elseif MyOS() == "unix"
-	let $CMD_CTAGS	= 'ctags'
-	let $CMD_GREP	= 'grep'
-	let $CMD_FGREP	= 'fgrep'
-	let $CMD_EGREP	= 'egrep'
-	let $CMD_AGREP	= 'grep'
-	let $CMD_FIND	= 'find'
-else
-	let $CMD_CTAGS	= '/usr/local/bin/ctags'
-	let $CMD_GREP	= 'grep'
-	let $CMD_FGREP	= 'fgrep'
-	let $CMD_EGREP	= 'egrep'
-	let $CMD_AGREP	= 'grep'
-	let $CMD_FIND	= 'find'
-endif
 
 " ctags cmd line
 let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q"
