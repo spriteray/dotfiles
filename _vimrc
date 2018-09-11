@@ -74,8 +74,24 @@ endfunction
 let mapleader=","
 let g:mapleader=","
 
-" pathogen
-call pathogen#infect()
+" vim-plug
+call plug#begin('~/.vim/bundle')
+Plug 'vim-scripts/a.vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'tomasr/molokai'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/winmanager'
+Plug 'vim-scripts/grep.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'christoomey/vim-run-interactive'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'Yggdroot/LeaderF'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"Plug 'Valloric/YouCompleteMe', { 'dir':'ycm' }
+Plug '~/.vim/bundle/ycm'
+call plug#end()
 
 set magic
 set autoread
@@ -186,6 +202,10 @@ endif
 " ctags cmd line
 let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q"
 
+" Highlight TODO, FIXME, NOTE, etc.
+autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|BUG\|HACK\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
+
 " Auto-Refresh Tags File
 set tags=tags;
 autocmd BufWritePost *.{c,h,cpp,cc,hpp}
@@ -246,7 +266,6 @@ if has("gui_running")
         set guifont=Lucida\ Console:h10.5   " 字体
     elseif MyOS() == "mac"
         set macmeta                         " Mac Alt-Key
-		set background=light
         "set noantialias	                " Mac Anti-Alias
         set guifont=Droid\ Sans\ Mono:h14	" 字体
     endif
@@ -266,20 +285,26 @@ map 	<C-]> 		g<C-]>
 "
 nmap 	<leader>cw 	:cw<CR>
 nmap 	<leader>cc 	:cclose<CR>
+cmap    cwd         lcd %:p:h
+cmap    cd.         lcd %:p:h
 
 " ============================================================================
 " => Plugins Settings
 " ============================================================================
 
+" cpp-enhanced
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+
 " air-line
+"let g:airline_theme='solarized'
 let g:airline_theme='simple'
 "let g:airline_powerline_fonts = 1
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#buffer_nr_show = 1
-
-" cpp-enhanced
-let g:cpp_class_scope_highlight = 0
-let g:cpp_experimental_template_highlight = 0
 
 " Tag List
 let Tlist_Ctags_Cmd = $CMD_CTAGS
@@ -319,6 +344,10 @@ nnoremap <silent> <leader>F : Rgrep<CR>
 " LeaderF
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<m-n>'
+noremap <c-n> :LeaderfMru<cr>
+noremap <m-p> :LeaderfFunction!<cr>
+noremap <m-n> :LeaderfBuffer<cr>
+noremap <m-m> :LeaderfTag<cr>
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 let g:Lf_WorkingDirectoryMode = 'Ac'
@@ -328,10 +357,6 @@ let g:Lf_ShowRelativePath = 0
 let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
-noremap <c-n> :LeaderfMru<cr>
-noremap <m-p> :LeaderfFunction!<cr>
-noremap <m-n> :LeaderfBuffer<cr>
-noremap <m-m> :LeaderfTag<cr>
 
 " gutentags
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
@@ -347,10 +372,12 @@ set completeopt=menuone,menu,longest
 nnoremap <F11> :YcmCompleter GoTo<CR>
 nnoremap <F12> :YcmCompleter GoToDeclaration<CR>
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_min_num_identifier_candidate_chars = 2
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:syntastic_always_populate_loc_list = 0
 let g:ycm_min_num_of_chars_for_completion = 0
+let g:ycm_key_invoke_completion = '<c-z>'
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
       \ 'qf' : 1,
