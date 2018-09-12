@@ -71,12 +71,9 @@ endfunction
 " => General
 " ==============================================================================
 
-let mapleader=","
-let g:mapleader=","
-" VIMFILES
-let $VIMFILES="$HOME/.vim"
-
-" VIM Tools Settings
+"------------------------------
+" Platform Dependent Settings 
+"------------------------------
 if MyOS() == "win"
 	let $VIMFILES 	= $VIM.'\vimfiles'
 	let $VIMBINFILES= $VIMFILES.'\bin\'
@@ -87,6 +84,8 @@ if MyOS() == "win"
 	let $CMD_AGREP	= $VIMBINFILES.'grep.exe'
 	let $CMD_FIND	= $VIMBINFILES.'find.exe'
 elseif MyOS() == "unix"
+	" VIMFILES
+	let $VIMFILES	="$HOME/.vim"
 	let $CMD_CTAGS	= 'ctags'
 	let $CMD_GREP	= 'grep'
 	let $CMD_FGREP	= 'fgrep'
@@ -94,6 +93,8 @@ elseif MyOS() == "unix"
 	let $CMD_AGREP	= 'grep'
 	let $CMD_FIND	= 'find'
 else
+	" VIMFILES
+	let $VIMFILES	="$HOME/.vim"
 	let $CMD_CTAGS	= '/usr/local/bin/ctags'
 	let $CMD_GREP	= 'grep'
 	let $CMD_FGREP	= 'fgrep'
@@ -102,30 +103,27 @@ else
 	let $CMD_FIND	= 'find'
 endif
 
-" vim-plug
-call plug#begin($VIMFILES.'/bundle')
-Plug 'vim-scripts/a.vim', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
-Plug 'octol/vim-cpp-enhanced-highlight', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
-Plug 'tomasr/molokai'
-Plug 'scrooloose/nerdtree'
-Plug 'vim-scripts/taglist.vim'
-Plug 'vim-scripts/winmanager'
-Plug 'vim-scripts/grep.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'christoomey/vim-run-interactive'
-Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
-Plug 'Yggdroot/LeaderF'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug $VIMFILES.'/bundle/ycm', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
-call plug#end()
-
+"------------------------------
+" General Settings 
+"------------------------------
+let mapleader=","
+let g:mapleader=","
 set magic
 set autoread
 set autowrite
 set history=400
 set nocompatible
 set makeprg=make\ all
+" ctags cmd line
+let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q"
+
+" File Detecting
+filetype on
+filetype plugin on
+filetype indent on
+" Custom File Type 
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+autocmd BufRead,BufNewFile Makefile.* set filetype=makefile
 
 " Display related
 set ru
@@ -138,6 +136,16 @@ set t_Co=256
 set showmatch 				" 括号配对
 syntax on
 set formatoptions=tcqmM
+" tab page
+set showtabline=1
+set tabline=%!MyTabLine()
+" status line
+set laststatus=2
+"set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
+" code fold 
+set foldenable
+set foldmethod=indent
+set foldlevel=100
 
 " Editing related
 set number
@@ -158,62 +166,33 @@ set cinoptions=s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,g0,hs,N0,ps,ts,is,+s,c3,C0,/0
 set autoindent
 set smartindent									" 自动缩进
 
-" status line
-set laststatus=2
-"set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
+" Formats and Encoding relate
+set ffs=unix,dos,mac
+set encoding=utf-8					" vim内部编码
+set termencoding=utf-8				" 终端以及系统编码
+set fileencoding=utf-8				" 默认文件编码utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+" 需要使用非UTF-8打开的项目
+"autocmd BufNewFile,BufRead */server/*.{c,h,cpp,py},*/server/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */gameserver.git/*.{c,h,cpp,mk,conf},*/gameserver.git/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */webgame.git/*.{c,h,cpp,mk,conf},*/webgame.git/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */actgame.git/*.{c,h,cpp,mk,conf},*/actgame.git/*Makefile* set fileencoding=cp936
+"autocmd BufNewFile,BufRead */libevlite.git/*.{c,h,cpp},*/libevlite.git/*Makefile* set fileencoding=cp936
 
-" tab page
-set showtabline=1
-set tabline=%!MyTabLine()
+"------------------------------
+" Auto Command Settings 
+"------------------------------
 
-" 代码折叠
-set foldenable
-set foldmethod=indent
-set foldlevel=100
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
-
-filetype on
-filetype plugin on
-filetype indent on
-" 文件类型
-autocmd BufRead,BufNewFile *.md set filetype=markdown
-autocmd BufRead,BufNewFile Makefile.* set filetype=makefile
 " 4个SPACE替换TAB
 autocmd FileType c,cpp,python 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
-
-" Qargs
-command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
-
-" 删除不放入剪切板
-noremap <C-d> "_d
-
-" molokai
-" colorscheme molokai
-" colorscheme onedark
-set background=dark
-colorscheme solarized
 
 " 额外的配置
 hi WhitespaceEOF ctermbg=grey guibg=grey
 match WhitespaceEOF /\s\+$/
 
-"------------------------------
-" Platform Dependent Settings
-"------------------------------
-
-" ctags cmd line
-let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q"
-
 " Highlight TODO, FIXME, NOTE, etc.
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|BUG\|HACK\)')
 autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
-
-" Auto-Refresh Tags File
-set tags=tags;
-autocmd BufWritePost *.{c,h,cpp,cc,hpp}
-			\ if filewritable("tags") |
-			\	silent execute $CTAGS_CMD_LINE |
-			\ endif
 
 " 跳到退出之前的光标处
 autocmd BufReadPost *
@@ -225,58 +204,19 @@ autocmd BufReadPost *
 autocmd BufWritePre *.{c,h,cc,cpp,hpp,py,lua} call RemoveTrailingWhitespace()
 
 "------------------------------
-" File Formats And Encodings
-"------------------------------
-
-" Formats relate
-set ffs=unix,dos,mac
-nmap <leader>fd :se ff=dos<CR>
-nmap <leader>fu :se ff=unix<CR>
-nmap <leader>fm :se ff=mac<CR>
-
-" Encoding relate
-set encoding=utf-8					" vim内部编码
-set termencoding=utf-8				" 终端以及系统编码
-set fileencoding=utf-8				" 默认文件编码utf-8
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-
-" 需要使用非UTF-8打开的项目
-"autocmd BufNewFile,BufRead */server/*.{c,h,cpp,py},*/server/*Makefile* set fileencoding=cp936
-"autocmd BufNewFile,BufRead */gameserver.git/*.{c,h,cpp,mk,conf},*/gameserver.git/*Makefile* set fileencoding=cp936
-"autocmd BufNewFile,BufRead */webgame.git/*.{c,h,cpp,mk,conf},*/webgame.git/*Makefile* set fileencoding=cp936
-"autocmd BufNewFile,BufRead */actgame.git/*.{c,h,cpp,mk,conf},*/actgame.git/*Makefile* set fileencoding=cp936
-"autocmd BufNewFile,BufRead */libevlite.git/*.{c,h,cpp},*/libevlite.git/*Makefile* set fileencoding=cp936
-
-"------------------------------
-" GUI Settings
-"------------------------------
-
-if has("gui_running")
-	" GUI
-    set guioptions-=m	" 隐藏菜单栏
-    set guioptions-=T	" 隐藏工具栏
-    set guioptions-=L	" 隐藏左侧滚动条
-    set guioptions-=r	" 隐藏右侧滚动条
-    set guioptions-=b	" 隐藏底部滚动条
-    set guioptions-=e	" 隐藏底部滚动条
-    " OS Gui Layout
-    if MyOS() == "win"
-        set langmenu=zh_CN.UTF-8
-        source $VIMRUNTIME/delmenu.vim
-        source $VIMRUNTIME/menu.vim
-        language message zh_CN.UTF-8
-        set guifont=Lucida\ Console:h10.5   " 字体
-    elseif MyOS() == "mac"
-        set macmeta                         " Mac Alt-Key
-        "set noantialias	                " Mac Anti-Alias
-        set guifont=Droid\ Sans\ Mono:h14	" 字体
-    endif
-endif
-
-"------------------------------
 " Global Keymap Settings
 "------------------------------
 
+" Code Fold
+nnoremap <space> 	@=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
+" File-formats Exchange
+nmap 	<leader>fd 	:se ff=dos<CR>
+nmap 	<leader>fu 	:se ff=unix<CR>
+nmap 	<leader>fm 	:se ff=mac<CR>
+" 删除不放入剪切板
+noremap <C-d> 		"_d
+" Qargs
+command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
 " Shutdown HighLight
 nmap	<leader>c	:nohls <CR>
 " Tab Page
@@ -293,103 +233,171 @@ cmap    cd.         lcd %:p:h
 " ============================================================================
 " => Plugins Settings
 " ============================================================================
+call plug#begin($VIMFILES.'/bundle')
 
-" cpp-enhanced
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_experimental_simple_template_highlight = 1
-let g:cpp_concepts_highlight = 1
+" a.vim {
+	Plug 'vim-scripts/a.vim', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+" }
 
-" air-line
-"let g:airline_theme='solarized'
-let g:airline_theme='simple'
-"let g:airline_powerline_fonts = 1
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#buffer_nr_show = 1
+" Cpp-Enhanced-Highlight {
+	Plug 'octol/vim-cpp-enhanced-highlight', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+	let g:cpp_class_scope_highlight = 1
+	let g:cpp_member_variable_highlight = 1
+	let g:cpp_class_decl_highlight = 1
+	let g:cpp_experimental_simple_template_highlight = 1
+	let g:cpp_concepts_highlight = 1
+" }
 
-" Tag List
-let Tlist_Ctags_Cmd = $CMD_CTAGS
-let Tlist_Show_One_File = 1
-let Tlist_Exit_OnlyWindow = 1
+" ColorScheme {
+	Plug 'tomasr/molokai'
+	Plug 'altercation/vim-colors-solarized'
+	" it appears as though colorscheme solarized 
+	" must come somewhere after call plug#end()
+	"set background=dark
+	"colorscheme solarized
+" }
 
-" NERDTree
-"let g:NERDTree_title='NERD Tree'
-"let NERDTreeDirArrows = 0
-"function! NERDTree_Start()
-"	exec 'NERDTree'
-"endfunction
-"function! NERDTree_IsValid()
-"	return 1
-"endfunction
+" Airline {
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
+	"let g:airline_theme='solarized'
+	let g:airline_theme='simple'
+	"let g:airline_powerline_fonts = 1
+	"let g:airline#extensions#tabline#enabled = 1
+	"let g:airline#extensions#tabline#buffer_nr_show = 1
+" }
 
-" Window Manager
-let g:defaultExplorer = 0
-let g:winManagerWidth = 40
-let g:winManagerWindowLayout='FileExplorer|TagList'
-"let g:winManagerWindowLayout='NERDTree|TagList'
-map <C-W><C-t>	:WMToggle<CR>
-map <C-W><C-f>	:FirstExplorerWindow<CR>
-map <C-W><C-b> 	:BottomExplorerWindow<CR>
+" NERDTree {
+	Plug 'scrooloose/nerdtree'
+	"let g:NERDTree_title='NERD Tree'
+	"let NERDTreeDirArrows = 0
+	"function! NERDTree_Start()
+	"	exec 'NERDTree'
+	"endfunction
+	"function! NERDTree_IsValid()
+	"	return 1
+	"endfunction
+" }
 
-" Grep
-let Grep_Find_Use_Xargs = 0
-let Grep_Path = $CMD_GREP
-let Fgrep_Path = $CMD_FGREP
-let Egrep_Path = $CMD_EGREP
-let Agrep_Path = $CMD_AGREP
-let Grep_Find_Path = $CMD_FIND
-let Grep_Skip_Dirs = '.svn .git'
-nnoremap <silent> <leader>f : Grep<CR>
-nnoremap <silent> <leader>F : Rgrep<CR>
+" TagList.vim {
+	Plug 'vim-scripts/taglist.vim'
+	let Tlist_Ctags_Cmd = $CMD_CTAGS
+	let Tlist_Show_One_File = 1
+	let Tlist_Exit_OnlyWindow = 1
+" }
 
-" LeaderF
-let g:Lf_ShortcutF = '<c-p>'
-let g:Lf_ShortcutB = '<m-n>'
-noremap <c-n> :LeaderfMru<cr>
-noremap <m-p> :LeaderfFunction!<cr>
-noremap <m-n> :LeaderfBuffer<cr>
-noremap <m-m> :LeaderfTag<cr>
-let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
-let g:Lf_WorkingDirectoryMode = 'Ac'
-let g:Lf_WindowHeight = 0.30
-let g:Lf_CacheDirectory = expand('~/.cache')
-let g:Lf_ShowRelativePath = 0
-let g:Lf_HideHelp = 1
-let g:Lf_StlColorscheme = 'powerline'
-let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+" WinManager {
+	Plug 'vim-scripts/winmanager'
+	let g:defaultExplorer = 0
+	let g:winManagerWidth = 40
+	let g:winManagerWindowLayout='FileExplorer|TagList'
+	"let g:winManagerWindowLayout='NERDTree|TagList'
+	map <C-W><C-t>	:WMToggle<CR>
+	map <C-W><C-f>	:FirstExplorerWindow<CR>
+	map <C-W><C-b> 	:BottomExplorerWindow<CR>
+" }
 
-" gutentags
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-let g:gutentags_ctags_tagfile = '.tags'
-let s:vim_tags = expand('~/.cache/tags')
-let g:gutentags_cache_dir = s:vim_tags
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+" Grep.vim {
+	Plug 'vim-scripts/grep.vim'
+	let Grep_Find_Use_Xargs = 0
+	let Grep_Path = $CMD_GREP
+	let Fgrep_Path = $CMD_FGREP
+	let Egrep_Path = $CMD_EGREP
+	let Agrep_Path = $CMD_AGREP
+	let Grep_Find_Path = $CMD_FIND
+	let Grep_Skip_Dirs = '.svn .git'
+	nnoremap <silent> <leader>f : Grep<CR>
+	nnoremap <silent> <leader>F : Rgrep<CR>
+" }
 
-" YouCompleteMe
-set completeopt=menuone,menu,longest
-nnoremap <F11> :YcmCompleter GoTo<CR>
-nnoremap <F12> :YcmCompleter GoToDeclaration<CR>
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_min_num_identifier_candidate_chars = 2
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:syntastic_always_populate_loc_list = 0
-let g:ycm_min_num_of_chars_for_completion = 0
-let g:ycm_key_invoke_completion = '<c-z>'
-let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
-      \ 'qf' : 1,
-      \ 'notes' : 1,
-      \ 'markdown' : 1,
-      \ 'unite' : 1,
-      \ 'text' : 1,
-      \ 'vimwiki' : 1,
-      \ 'pandoc' : 1,
-      \ 'infolog' : 1,
-      \ 'gitcommit' : 1,
-      \ 'mail' : 1
-      \}
+Plug 'christoomey/vim-run-interactive'
+
+" gutentags {
+	Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+	let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+	let g:gutentags_ctags_tagfile = '.tags'
+	let s:vim_tags = expand('~/.cache/tags')
+	let g:gutentags_cache_dir = s:vim_tags
+	let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+	let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+	let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+" }
+
+" LeaderF {
+	Plug 'Yggdroot/LeaderF'
+	let g:Lf_ShortcutF = '<c-p>'
+	let g:Lf_ShortcutB = '<m-n>'
+	noremap <c-n> :LeaderfMru<cr>
+	noremap <m-p> :LeaderfFunction!<cr>
+	noremap <m-n> :LeaderfBuffer<cr>
+	noremap <m-m> :LeaderfTag<cr>
+	let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+	let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+	let g:Lf_WorkingDirectoryMode = 'Ac'
+	let g:Lf_WindowHeight = 0.30
+	let g:Lf_CacheDirectory = expand('~/.cache')
+	let g:Lf_ShowRelativePath = 0
+	let g:Lf_HideHelp = 1
+	let g:Lf_StlColorscheme = 'powerline'
+	let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+" }
+
+" YouCompleteMe {
+	Plug $VIMFILES.'/bundle/ycm', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+	set completeopt=menuone,menu,longest
+	nnoremap <F11> :YcmCompleter GoTo<CR>
+	nnoremap <F12> :YcmCompleter GoToDeclaration<CR>
+	let g:ycm_confirm_extra_conf = 0
+	let g:ycm_min_num_identifier_candidate_chars = 2
+	let g:ycm_collect_identifiers_from_comments_and_strings = 1
+	let g:ycm_seed_identifiers_with_syntax = 1
+	let g:syntastic_always_populate_loc_list = 0
+	let g:ycm_min_num_of_chars_for_completion = 0
+	let g:ycm_key_invoke_completion = '<c-z>'
+	let g:ycm_filetype_blacklist = {
+	      \ 'tagbar' : 1,
+	      \ 'qf' : 1,
+	      \ 'notes' : 1,
+	      \ 'markdown' : 1,
+	      \ 'unite' : 1,
+	      \ 'text' : 1,
+	      \ 'vimwiki' : 1,
+	      \ 'pandoc' : 1,
+	      \ 'infolog' : 1,
+	      \ 'gitcommit' : 1,
+	      \ 'mail' : 1
+	      \}
+" }
+
+call plug#end()
+
+" ============================================================================
+" => UI Settings 
+" ============================================================================
+if has("gui_running")
+	" GUI
+    set guioptions-=m	" 隐藏菜单栏
+    set guioptions-=T	" 隐藏工具栏
+    set guioptions-=L	" 隐藏左侧滚动条
+    set guioptions-=r	" 隐藏右侧滚动条
+    set guioptions-=b	" 隐藏底部滚动条
+    set guioptions-=e	" 隐藏底部滚动条
+	colorscheme solarized
+    " OS Gui Layout
+    if MyOS() == "win"
+        set langmenu=zh_CN.UTF-8
+        source $VIMRUNTIME/delmenu.vim
+        source $VIMRUNTIME/menu.vim
+        language message zh_CN.UTF-8
+        set guifont=Lucida\ Console:h10.5   " 字体
+    elseif MyOS() == "mac"
+        set macmeta                         " Mac Alt-Key
+        "set noantialias	                " Mac Anti-Alias
+		set background=light				" 背景色
+        set guifont=Go\ Mono:h14			" 字体
+    endif
+else
+	set background=dark 					" 背景色
+	colorscheme solarized
+endif
+
