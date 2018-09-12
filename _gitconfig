@@ -22,6 +22,8 @@
 	st = status
 	dw = diff
 	dc = diff --cached
+	ci = commit -s
+	cia= commit --amend -s
 	merges = merge --squash --allow-unrelated-histories
 	commita = commit --amend
 	unstage = reset HEAD --

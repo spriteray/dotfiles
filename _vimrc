@@ -343,7 +343,7 @@ Plug 'christoomey/vim-run-interactive'
 " }
 
 " YouCompleteMe {
-	Plug $VIMFILES.'/bundle/ycm', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+	Plug $VIMFILES.'/bundle/YouCompleteMe', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
 	set completeopt=menuone,menu,longest
 	nnoremap <F11> :YcmCompleter GoTo<CR>
 	nnoremap <F12> :YcmCompleter GoToDeclaration<CR>
