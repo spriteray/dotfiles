@@ -313,7 +313,7 @@ call plug#begin($VIMFILES.'/bundle')
 Plug 'christoomey/vim-run-interactive'
 
 " gutentags {
-	Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+	Plug 'ludovicchabant/vim-gutentags'
 	let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 	let g:gutentags_ctags_tagfile = '.tags'
 	let s:vim_tags = expand('~/.cache/tags')
@@ -347,6 +347,8 @@ Plug 'christoomey/vim-run-interactive'
 	set completeopt=menuone,menu,longest
 	nnoremap <F11> :YcmCompleter GoTo<CR>
 	nnoremap <F12> :YcmCompleter GoToDeclaration<CR>
+	let g:ycm_error_symbol = 'X'
+	let g:ycm_warning_symbol = '?'
 	let g:ycm_confirm_extra_conf = 0
 	let g:ycm_min_num_identifier_candidate_chars = 2
 	let g:ycm_collect_identifiers_from_comments_and_strings = 1
