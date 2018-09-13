@@ -114,8 +114,6 @@ set autowrite
 set history=400
 set nocompatible
 set makeprg=make\ all
-" ctags cmd line
-let $CTAGS_CMD_LINE = '!'.$CMD_CTAGS." -R --c-kinds=+p --c++-kinds=+p --fields=+iaS --extra=+q"
 
 " File Detecting
 filetype on
