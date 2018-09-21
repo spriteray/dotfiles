@@ -352,7 +352,7 @@ Plug 'christoomey/vim-run-interactive'
 	let g:ycm_collect_identifiers_from_comments_and_strings = 1
 	let g:ycm_seed_identifiers_with_syntax = 1
 	let g:syntastic_always_populate_loc_list = 0
-	let g:ycm_min_num_of_chars_for_completion = 0
+	let g:ycm_min_num_of_chars_for_completion = 1
 	let g:ycm_key_invoke_completion = '<c-z>'
 	let g:ycm_filetype_blacklist = {
 	      \ 'tagbar' : 1,
