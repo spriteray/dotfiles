@@ -17,7 +17,7 @@
 # $ autossh   // List Server
 # $ autossh 1 // Login Num n Server
 
-SSH_PARAMS="-o ServerAliveInterval=60 -o GSSAPIAuthentication=no -o StrictHostKeyChecking=no"
+SSH_PARAMS="-o ServerAliveInterval=60 -o GSSAPIAuthentication=no -o StrictHostKeyChecking=no -o ControlMaster=auto -o ControlPath=/tmp/xssh-%r@%h:%p"
 
 AUTO_SSH_CONFIG=`cat ~/.xsshrc`
 BORDER_LINE="\033[1;34m############################################################ \033[0m"
