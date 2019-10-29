@@ -311,7 +311,8 @@ call plug#begin($VIMFILES.'/bundle')
 Plug 'christoomey/vim-run-interactive'
 
 " gutentags {
-	Plug 'ludovicchabant/vim-gutentags'
+	Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+	let g:gutentags_trace = 1
 	let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 	let g:gutentags_ctags_tagfile = '.tags'
 	let s:vim_tags = expand('~/.cache/tags')
@@ -341,32 +342,32 @@ Plug 'christoomey/vim-run-interactive'
 " }
 
 " YouCompleteMe {
-	Plug $VIMFILES.'/bundle/YouCompleteMe', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
-	set completeopt=menuone,menu,longest
-	nnoremap <F11> :YcmCompleter GoTo<CR>
-	nnoremap <F12> :YcmCompleter GoToDeclaration<CR>
-	let g:ycm_error_symbol = 'X'
-	let g:ycm_warning_symbol = '?'
-	let g:ycm_confirm_extra_conf = 0
-	let g:ycm_min_num_identifier_candidate_chars = 2
-	let g:ycm_collect_identifiers_from_comments_and_strings = 1
-	let g:ycm_seed_identifiers_with_syntax = 1
-	let g:syntastic_always_populate_loc_list = 0
-	let g:ycm_min_num_of_chars_for_completion = 1
-	let g:ycm_key_invoke_completion = '<c-z>'
-	let g:ycm_filetype_blacklist = {
-	      \ 'tagbar' : 1,
-	      \ 'qf' : 1,
-	      \ 'notes' : 1,
-	      \ 'markdown' : 1,
-	      \ 'unite' : 1,
-	      \ 'text' : 1,
-	      \ 'vimwiki' : 1,
-	      \ 'pandoc' : 1,
-	      \ 'infolog' : 1,
-	      \ 'gitcommit' : 1,
-	      \ 'mail' : 1
-	      \}
+"	Plug $VIMFILES.'/bundle/YouCompleteMe', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+"	set completeopt=menuone,menu,longest
+"	nnoremap <F11> :YcmCompleter GoTo<CR>
+"	nnoremap <F12> :YcmCompleter GoToDeclaration<CR>
+"	let g:ycm_error_symbol = 'X'
+"	let g:ycm_warning_symbol = '?'
+"	let g:ycm_confirm_extra_conf = 0
+"	let g:ycm_min_num_identifier_candidate_chars = 2
+"	let g:ycm_collect_identifiers_from_comments_and_strings = 1
+"	let g:ycm_seed_identifiers_with_syntax = 1
+"	let g:syntastic_always_populate_loc_list = 0
+"	let g:ycm_min_num_of_chars_for_completion = 1
+"	let g:ycm_key_invoke_completion = '<c-z>'
+"	let g:ycm_filetype_blacklist = {
+"	      \ 'tagbar' : 1,
+"	      \ 'qf' : 1,
+"	      \ 'notes' : 1,
+"	      \ 'markdown' : 1,
+"	      \ 'unite' : 1,
+"	      \ 'text' : 1,
+"	      \ 'vimwiki' : 1,
+"	      \ 'pandoc' : 1,
+"	      \ 'infolog' : 1,
+"	      \ 'gitcommit' : 1,
+"	      \ 'mail' : 1
+"	      \}
 " }
 
 call plug#end()
