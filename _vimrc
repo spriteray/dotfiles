@@ -237,6 +237,11 @@ call plug#begin($VIMFILES.'/bundle')
 	Plug 'vim-scripts/a.vim', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
 " }
 
+" Rainbow {
+	Plug 'luochen1990/rainbow'
+	let g:rainbow_active = 1
+" }
+
 " Cpp-Enhanced-Highlight {
 	Plug 'octol/vim-cpp-enhanced-highlight', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
 	let g:cpp_class_scope_highlight = 1
