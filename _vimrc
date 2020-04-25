@@ -315,6 +315,12 @@ call plug#begin($VIMFILES.'/bundle')
 
 Plug 'christoomey/vim-run-interactive'
 
+" Rainbow {
+	Plug 'luochen1990/rainbow'
+	let g:rainbow_active = 1
+	let g:rainbow_conf = { 'ctermfgs': ['darkblue', 'darkyellow', 'darkcyan', 'darkmagenta'] }
+" }
+
 " gutentags {
 	Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
 	let g:gutentags_trace = 1
