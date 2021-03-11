@@ -1,3 +1,6 @@
 [submodule "sshpass"]
 	path = sshpass
 	url = https://github.com/kevinburke/sshpass.git
+[submodule ".tmux"]
+	path = .tmux
+	url = https://github.com/gpakosz/.tmux.git
