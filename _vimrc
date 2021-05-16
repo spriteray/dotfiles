@@ -263,11 +263,12 @@ call plug#begin($VIMFILES.'/bundle')
 " Airline {
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
+	let g:airline_theme='luna'
 	"let g:airline_theme='solarized'
-	let g:airline_theme='simple'
+	"let g:airline_solarized_bg='light'
 	"let g:airline_powerline_fonts = 1
-	"let g:airline#extensions#tabline#enabled = 1
-	"let g:airline#extensions#tabline#buffer_nr_show = 1
+	let g:airline#extensions#tabline#enabled = 1
+	let g:airline#extensions#tabline#buffer_nr_show = 1
 " }
 
 " NERDTree {
@@ -322,21 +323,23 @@ Plug 'christoomey/vim-run-interactive'
 " }
 
 " gutentags {
-	Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
-	let g:gutentags_trace = 1
-	let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-	let g:gutentags_ctags_tagfile = '.tags'
-	let s:vim_tags = expand('~/.cache/tags')
-	let g:gutentags_cache_dir = s:vim_tags
-	let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-	let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-	let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+	"Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
+	"let g:gutentags_trace = 1
+	"let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+	"let g:gutentags_ctags_tagfile = '.tags'
+	"let s:vim_tags = expand('~/.cache/tags')
+	"let g:gutentags_cache_dir = s:vim_tags
+	"let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+	"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+	"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 " }
 
 " LeaderF {
 	Plug 'Yggdroot/LeaderF'
 	let g:Lf_ShortcutF = '<c-p>'
 	let g:Lf_ShortcutB = '<m-n>'
+	let g:Lf_WindowPosition = 'popup'
+	let g:Lf_PreviewInPopup = 1
 	noremap <c-n> :LeaderfMru<cr>
 	noremap <m-p> :LeaderfFunction!<cr>
 	noremap <m-n> :LeaderfBuffer<cr>
@@ -350,6 +353,7 @@ Plug 'christoomey/vim-run-interactive'
 	let g:Lf_HideHelp = 1
 	let g:Lf_StlColorscheme = 'powerline'
 	let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+	let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
 " }
 
 " YouCompleteMe {
@@ -363,7 +367,6 @@ Plug 'christoomey/vim-run-interactive'
 	let g:ycm_min_num_identifier_candidate_chars = 2
 	let g:ycm_collect_identifiers_from_comments_and_strings = 1
 	let g:ycm_seed_identifiers_with_syntax = 1
-	let g:syntastic_always_populate_loc_list = 0
 	let g:ycm_min_num_of_chars_for_completion = 1
 	let g:ycm_key_invoke_completion = '<c-z>'
 	let g:ycm_filetype_blacklist = {
