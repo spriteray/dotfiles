@@ -1,6 +1,6 @@
 [user]
-	name = lei.a.zhang
-	email = lei.a.zhang@dena.com
+	name = spriteray 
+	email = spriteray@gmail.com 
 [color]
 	diff = auto
 	status = auto
@@ -32,3 +32,6 @@
 	tool = vimdiff3
 [mergetool "vimdiff3"]
 	cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+
+[commit]
+	template = ~/.git-commit-template
