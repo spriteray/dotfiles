@@ -397,7 +397,6 @@ if has("gui_running")
     set guioptions-=r	" 隐藏右侧滚动条
     set guioptions-=b	" 隐藏底部滚动条
     set guioptions-=e	" 隐藏底部滚动条
-	colorscheme solarized
     " OS Gui Layout
     if MyOS() == "win"
         set langmenu=zh_CN.UTF-8
@@ -413,6 +412,6 @@ if has("gui_running")
     endif
 else
 	set background=light 					" 背景色
-	colorscheme solarized
+	# colorscheme solarized
 endif
 
