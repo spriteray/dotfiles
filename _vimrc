@@ -412,6 +412,6 @@ if has("gui_running")
     endif
 else
 	set background=light 					" 背景色
-	# colorscheme solarized
+	" colorscheme solarized
 endif
 
