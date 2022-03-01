@@ -240,6 +240,7 @@ call plug#begin($VIMFILES.'/bundle')
 " Rainbow {
 	Plug 'luochen1990/rainbow'
 	let g:rainbow_active = 1
+	let g:rainbow_conf = { 'ctermfgs': ['darkblue', 'darkyellow', 'darkcyan', 'darkmagenta'] }
 " }
 
 " Cpp-Enhanced-Highlight {
@@ -316,11 +317,15 @@ call plug#begin($VIMFILES.'/bundle')
 
 Plug 'christoomey/vim-run-interactive'
 
-" Rainbow {
-	Plug 'luochen1990/rainbow'
-	let g:rainbow_active = 1
-	let g:rainbow_conf = { 'ctermfgs': ['darkblue', 'darkyellow', 'darkcyan', 'darkmagenta'] }
-" }
+" Asyncrun {
+	Plug 'skywind3000/asyncrun.vim'
+	set errorformat+=%E%f:%l:%c:\ error:%m,%Z%m
+	set errorformat+=%-G%.%#
+	let g:asyncrun_open = 6
+	let g:asyncrun_bell = 1
+	nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+	nnoremap <silent> <F7> :AsyncRun ./buildproject.sh<cr>
+" } 
 
 " gutentags {
 	"Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
@@ -332,6 +337,46 @@ Plug 'christoomey/vim-run-interactive'
 	"let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 	"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 	"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+" }
+
+" clang-format {
+	Plug 'rhysd/vim-clang-format'
+	let g:clang_format#code_style='webkit'
+	let g:clang_format#style_options = {
+				\ "Standard" : "Latest",
+				\ "SortIncludes" : "false",
+				\ "AccessModifierOffset" : -4,
+				\ "AllowAllArgumentsOnNextLine" : "true",
+				\ "AllowAllConstructorInitializersOnNextLine" : "true",
+				\ "AllowShortLambdasOnASingleLine" : "true",
+				\ "AllowShortCaseLabelsOnASingleLine" : "true",
+				\ "AllowShortBlocksOnASingleLine" : "true",
+				\ "AllowShortLoopsOnASingleLine" : "true",
+				\ "AllowShortFunctionsOnASingleLine" : "Inline",
+				\ "AllowShortIfStatementsOnASingleLine" : "WithoutElse",
+				\ "AlwaysBreakTemplateDeclarations" : "No",
+				\ "PointerAlignment" : "Middle",
+				\ "AlignTrailingComments" : "true",
+				\ "BinPackArguments" : "false",
+				\ "FixNamespaceComments" : "true",
+				\ "NamespaceIndentation" : "Inner",
+				\ "SpaceInEmptyParentheses" : "false",
+				\ "SpaceInEmptyBlock" : "false",
+				\ "SpacesInConditionalStatement" : "true",
+				\ "SpacesInParentheses" : "true",
+				\ "SpacesInContainerLiterals" : "true",
+				\ "SpaceBeforeAssignmentOperators" : "true",
+				\ "SpaceBeforeInheritanceColon" : "true",
+				\ "SpaceBeforeCtorInitializerColon" : "true",
+				\ "SpaceBeforeRangeBasedForLoopColon" : "true",
+				\ "SpaceAfterTemplateKeyword" : "false",
+				\ "IndentCaseLabels" : "true", 
+				\ "BreakBeforeBinaryOperators" : "All", 
+				\ "BreakConstructorInitializers" : "BeforeColon", 
+				\ "BreakBeforeBraces" : "Mozilla", 
+				\ }
+	autocmd FileType c,cpp,objc nnoremap <buffer><F3> :<C-u>ClangFormat<CR>
+	autocmd FileType c,cpp,objc vnoremap <buffer><F3> :ClangFormat<CR>
 " }
 
 " LeaderF {
