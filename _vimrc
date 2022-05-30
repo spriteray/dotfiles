@@ -101,6 +101,8 @@ else
 	let $CMD_EGREP	= 'egrep'
 	let $CMD_AGREP	= 'grep'
 	let $CMD_FIND	= 'find'
+	set pythondll=
+	set pythonthreedll = libpython3.10.dylib
 endif
 
 "------------------------------
