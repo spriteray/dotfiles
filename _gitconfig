@@ -35,3 +35,6 @@
 
 [commit]
 	template = ~/.git-commit-template
+
+[pull]
+	rebase = false
