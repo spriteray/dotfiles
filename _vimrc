@@ -83,6 +83,7 @@ if MyOS() == "win"
 	let $CMD_EGREP	= $VIMBINFILES.'egrep.exe'
 	let $CMD_AGREP	= $VIMBINFILES.'grep.exe'
 	let $CMD_FIND	= $VIMBINFILES.'find.exe'
+	set pythonthreedll=C:\\Python\\python39.dll
 elseif MyOS() == "unix"
 	" VIMFILES
 	let $VIMFILES	="$HOME/.vim"
@@ -101,8 +102,7 @@ else
 	let $CMD_EGREP	= 'egrep'
 	let $CMD_AGREP	= 'grep'
 	let $CMD_FIND	= 'find'
-	set pythondll=
-	set pythonthreedll = libpython3.10.dylib
+	set pythonthreedll=libpython3.10.dylib
 endif
 
 "------------------------------
@@ -115,7 +115,6 @@ set autoread
 set autowrite
 set history=400
 set nocompatible
-set makeprg=make\ all
 
 " File Detecting
 filetype on
@@ -184,7 +183,7 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 "------------------------------
 
 " 4个SPACE替换TAB
-autocmd FileType c,cpp,python 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
+autocmd FileType c,cpp,python,lua 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
 
 " 额外的配置
 hi WhitespaceEOF ctermbg=grey guibg=grey
@@ -225,10 +224,17 @@ nmap	<C-t>		:tabnew %:p:h<CR>
 map 	<C-]> 		:tselect <C-R>=expand("<cword>")<CR><CR>
 map 	<C-]> 		g<C-]>
 "
-nmap 	<leader>cw 	:cw<CR>
+nmap 	<leader>co 	:copen<CR>
 nmap 	<leader>cc 	:cclose<CR>
+nmap 	<silent> <leader>ga :!git add %<CR>:qa<CR>
 cmap    cwd         lcd %:p:h
 cmap    cd.         lcd %:p:h
+"
+inoremap  <C-h>   <Left>
+inoremap  <C-j>   <Down>
+inoremap  <C-k>   <Up>
+inoremap  <C-l>   <Right>
+inoremap  <C-d>   <DELETE>
 
 " ============================================================================
 " => Plugins Settings
@@ -327,7 +333,15 @@ Plug 'christoomey/vim-run-interactive'
 	let g:asyncrun_bell = 1
 	nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
 	nnoremap <silent> <F7> :AsyncRun ./buildproject.sh<cr>
+	nnoremap <silent> <F8> :AsyncRun ./buildproject.sh -e<cr>
+	nnoremap <silent> <F9> :AsyncRun ./buildproject.sh -s<cr>
 " } 
+
+" Rainbow {
+	Plug 'luochen1990/rainbow'
+	let g:rainbow_active = 1
+	let g:rainbow_conf = { 'ctermfgs': ['darkblue', 'darkyellow', 'darkcyan', 'darkmagenta'] }
+" }
 
 " gutentags {
 	"Plug 'ludovicchabant/vim-gutentags', { 'for':['c', 'cpp', 'cc', 'h', 'hpp'] }
@@ -382,7 +396,7 @@ Plug 'christoomey/vim-run-interactive'
 " }
 
 " LeaderF {
-	Plug 'Yggdroot/LeaderF'
+	Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 	let g:Lf_ShortcutF = '<c-p>'
 	let g:Lf_ShortcutB = '<m-n>'
 	let g:Lf_WindowPosition = 'popup'
@@ -398,6 +412,8 @@ Plug 'christoomey/vim-run-interactive'
 	let g:Lf_CacheDirectory = expand('~/.cache')
 	let g:Lf_ShowRelativePath = 0
 	let g:Lf_HideHelp = 1
+	let g:Lf_UseCache = 0
+	let g:Lf_UseMemoryCache = 0
 	let g:Lf_StlColorscheme = 'powerline'
 	let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 	let g:Lf_CommandMap = {'<C-K>': ['<Up>'], '<C-J>': ['<Down>']}
@@ -444,6 +460,7 @@ if has("gui_running")
     set guioptions-=r	" 隐藏右侧滚动条
     set guioptions-=b	" 隐藏底部滚动条
     set guioptions-=e	" 隐藏底部滚动条
+	colorscheme solarized
     " OS Gui Layout
     if MyOS() == "win"
         set langmenu=zh_CN.UTF-8
