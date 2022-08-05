@@ -102,7 +102,8 @@ else
 	let $CMD_EGREP	= 'egrep'
 	let $CMD_AGREP	= 'grep'
 	let $CMD_FIND	= 'find'
-	set pythonthreedll=libpython3.10.dylib
+	"set pythonthreehome=/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/
+	set pythonthreedll=/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/libpython3.8.dylib
 endif
 
 "------------------------------
@@ -151,7 +152,7 @@ set number
 set numberwidth=5
 set tabstop=4
 set shiftwidth=4
-set cursorline
+"set cursorline
 "set cursorcolumn			" 设置光标十字坐标，高亮当前列
 set backspace=indent,eol,start
 set whichwrap=b,s,<,>,[,]
@@ -272,12 +273,14 @@ call plug#begin($VIMFILES.'/bundle')
 " Airline {
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
-	let g:airline_theme='luna'
-	"let g:airline_theme='solarized'
-	"let g:airline_solarized_bg='light'
-	"let g:airline_powerline_fonts = 1
+	" let g:airline_theme='luna'
+	let g:airline_theme='molokai'
+	" let g:airline_theme='solarized'
+	" let g:airline_solarized_bg='light'
+	let g:airline_powerline_fonts = 1
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline#extensions#tabline#buffer_nr_show = 1
+	let g:airline#extensions#tabline#formatter = 'unique_tail'
 " }
 
 " NERDTree {
@@ -472,7 +475,7 @@ if has("gui_running")
         set macmeta                         " Mac Alt-Key
         "set noantialias	                " Mac Anti-Alias
 		set background=light				" 背景色
-        set guifont=Go\ Mono:h14			" 字体
+        set guifont=Operator\ Mono\ Book:h17			" 字体
     endif
 else
 	set background=light 					" 背景色
