@@ -455,7 +455,7 @@
 	        set macmeta                         " Mac Alt-Key
 	        "set noantialias	                " Mac Anti-Alias
 			set background=light				" 背景色
-	        set guifont=Operator\ Mono\ Book:h17			" 字体
+	        set guifont=Operator\ Mono\ for\ Powerline:h16			" 字体
 	    endif
 	else
 		set background=light 					" 背景色
