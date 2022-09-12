@@ -1,4 +1,8 @@
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Functions 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Functions {
 	" OS Function
 	function! MyOS()
@@ -65,6 +69,10 @@
 	endfunction
 " }
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Environment 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Environment {
 	if MyOS() == "win"
 		let $VIMFILES 	= $VIM.'\vimfiles'
@@ -99,6 +107,10 @@
 	endif
 " }
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Settings 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " General {
 	let mapleader=","
 	let g:mapleader=","
@@ -107,42 +119,18 @@
 	set autowrite
 	set history=400
 	set nocompatible
-
-	" Display related
-	set ru
-	set sm
-	set hls
-	set incsearch
-	set nowrapscan
-	set hlsearch
-	set t_Co=256
-	set showmatch 				" 括号配对
-	syntax on
-	set formatoptions=tcqmM
-	" tab page
-	set showtabline=1
-	set tabline=%!MyTabLine()
-	" status line
-	set laststatus=2
-	"set statusline=%f%m%r%h\ %w\ CWD:\ %{getcwd()}%h\ \ INFO:\ %{&ff}/%{&fenc!=''?&fenc:&enc}\ \ LINE:\ %l/%L:%c
 	" code fold
 	set foldenable
 	set foldmethod=indent
 	set foldlevel=100
-	" 额外的配置
-	hi WhitespaceEOF ctermbg=grey guibg=grey
-	match WhitespaceEOF /\s\+$/
-	" Highlight TODO, FIXME, NOTE, etc.
-	autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|BUG\|HACK\)')
-	autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
 
 	" Editing related
 	set number
 	set numberwidth=5
 	set tabstop=4
 	set shiftwidth=4
-	"set cursorline
-	"set cursorcolumn			" 设置光标十字坐标，高亮当前列
+	set cursorline
+	set cursorcolumn			" 设置光标十字坐标，高亮当前列
 	set backspace=indent,eol,start
 	set whichwrap=b,s,<,>,[,]
 	set mouse=a
@@ -188,6 +176,10 @@
 	autocmd FileType c,cpp,python,lua 	set expandtab softtabstop=4	" C/C++/python 扩展TAB
 " }
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Key Mappings 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Key Mappings {
 	" Code Fold
 	nnoremap <space> 	@=((foldclosed(line('.')) < 0) ? 'zc':'zo')<CR>
@@ -219,6 +211,10 @@
 	inoremap  <C-l>   <Right>
 	inoremap  <C-d>   <DELETE>
 " }
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins Settings 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Plugins {
 	call plug#begin($VIMFILES.'/bundle')
@@ -434,16 +430,45 @@
 	call plug#end()
 " }
 
-" UI {
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => UI Settings 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" UI Settings {
+	" Display related
+	set ruler
+	set sm
+	set hls
+	set incsearch
+	set nowrapscan
+	set hlsearch
+	set t_Co=256
+	set showmatch 				" 括号配对
+	syntax on
+	set formatoptions=tcqmM
+	" tab page
+	set showtabline=1
+	set tabline=%!MyTabLine()
+	" status line
+	set laststatus=2
+	" Current Theme
+	set background=light 	" 背景色
+	colorscheme solarized
+	" 额外的配置
+	hi WhitespaceEOF ctermbg=grey guibg=grey
+	match WhitespaceEOF /\s\+$/
+	" Highlight TODO, FIXME, NOTE, etc.
+	autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|BUG\|HACK\)')
+	autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
+
 	if has("gui_running")
 		" GUI
-	    set guioptions-=m	" 隐藏菜单栏
-	    set guioptions-=T	" 隐藏工具栏
-	    set guioptions-=L	" 隐藏左侧滚动条
-	    set guioptions-=r	" 隐藏右侧滚动条
-	    set guioptions-=b	" 隐藏底部滚动条
-	    set guioptions-=e	" 隐藏底部滚动条
-		colorscheme solarized
+	    set guioptions-=m		" 隐藏菜单栏
+	    set guioptions-=T		" 隐藏工具栏
+	    set guioptions-=L		" 隐藏左侧滚动条
+	    set guioptions-=r		" 隐藏右侧滚动条
+	    set guioptions-=b	 	" 隐藏底部滚动条
+	    set guioptions-=e	 	" 隐藏底部滚动条
 	    " OS Gui Layout
 	    if MyOS() == "win"
 	        set langmenu=zh_CN.UTF-8
@@ -454,12 +479,10 @@
 	    elseif MyOS() == "mac"
 	        set macmeta                         " Mac Alt-Key
 	        "set noantialias	                " Mac Anti-Alias
-			set background=light				" 背景色
 	        set guifont=Operator\ Mono\ for\ Powerline:h16			" 字体
 	    endif
 	else
-		set background=light 					" 背景色
-		" colorscheme solarized
+		" Command Line
 	endif
 " }
 
