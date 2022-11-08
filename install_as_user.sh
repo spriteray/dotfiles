@@ -47,6 +47,7 @@ sed -i 's/^# unbind C-b/unbind C-x/g' .tmux.conf.local
 sed -i 's/^# set -g prefix C-a/set -g prefix C-x/g' .tmux.conf.local
 sed -i 's/^# bind C-a send-prefix/bind C-x send-prefix/g' .tmux.conf.local
 sed -i 's/^#set -g status-position top/set -g status-position top/g' .tmux.conf.local
+sed -i 's/^#set -g mouse on/set -g mouse on/g' .tmux.conf.local
 
 vim +PlugInstall +qall
 sed -i 's/" colorscheme solarized/colorscheme solarized/g' .vimrc

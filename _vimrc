@@ -452,8 +452,7 @@
 	" status line
 	set laststatus=2
 	" Current Theme
-	set background=light 	" 背景色
-	colorscheme solarized
+	colorscheme molokai 
 	" 额外的配置
 	hi WhitespaceEOF ctermbg=grey guibg=grey
 	match WhitespaceEOF /\s\+$/
