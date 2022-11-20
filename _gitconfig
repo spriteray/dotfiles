@@ -27,6 +27,7 @@
 	merges = merge --squash --allow-unrelated-histories
 	commita = commit --amend
 	unstage = reset HEAD --
+	pulls = submodule foreach git pull
 
 [merge]
 	tool = vimdiff3
