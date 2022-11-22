@@ -15,6 +15,10 @@ echo "Install Manual ..."
 apt install -y manpages-de  manpages-de-dev  manpages-dev glibc-doc manpages-posix-dev manpages-posix manpages-zh
 
 echo "/usr/local/lib" >> /etc/ld.so.conf.d/usr_local_lib
+echo "kernel.core_pattern=core.%e.%p.%t" >> /etc/sysctl.conf
+echo "*               soft    core            unlimited" >> /etc/security/limits.conf
+echo "*               hard 	  core            unlimited" >> /etc/security/limits.conf
+sysctl -w kernel.core_pattern=core.%e.%p.%t
 
 echo "Install YouCompleteMe ..."
 git clone https://github.com/ycm-core/YouCompleteMe.git /usr/src/YouCompleteMe
