@@ -5,8 +5,9 @@ project_name=$2
 window_list="console,bin protocol,protocol fight,scripts/fight simulate,tools/simulator memchk,bin/memchk debug,bin/debug"
 
 # 打开会话
+change_path="cd ~/$project_name"
 tmux new-session -s $session_name -n editor -d
-tmux send-keys -t $session_name 'cd ~/magicserver' C-m
+tmux send-keys -t $session_name "$change_path" C-m
 tmux send-keys -t $session_name 'vim' C-m
 
 window_id=1
