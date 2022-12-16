@@ -1,7 +1,7 @@
 #!/bin/bash
 
 session_name=$1
-project_name=magicserver
+project_name=$2
 window_list="console,bin protocol,protocol fight,scripts/fight simulate,tools/simulator memchk,bin/memchk debug,bin/debug"
 
 # 打开会话
