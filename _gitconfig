@@ -27,7 +27,8 @@
 	merges = merge --squash --allow-unrelated-histories
 	commita = commit --amend
 	unstage = reset HEAD --
-	pulls = submodule foreach git pull
+	pulls = pull --recurse-submodule 
+	relink = !sh -c 'git checkout $0 && git pull'
 
 [merge]
 	tool = vimdiff3
