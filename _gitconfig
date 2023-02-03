@@ -1,6 +1,6 @@
 [user]
-	name = spriteray 
-	email = spriteray@gmail.com 
+	name = lei.zhang
+	email = lei.zhang@silverkeyz.com
 [color]
 	diff = auto
 	status = auto
@@ -10,6 +10,8 @@
 	editor = vim
 	pager = less -FRSX
 
+[status]
+	submodulesummary = 1
 [diff]
 	external = git-diff-wrapper
 
@@ -29,6 +31,7 @@
 	unstage = reset HEAD --
 	pulls = pull --recurse-submodule 
 	relink = !sh -c 'git checkout $0 && git pull'
+	checkouts = checkout --recurse-submodules=yes
 
 [merge]
 	tool = vimdiff3
