@@ -1,5 +1,5 @@
 
-local colorscheme = 'monokai_pro'
+local colorscheme = 'solarized'
 -- cpp文件类型列表
 local cppfilelist = { 'cpp', 'c', 'h', 'cc', 'hpp' }
 -- 插件根目录

@@ -4,7 +4,17 @@ local vimgui = {}
 function vimgui.load()
     return {
         -- colorscheme
+
+        -- colorscheme: monokai
         'tanvirtin/monokai.nvim',
+        -- colorscheme: solarized
+        {
+            'maxmx03/solarized.nvim',
+            main = { theme = 'neovim' },
+            init = function()
+                vim.o.background = 'dark'
+            end,
+        },
 
         -- nvim-neo-tree
         {
