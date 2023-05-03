@@ -40,6 +40,27 @@ function vimgui.load()
             },
         },
 
+        -- bufferline
+        {
+            'akinsho/bufferline.nvim',
+            dependencies = 'nvim-tree/nvim-web-devicons',
+            config = function()
+                local plugin = require( 'bufferline' )
+                plugin.setup( {
+                    options = {
+                        diagnostics = '',
+                        style_preset = plugin.style_preset.no_italic,
+                        offsets = { {
+                            filetype = 'NeoTree',
+                            text = 'File Explorer',
+                            highlight = 'Directory',
+                            text_align = 'left'
+                        } },
+                    },
+                } ) 
+            end,
+        },
+
         -- statusline
         {
             'nvim-lualine/lualine.nvim',
@@ -57,7 +78,7 @@ function vimgui.load()
                     refresh = { statusline = 1000, tabline = 1000, winbar = 1000, },
                 },
                 sections = {
-                    lualine_a = {'mode'},
+                    lualine_a = {},
                     lualine_b = {'branch', 'diff', 'diagnostics'},
                     lualine_c = {'filename'},
                     lualine_x = {'encoding', 'fileformat', 'filetype'},
