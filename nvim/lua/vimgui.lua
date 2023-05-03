@@ -3,16 +3,19 @@ local vimgui = {}
 
 function vimgui.load()
     return {
+        --
         -- colorscheme
+        --
 
         -- colorscheme: monokai
         'tanvirtin/monokai.nvim',
+
         -- colorscheme: solarized
         {
             'maxmx03/solarized.nvim',
             main = { theme = 'neovim' },
             init = function()
-                vim.o.background = 'dark'
+                vim.o.background = 'light'
             end,
         },
 
@@ -32,9 +35,12 @@ function vimgui.load()
                 sort_case_insensitive = false,
                 sort_function = nil,
             },
+            keys = {
+                { "<leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+            },
         },
 
-        -- StatusLine
+        -- statusline
         {
             'nvim-lualine/lualine.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons', opt=true },

@@ -18,6 +18,12 @@ function cppsuite.load( cppfilelist )
                 vim.g.cpp_posix_standard = 1
             end,
         },
+
+        -- telescope
+        {
+            'nvim-telescope/telescope.nvim',
+            dependencies = { 'nvim-lua/plenary.nvim' },
+        },
     }
 end
 
