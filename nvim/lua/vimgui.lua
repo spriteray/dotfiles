@@ -33,7 +33,6 @@ function vimgui.load()
                 enable_diagnostics = true,
                 open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
                 sort_case_insensitive = false,
-                sort_function = nil,
             },
             keys = {
                 { "<leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
@@ -48,13 +47,16 @@ function vimgui.load()
                 local plugin = require( 'bufferline' )
                 plugin.setup( {
                     options = {
-                        diagnostics = '',
+                        separator_style = 'slant',
                         style_preset = plugin.style_preset.no_italic,
+                        numbers = function(opts)
+                            return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
+                        end,
                         offsets = { {
-                            filetype = 'NeoTree',
-                            text = 'File Explorer',
+                            filetype = 'neo-tree',
+                            text = 'Explorer',
                             highlight = 'Directory',
-                            text_align = 'left'
+                            text_align = 'center'
                         } },
                     },
                 } ) 
@@ -71,7 +73,7 @@ function vimgui.load()
                     theme = 'molokai',
                     component_separators = { left = '', right = ''},
                     section_separators = { left = '', right = ''},
-                    disabled_filetypes = { statusline = {}, winbar = {} },
+                    disabled_filetypes = { statusline = {}, winbar = {}, 'neo-tree' },
                     ignore_focus = {},
                     always_divide_middle = true,
                     globalstatus = false,
