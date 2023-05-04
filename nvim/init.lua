@@ -1,5 +1,6 @@
 
-local colorscheme = 'solarized'
+-- 当前配色
+local scheme = 'solarized'
 -- cpp文件类型列表
 local cppfilelist = { 'cpp', 'c', 'h', 'cc', 'hpp' }
 -- 插件根目录
@@ -13,8 +14,10 @@ local plugins = require('plugins')
 plugins.init( pluginpath )
 plugins.load( pluginpath, cppfilelist )
 
+-- 系统配置
+-- local is_mac = vim.fn.has( 'macunix' )
+-- local is_win = vim.fn.has( 'win32' )
+-- local is_wsl = vim.fn.has( 'wsl' )
+
 -- 应用配色
-local is_ok,_ = pcall( vim.cmd, "colorscheme "..colorscheme )
-if not is_ok then
-    vim.notify( 'colorscheme ' .. colorscheme .. ' not found !' )
-end
+require( 'colorscheme' ).apply( scheme )

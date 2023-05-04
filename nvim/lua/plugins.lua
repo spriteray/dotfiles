@@ -18,6 +18,8 @@ end
 
 function plugins.load( rootpath, cppfilelist )
     require('lazy').setup( {
+        -- colorschemes
+        require( 'colorscheme' ).load(),
         -- vimgui
         require( 'vimgui' ).load( cppfilelist ),
         -- cpp suite
