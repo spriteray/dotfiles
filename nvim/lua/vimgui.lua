@@ -50,7 +50,7 @@ function vimgui.load()
             dependencies = { 'nvim-tree/nvim-web-devicons', opt=true },
             opts = {
                 options = {
-                    theme = 'tokyonight',
+                    theme = 'molokai',
                     disabled_filetypes = { statusline = {}, winbar = {} },
                 },
             },

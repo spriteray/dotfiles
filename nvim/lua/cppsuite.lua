@@ -24,6 +24,15 @@ function cppsuite.load( cppfilelist )
             'nvim-telescope/telescope.nvim',
             dependencies = { 'nvim-lua/plenary.nvim' },
         },
+
+        -- clang-format
+        {
+            'rhysd/vim-clang-format', ft = cppfilelist,
+            keys = {
+                { '<buffer>F3', '<cmd>ClangFormat<cr>', desc = 'formatter' },
+
+            },
+        },
     }
 end
 
