@@ -29,8 +29,8 @@ function cppsuite.load( cppfilelist )
         {
             'rhysd/vim-clang-format', ft = cppfilelist,
             keys = {
-                { '<buffer>F3', '<cmd>ClangFormat<cr>', desc = 'formatter' },
-
+                { '<F3>', ':ClangFormat<cr>', mode = 'v', desc = 'CodeFormatV', noremap = true, buffer = true, silent = true },
+                { '<F3>', ':<C-u>ClangFormat<cr>', mode = 'n', desc = 'CodeFormatN', noremap = true, buffer = true, silent = true },
             },
         },
     }
