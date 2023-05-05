@@ -1,7 +1,7 @@
 
-local cppsuite = {}
+local develop = {}
 
-function cppsuite.load( cppfilelist )
+function develop.load( cppfilelist )
     return {
         -- A
         { 'vim-scripts/a.vim', ft = cppfilelist },
@@ -36,4 +36,4 @@ function cppsuite.load( cppfilelist )
     }
 end
 
-return cppsuite
+return develop

@@ -22,8 +22,8 @@ function plugins.load( rootpath, cppfilelist )
         require( 'colorscheme' ).load(),
         -- vimgui
         require( 'vimgui' ).load( cppfilelist ),
-        -- cpp suite
-        require( 'cppsuite' ).load( cppfilelist ),
+        -- develop
+        require( 'develop' ).load( cppfilelist ),
     }, {
         root = rootpath,
         state = rootpath .. '/state.json',
