@@ -31,7 +31,6 @@ function vimgui.load()
                 local plugin = require( 'bufferline' )
                 plugin.setup( {
                     options = {
-                        separator_style = 'slant',
                         style_preset = plugin.style_preset.no_italic,
                         numbers = function(opts)
                             return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
