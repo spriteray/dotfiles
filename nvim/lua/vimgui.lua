@@ -32,9 +32,7 @@ function vimgui.load()
                 plugin.setup( {
                     options = {
                         style_preset = plugin.style_preset.no_italic,
-                        numbers = function(opts)
-                            return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
-                        end,
+                        numbers = true,
                         offsets = {
                             { filetype = 'neo-tree', text = 'File Explorer', highlight = 'Directory', text_align = 'center' },
                         },
@@ -49,7 +47,7 @@ function vimgui.load()
             dependencies = { 'nvim-tree/nvim-web-devicons', opt=true },
             opts = {
                 options = {
-                    theme = 'molokai',
+                    theme = 'gruvbox',
                     disabled_filetypes = { statusline = {}, winbar = {} },
                 },
             },

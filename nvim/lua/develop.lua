@@ -22,7 +22,22 @@ function develop.load( cppfilelist )
         -- telescope
         {
             'nvim-telescope/telescope.nvim',
-            dependencies = { 'nvim-lua/plenary.nvim' },
+            dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' },
+            init = function()
+                local builtin = require('telescope.builtin')
+                vim.keymap.set({'n','i','v'}, '<C-p>', builtin.find_files, {})
+                vim.keymap.set({'n','i','v'}, '<leader>bb', builtin.buffers, {})
+                vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+            end,
+        },
+
+        -- terminal
+        {
+            'akinsho/toggleterm.nvim',
+            opts = {
+                open_mapping = [[<C-`>]],
+                direction = 'float',
+            },
         },
 
         -- clang-format
