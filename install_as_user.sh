@@ -24,11 +24,13 @@ cp xssh ~/bin
 cp findc ~/bin
 cp git-diff-wrapper ~/bin
 cp agnoster-light.zsh-theme ~/.oh-my-zsh/themes
+cp -a zsh-osx-autoproxy ~/.oh-my-zsh/plugins/
 
 cd $HOME
 mkdir -p .vim/bundle
 ln -s /usr/src/YouCompleteMe .vim/bundle/YouCompleteMe
 echo "PATH=$PATH:$HOME/bin"
+echo "plugins+=(zsh-osx-autoproxy)" >> .zshrc
 echo "export LESSCHARSET=utf-8" >> .zshrc
 echo "export LANG=\"zh_CN.UTF-8\"" >> .zshrc
 echo "export LC_ALL=\"zh_CN.UTF-8\"" >> .zshrc
