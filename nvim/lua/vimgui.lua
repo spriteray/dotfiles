@@ -3,6 +3,20 @@ local vimgui = {}
 
 function vimgui.load()
     return {
+        -- dashboard
+        {
+            'nvimdev/dashboard-nvim',
+            dependencies = { 'nvim-tree/nvim-web-devicons' },
+            opts = {
+                theme = 'hyper',
+                disable_move = true,
+                config = {
+                    week_header = { enable = true },
+                    project = { enable = false },
+                },
+            },
+        },
+
         -- nvim-neo-tree
         {
             'nvim-neo-tree/neo-tree.nvim',
