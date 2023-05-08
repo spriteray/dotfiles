@@ -18,4 +18,4 @@ plugins.load( pluginpath, cppfilelist )
 -- local is_wsl = vim.fn.has( 'wsl' )
 
 -- 应用配色
-require( 'colorscheme' ).apply( 'molokai', 'dark' )
+require( 'colorscheme' ).apply( 'solarized', 'light' )

@@ -45,8 +45,8 @@ function develop.load( cppfilelist )
         {
             'akinsho/toggleterm.nvim',
             opts = {
-                direction = 'horizontal',
                 open_mapping = [[<F4>]],
+                direction = 'float',
             },
         },
 
