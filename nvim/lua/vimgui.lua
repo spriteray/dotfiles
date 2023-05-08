@@ -17,6 +17,18 @@ function vimgui.load()
             },
         },
 
+        -- rainbow
+        {
+            'luochen1990/rainbow',
+            init = function()
+                vim.cmd([[
+                    syntax on
+                    let g:rainbow_active = 1
+                    let g:rainbow_conf = { 'ctermfgs': ['darkblue', 'darkyellow', 'darkcyan', 'darkmagenta'] }
+                ]])
+            end
+        },
+
         -- nvim-neo-tree
         {
             'nvim-neo-tree/neo-tree.nvim',
@@ -61,7 +73,7 @@ function vimgui.load()
             dependencies = { 'nvim-tree/nvim-web-devicons', opt=true },
             opts = {
                 options = {
-                    theme = 'gruvbox',
+                    theme = 'material',
                     disabled_filetypes = { statusline = {}, winbar = {} },
                 },
             },

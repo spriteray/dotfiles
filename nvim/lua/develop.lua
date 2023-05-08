@@ -6,6 +6,9 @@ function develop.load( cppfilelist )
         -- A
         { 'vim-scripts/a.vim', ft = cppfilelist },
 
+        -- todo
+        { 'folke/todo-comments.nvim', config = true, },
+
         -- highlight
         {
             'octol/vim-cpp-enhanced-highlight', ft = cppfilelist,
@@ -53,6 +56,7 @@ function develop.load( cppfilelist )
         {
             dir = '/home/ryan/app/YouCompleteMe', ft = cppfilelist,
             config = function()
+                vim.opt.completeopt = { 'menuone', 'menu', 'longest' }
                 vim.g.ycm_error_symbol = 'X'
                 vim.g.ycm_warning_symbol = '?'
                 vim.g.ycm_confirm_extra_conf = 0

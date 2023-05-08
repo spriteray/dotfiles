@@ -5,25 +5,30 @@ function colorscheme.load()
     return {
         -- colorschemes
 
-        -- colorscheme: monokai
-        'tanvirtin/monokai.nvim',
+        -- monokai
+        'tomasr/molokai',
 
-        -- colorscheme: solarized
+        -- nord
+        'shaunsingh/nord.nvim',
+
+        -- solarized
         {
             'maxmx03/solarized.nvim',
             main = { theme = 'neovim' },
-            init = function()
-                vim.o.background = 'light'
-            end,
         },
+
+        -- gruvbox
+        {
+            'ellisonleao/gruvbox.nvim', dependencies = { 'rktjmp/lush.nvim' },
+        }
     }
 end
 
-function colorscheme.apply( scheme )
-    local curscheme = "colorscheme " .. scheme
-    local is_ok,_ = pcall( vim.cmd, curscheme )
+function colorscheme.apply( scheme, bg )
+    local cmd = string.format( "set background=%s\ncolorscheme %s", bg, scheme )
+    local is_ok,_ = pcall( vim.cmd, cmd )
     if not is_ok then
-        vim.notify( curscheme .. ' not found !' )
+        vim.notify( 'colorscheme ' .. scheme .. ' not found !' )
     end
 end
 
