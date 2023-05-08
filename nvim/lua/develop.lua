@@ -7,7 +7,14 @@ function develop.load( cppfilelist )
         { 'vim-scripts/a.vim', ft = cppfilelist },
 
         -- todo
-        { 'folke/todo-comments.nvim', config = true, },
+        {
+            'folke/todo-comments.nvim',
+            opts = {
+                keywords = {
+                    NOTICE = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+                },
+            },
+        },
 
         -- highlight
         {
@@ -38,8 +45,8 @@ function develop.load( cppfilelist )
         {
             'akinsho/toggleterm.nvim',
             opts = {
-                open_mapping = [[<C-`>]],
-                direction = 'float',
+                direction = 'horizontal',
+                open_mapping = [[<F4>]],
             },
         },
 

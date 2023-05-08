@@ -22,6 +22,7 @@ cp -r vimfiles ~/.vim
 cp pid ~/bin
 cp xssh ~/bin
 cp findc ~/bin
+cp clang-format ~/.clang-format
 cp git-diff-wrapper ~/bin
 cp agnoster-light.zsh-theme ~/.oh-my-zsh/themes
 cp -a zsh-osx-autoproxy ~/.oh-my-zsh/plugins/
