@@ -1,5 +1,6 @@
 
 local develop = {}
+local global = require( 'global' )
 
 function develop.load( cppfilelist )
     return {
@@ -39,11 +40,7 @@ function develop.load( cppfilelist )
             'nvim-telescope/telescope.nvim',
             dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' },
             build = function()
-                local installcmd = 'apt'
-                if vim.loop.os_uname().sysname == "Darwin" then
-                    installcmd = 'brew'
-                end
-                vim.fn.system( { installcmd, 'install', 'ripgrep' } )
+                global:install( 'ripgrep' )
             end,
             init = function()
                 local builtin = require('telescope.builtin')

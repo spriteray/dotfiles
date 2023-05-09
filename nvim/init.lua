@@ -4,6 +4,9 @@ local cppfilelist = { 'cpp', 'c', 'h', 'cc', 'hpp' }
 -- 插件根目录
 local pluginpath = vim.fn.stdpath( 'data' ) .. '/plugin'
 
+-- 加载全局
+require( 'global' ):init()
+
 -- 加载基础配置
 require('basic')
 
