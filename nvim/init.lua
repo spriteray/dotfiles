@@ -12,10 +12,5 @@ local plugins = require('plugins')
 plugins.init( pluginpath )
 plugins.load( pluginpath, cppfilelist )
 
--- 系统配置
--- local is_mac = vim.fn.has( 'macunix' )
--- local is_win = vim.fn.has( 'win32' )
--- local is_wsl = vim.fn.has( 'wsl' )
-
 -- 应用配色
-require( 'colorscheme' ).apply( 'solarized', 'light' )
+require( 'colorscheme' ).apply( 'solarized', 'dark' )

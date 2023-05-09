@@ -29,16 +29,36 @@ function develop.load( cppfilelist )
             end,
         },
 
+        -- fzf native
+        {
+            'nvim-telescope/telescope-fzf-native.nvim', build = 'make',
+        },
+
         -- telescope
         {
             'nvim-telescope/telescope.nvim',
             dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' },
+            build = function()
+                local installcmd = 'apt'
+                if vim.loop.os_uname().sysname == "Darwin" then
+                    installcmd = 'brew'
+                end
+                vim.fn.system( { installcmd, 'install', 'ripgrep' } )
+            end,
             init = function()
                 local builtin = require('telescope.builtin')
                 vim.keymap.set({'n','i','v'}, '<C-p>', builtin.find_files, {})
                 vim.keymap.set({'n','i','v'}, '<leader>bb', builtin.buffers, {})
                 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+                require('telescope').load_extension('fzf')
             end,
+            opts = {
+                extensions = {
+                    fzf = {
+                        fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case",
+                    },
+                },
+            },
         },
 
         -- terminal
