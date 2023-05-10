@@ -62,6 +62,12 @@ function vimgui.load()
                         offsets = {
                             { filetype = 'neo-tree', text = 'File Explorer', highlight = 'Directory', text_align = 'center' },
                         },
+                        custom_filter = function(buf_number, buf_numbers)
+                            if vim.bo[buf_number].filetype ~= 'gitcommit' then
+                                return true
+                            end
+                            return false
+                        end
                     },
                 } )
             end,
@@ -73,8 +79,21 @@ function vimgui.load()
             dependencies = { 'nvim-tree/nvim-web-devicons', opt=true },
             opts = {
                 options = {
-                    theme = 'material',
-                    disabled_filetypes = { statusline = {}, winbar = {} },
+                    theme = 'nightfox',
+                    disabled_filetypes = { statusline = { 'gitcommit' }, winbar = {} },
+                },
+                setions = {
+                    lualine_a = {
+                        'diff',
+                        colored = true,
+                        diff_color = {
+                            added    = 'DiffAdd',
+                            modified = 'DiffChange',
+                            removed  = 'DiffDelete',
+                        },
+                        source = nil,
+                        symbols = {added = '+', modified = '~', removed = '-'},
+                    },
                 },
             },
         },

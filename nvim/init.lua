@@ -16,4 +16,4 @@ plugins.init( pluginpath )
 plugins.load( pluginpath, cppfilelist )
 
 -- 应用配色
-require( 'colorscheme' ).apply( 'solarized', 'dark' )
+require( 'colorscheme' ).apply( 'nightfox', 'dark' )

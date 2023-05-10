@@ -84,6 +84,7 @@ function develop.load( cppfilelist )
                 vim.g.ycm_error_symbol = 'X'
                 vim.g.ycm_warning_symbol = '?'
                 vim.g.ycm_confirm_extra_conf = 0
+                vim.g.ycm_show_diagnostics_ui = 1
                 vim.g.ycm_min_num_identifier_candidate_chars = 2
                 vim.g.ycm_collect_identifiers_from_comments_and_strings = 1
                 vim.g.ycm_seed_identifiers_with_syntax = 1

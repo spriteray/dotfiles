@@ -9,7 +9,7 @@ function colorscheme.load()
         'tomasr/molokai',
 
         -- nord
-        'shaunsingh/nord.nvim',
+        'rmehri01/onenord.nvim',
 
         -- solarized
         {
@@ -17,10 +17,34 @@ function colorscheme.load()
             main = { theme = 'neovim' },
         },
 
+        -- nightfox
+        {
+            'EdenEast/nightfox.nvim',
+            opts = {
+                options = {
+                    styles = {
+                        comments = 'italic',
+                        keywords = "bold",
+                        types = "bold",
+                    },
+
+                },
+            },
+        },
+
         -- gruvbox
         {
             'ellisonleao/gruvbox.nvim', dependencies = { 'rktjmp/lush.nvim' },
-        }
+        },
+
+        -- tokyo night
+        {
+            'folke/tokyonight.nvim',
+            opts = {
+                style = 'storm',
+                transparent = false,
+            },
+        },
     }
 end
 
