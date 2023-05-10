@@ -1,11 +1,14 @@
 
+local global = require( 'global' )
+local scheme = require( 'colorscheme' )
+
 -- cpp文件类型列表
 local cppfilelist = { 'cpp', 'c', 'h', 'cc', 'hpp' }
 -- 插件根目录
 local pluginpath = vim.fn.stdpath( 'data' ) .. '/plugin'
 
--- 加载全局
-require( 'global' ):init()
+-- 全局参数加载
+global:init()
 
 -- 加载基础配置
 require('basic')
@@ -16,4 +19,8 @@ plugins.init( pluginpath )
 plugins.load( pluginpath, cppfilelist )
 
 -- 应用配色
-require( 'colorscheme' ).apply( 'nightfox', 'dark' )
+if global.is_mac then
+    scheme.apply( 'solarized', 'light' )
+else
+    scheme.apply( 'nightfox', 'dark' )
+end
