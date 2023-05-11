@@ -17,6 +17,14 @@ function vimgui.load()
             },
         },
 
+        -- which-key
+        {
+            'folke/which-key.nvim', 
+            opts = {
+
+            },
+        },
+
         -- rainbow
         {
             'luochen1990/rainbow',
@@ -62,11 +70,12 @@ function vimgui.load()
                         offsets = {
                             { filetype = 'neo-tree', text = 'File Explorer', highlight = 'Directory', text_align = 'center' },
                         },
-                        custom_filter = function(buf_number, buf_numbers)
-                            if vim.bo[buf_number].filetype ~= 'gitcommit' then
-                                return true
+                        custom_filter = function(buf, buf_numbers)
+                            local buf_type = vim.bo[buf].filetype
+                            if buf_type == 'gitcommit' or buf_type == 'help' then
+                                return false 
                             end
-                            return false
+                            return true 
                         end
                     },
                 } )

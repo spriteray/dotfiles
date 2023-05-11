@@ -3,11 +3,12 @@ vim.g.mapleader = ','
 
 -- Hint: use `:h <option>` to figure out the meaning if needed
 -- vim.opt.clipboard = 'unnamedplus' -- use system clipboard
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.completeopt = menu, menuone, noselect
 vim.opt.mouse = 'a' -- allow the mouse to be used in Nvim
 vim.opt.selection = 'inclusive'
+vim.opt.magic = true
 -- vim.opt.selectmode
-vim.opt.mousemodel = 'popup'
+vim.opt.mousemodel = popup
 vim.opt.formatoptions= 'tcqmM'
 vim.opt.autoindent = true
 vim.opt.smartindent = true
@@ -32,15 +33,19 @@ vim.opt.signcolumn = 'yes'
 vim.opt.ruler = true
 vim.opt.foldenable = true
 vim.opt.foldlevel = 100
+-- vim.opt.backspace = 'indent, eol, start'
+vim.opt.showmatch = true
 
 -- Searching
 vim.opt.incsearch = true -- search as characters are entered
-vim.opt.hlsearch = false -- do not highlight matches
 vim.opt.ignorecase = true -- ignore case in searches by default
 vim.opt.smartcase = true -- but make it case sensitive if an uppercase is entered
-vim.opt.syntax = 'enable'
+vim.opt.syntax = 'on'
 
 -- Python3
 vim.g.python3_host_prog = '/usr/bin/python3'
 
 -- file
+vim.opt.autoread = true
+vim.opt.autowrite = true
+

@@ -21,4 +21,16 @@ function global:install( app )
     end
 end
 
+function global:register()
+    local wk = require( 'which-key' )
+    wk.register({
+        ['<leader>c'] = { '<cmd>nohls<cr>', 'Clear HighLight' },
+        ['<leader>co'] = { '<cmd>:copen<cr>', 'Open qf Window' },
+        ['<leader>cc'] = { '<cmd>:cclose<cr>', 'Close qf Window' },
+        ['<leader>fd'] = { '<cmd>:set ff=dos<cr>', 'Set File-Format DOS' },
+        ['<leader>fu'] = { '<cmd>:set ff=unix<cr>', 'Set File-Format UNIX' },
+        ['<leader>fm'] = { '<cmd>:set ff=mac<cr>', 'Set File-Format MAC' },
+    })
+end
+
 return global

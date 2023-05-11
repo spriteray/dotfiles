@@ -18,6 +18,9 @@ local plugins = require('plugins')
 plugins.init( pluginpath )
 plugins.load( pluginpath, cppfilelist )
 
+-- 注册快捷键
+global:register()
+
 -- 应用配色
 if global.is_mac then
     scheme.apply( 'solarized', 'light' )
