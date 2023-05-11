@@ -22,8 +22,4 @@ plugins.load( pluginpath, cppfilelist )
 global:register()
 
 -- 应用配色
-if global.is_mac then
-    scheme.apply( 'solarized', 'light' )
-else
-    scheme.apply( 'nightfox', 'dark' )
-end
+scheme.apply_scheme()

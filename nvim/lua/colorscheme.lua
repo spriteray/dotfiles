@@ -56,4 +56,14 @@ function colorscheme.apply( scheme, bg )
     end
 end
 
+-- 选择主题
+function colorscheme.apply_scheme()
+    local global = require( 'global' )
+    if global.is_mac then
+        colorscheme.apply( 'solarized', 'light' )
+    else
+        colorscheme.apply( 'nightfox', 'dark' )
+    end
+end
+
 return colorscheme
