@@ -30,15 +30,15 @@ function develop.load( cppfilelist )
             end,
         },
 
-        -- fzf native
-        {
-            'nvim-telescope/telescope-fzf-native.nvim', build = 'make',
-        },
-
         -- telescope
         {
             'nvim-telescope/telescope.nvim',
-            dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' },
+            dependencies = { 
+                'nvim-lua/plenary.nvim', 
+                'BurntSushi/ripgrep', 
+                'nvim-telescope/telescope-ui-select.nvim',
+                'nvim-telescope/telescope-fzf-native.nvim', build = 'make',
+            },
             build = function()
                 global:install( 'ripgrep' )
             end,
@@ -46,16 +46,30 @@ function develop.load( cppfilelist )
                 local builtin = require('telescope.builtin')
                 vim.keymap.set({'n','i','v'}, '<C-p>', builtin.find_files, {})
                 vim.keymap.set({'n','i','v'}, '<leader>bb', builtin.buffers, {})
-                vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+                vim.keymap.set({'n','i','v'}, '<leader>ff', builtin.grep_string, {})
                 require('telescope').load_extension('fzf')
+                require('telescope').load_extension('ui-select')
             end,
-            opts = {
-                extensions = {
-                    fzf = {
-                        fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case",
+            opts = function()
+                require( 'telescope' ).setup( {
+                    extensions = {
+                        fzf = {
+                            fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case",
+                        },
+                        ['ui-select'] = {
+                            require('telescope.themes').get_dropdown({
+                                previewer        = true,
+                                initial_mode     = 'normal',
+                                sorting_strategy = 'ascending',
+                                layout_strategy  = 'horizontal',
+                                layout_config    = {
+                                    horizontal = { width = 0.5, height = 0.4, preview_width = 0.6 },
+                                },
+                            })
+                        };
                     },
-                },
-            },
+                })
+            end,
         },
 
         -- terminal
