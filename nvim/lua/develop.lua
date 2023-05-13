@@ -32,37 +32,38 @@ function develop.load( cppfilelist )
 
         -- telescope
         {
+            'nvim-telescope/telescope-fzf-native.nvim', build = 'make',
+        },
+
+        {
             'nvim-telescope/telescope.nvim',
             dependencies = {
                 'nvim-lua/plenary.nvim',
                 'BurntSushi/ripgrep',
                 'nvim-telescope/telescope-ui-select.nvim',
-                'nvim-telescope/telescope-fzf-native.nvim', build = 'make',
+                'nvim-telescope/telescope-fzf-native.nvim',
             },
             build = function()
                 global:install( 'ripgrep' )
             end,
             init = function()
-                local builtin = require('telescope.builtin')
-                vim.keymap.set({'n','i','v'}, '<C-p>', builtin.find_files, {})
-                vim.keymap.set({'n','i','v'}, '<leader>bb', builtin.buffers, {})
-                vim.keymap.set({'n','i','v'}, '<leader>ff', function()
-                    local data = global:selection()
-                    if data == '' then
-                        builtin.live_grep({})
-                    else
-                        builtin.live_grep({ default_text = data })
-                    end
-                end, opt )
-                vim.keymap.set('n', '<leader>fs', builtin.grep_string, {})
-                require('telescope').load_extension('fzf')
-                require('telescope').load_extension('ui-select')
-            end,
-            opts = function()
-                require( 'telescope' ).setup( {
+                local plugin = require( 'telescope' )
+                plugin.load_extension('fzf')
+                plugin.load_extension('ui-select')
+                plugin.setup( {
+                    defaults = {
+                        mappings = {
+                            i = {
+                                ['<C-h>'] = 'which_key',
+                            },
+                            n = {
+                                ['q'] = require('telescope.actions').close,
+                            },
+                        },
+                    },
                     extensions = {
                         fzf = {
-                            fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case",
+                            fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = 'smart_case',
                         },
                         ['ui-select'] = {
                             require('telescope.themes').get_dropdown({
@@ -77,6 +78,18 @@ function develop.load( cppfilelist )
                         };
                     },
                 })
+                local builtin = require('telescope.builtin')
+                vim.keymap.set({'n','i','v'}, '<C-p>', builtin.find_files, {})
+                vim.keymap.set({'n','i','v'}, '<leader>bb', builtin.buffers, {})
+                vim.keymap.set({'n','i','v'}, '<leader>ff', function()
+                    local data = global:selection()
+                    if data == '' then
+                        builtin.live_grep({})
+                    else
+                        builtin.live_grep({ default_text = data })
+                    end
+                end, opt )
+                vim.keymap.set('n', '<leader>fs', builtin.grep_string, {})
             end,
         },
 
@@ -84,7 +97,7 @@ function develop.load( cppfilelist )
         {
             'akinsho/toggleterm.nvim',
             opts = {
-                open_mapping = [[<F4>]],
+                open_mapping = [[<F2>]],
                 direction = 'float',
             },
         },

@@ -20,6 +20,14 @@ function vimgui.load()
         -- which-key
         {
             'folke/which-key.nvim', 
+            config = function()
+                vim.o.timeout = true
+                vim.o.timeoutlen = 300
+            end ,
+        },
+
+        {
+            'sindrets/diffview.nvim',
             opts = {
 
             },

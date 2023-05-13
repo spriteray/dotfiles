@@ -29,7 +29,10 @@ for w in $window_list; do
 done
 
 tmux new-window -n admin -t $session_name
-tmux new-window -n other -t $session_name
+tmux new-window -n xssh -t $session_name
+tmux new-window -n other1 -t $session_name
+tmux new-window -n other2 -t $session_name
+tmux new-window -n other3 -t $session_name
 
 tmux select-window -t $session_name:1
 
