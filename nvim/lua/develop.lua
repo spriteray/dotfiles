@@ -79,9 +79,9 @@ function develop.load( cppfilelist )
                     },
                 })
                 local builtin = require('telescope.builtin')
-                vim.keymap.set({'n','i','v'}, '<C-p>', builtin.find_files, {})
-                vim.keymap.set({'n','i','v'}, '<leader>bb', builtin.buffers, {})
-                vim.keymap.set({'n','i','v'}, '<leader>ff', function()
+                vim.keymap.set({'n','v'}, '<C-p>', builtin.find_files, {})
+                vim.keymap.set({'n','v'}, '<leader>bb', builtin.buffers, {})
+                vim.keymap.set({'n','v'}, '<leader>ff', function()
                     local data = global:selection()
                     if data == '' then
                         builtin.live_grep({})
@@ -97,7 +97,7 @@ function develop.load( cppfilelist )
         {
             'akinsho/toggleterm.nvim',
             opts = {
-                open_mapping = [[<F2>]],
+                open_mapping = [[<C-/>]],
                 direction = 'float',
             },
         },
