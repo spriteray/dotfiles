@@ -5,7 +5,10 @@ local global = require( 'global' )
 function develop.load( cppfilelist )
     return {
         -- A
-        { 'vim-scripts/a.vim', ft = cppfilelist },
+        { 
+            'vim-scripts/a.vim', ft = cppfilelist,
+            dependencies = { 'SirVer/ultisnips' },
+        },
 
         -- todo
         {
