@@ -35,15 +35,12 @@ function global:selection()
 end
 
 function global:register()
-    local wk = require( 'which-key' )
-    wk.register({
-        ['<leader>c'] = { '<cmd>nohls<cr>', 'Clear HighLight' },
-        ['<leader>co'] = { '<cmd>:copen<cr>', 'Open qf Window' },
-        ['<leader>cc'] = { '<cmd>:cclose<cr>', 'Close qf Window' },
-        ['<leader>fd'] = { '<cmd>:set ff=dos<cr>', 'Set File-Format DOS' },
-        ['<leader>fu'] = { '<cmd>:set ff=unix<cr>', 'Set File-Format UNIX' },
-        ['<leader>fm'] = { '<cmd>:set ff=mac<cr>', 'Set File-Format MAC' },
-    })
+    vim.keymap.set( 'n', '<leader>c',  '<cmd>nohls<cr>', { desc = 'Clear HighLight' } )
+    vim.keymap.set( 'n', '<leader>co', '<cmd>:copen<cr>', { desc = 'Open qf Window' } )
+    vim.keymap.set( 'n', '<leader>cc', '<cmd>:cclose<cr>', { desc = 'Close qf Window' } )
+    vim.keymap.set( 'n', '<leader>fd', '<cmd>:set ff=dos<cr>',{ desc = 'Set File-Format DOS' } )
+    vim.keymap.set( 'n', '<leader>fu', '<cmd>:set ff=unix<cr>', { desc = 'Set File-Format UNIX' } )
+    vim.keymap.set( 'n', '<leader>fm', '<cmd>:set ff=mac<cr>', { desc = 'Set File-Format MAC' } )
 end
 
 return global

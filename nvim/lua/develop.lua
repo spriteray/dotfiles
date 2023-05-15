@@ -116,7 +116,7 @@ function develop.load( cppfilelist )
 
         -- you complete me
         {
-            dir = '/home/ryan/app/YouCompleteMe', ft = cppfilelist,
+            dir = '/home/ryan/app/YouCompleteMe', ft = cppfilelist, 
             config = function()
                 vim.opt.completeopt = { 'menuone', 'menu', 'longest' }
                 vim.g.ycm_error_symbol = 'X'
