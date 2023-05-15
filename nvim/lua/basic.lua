@@ -3,6 +3,7 @@ vim.g.mapleader = ','
 
 -- Hint: use `:h <option>` to figure out the meaning if needed
 -- vim.opt.clipboard = 'unnamedplus' -- use system clipboard
+vim.opt.wildmenu = true
 vim.opt.completeopt = menu, menuone, noselect
 vim.opt.mouse = 'a' -- allow the mouse to be used in Nvim
 vim.opt.selection = 'inclusive'
@@ -12,6 +13,7 @@ vim.opt.mousemodel = popup
 vim.opt.formatoptions= 'tcqmM'
 vim.opt.autoindent = true
 vim.opt.smartindent = true
+vim.opt.whichwrap = 'b,s,<,>,[,]' -- 方向键换行
 
 -- Tab
 vim.opt.tabstop = 4 -- number of visual spaces per TAB
@@ -35,6 +37,8 @@ vim.opt.foldenable = true
 vim.opt.foldlevel = 100
 -- vim.opt.backspace = 'indent, eol, start'
 vim.opt.showmatch = true
+vim.opt.scrolloff = 3
+vim.opt.sidescrolloff = 3
 
 -- Searching
 vim.opt.incsearch = true -- search as characters are entered
@@ -48,4 +52,11 @@ vim.g.python3_host_prog = '/usr/bin/python3'
 -- file
 vim.opt.autoread = true
 vim.opt.autowrite = true
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
+
+-- split window 从上边和左边边出现
+vim.opt.splitbelow = true 
+vim.opt.splitright = false 
 

@@ -50,6 +50,15 @@ function vimgui.load()
                 enable_diagnostics = true,
                 open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
                 sort_case_insensitive = false,
+                default_component_configs = {
+                    indent = { padding = 0, indent_size = 1, },
+                    icon = {
+                        folder_closed = '',
+                        folder_open = '',
+                        folder_empty = '',
+                        default = '',
+                    },
+                },
             },
             keys = {
                 { "<leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
