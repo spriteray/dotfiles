@@ -106,7 +106,18 @@ function develop.load( cppfilelist )
         },
 
         -- clang-format
-        { 'rhysd/vim-clang-format' },
+        { 
+            'rhysd/vim-clang-format', 
+            config = function()
+                vim.api.nvim_create_autocmd( 'FileType', { 
+                    pattern = { 'c','cpp','objc' }, 
+                    callback = function() 
+                        vim.keymap.set( { 'n', 'v' }, '<F3>', ':ClangFormat<cr>', { desc = 'CodeFormatV', noremap = true, buffer = true, silent = true } )
+                        vim.keymap.set( { 'n', 'v' }, '<F3>', ':<C-u>ClangFormat<cr>', { desc = 'CodeFormatN', noremap = true, buffer = true, silent = true } )
+                    end, 
+                } )
+            end
+        },
 
         -- you complete me
         {

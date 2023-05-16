@@ -41,13 +41,6 @@ function global:register()
     vim.keymap.set( 'n', '<leader>fd', '<cmd>:set ff=dos<cr>',{ desc = 'Set File-Format DOS' } )
     vim.keymap.set( 'n', '<leader>fu', '<cmd>:set ff=unix<cr>', { desc = 'Set File-Format UNIX' } )
     vim.keymap.set( 'n', '<leader>fm', '<cmd>:set ff=mac<cr>', { desc = 'Set File-Format MAC' } )
-    vim.api.nvim_create_autocmd( 'FileType', { 
-        pattern = { 'c','cpp','objc' }, 
-        callback = function() 
-            vim.keymap.set( { 'n', 'v' }, '<F3>', ':ClangFormat<cr>', { desc = 'CodeFormatV', noremap = true, buffer = true, silent = true } )
-            vim.keymap.set( { 'n', 'v' }, '<F3>', ':<C-u>ClangFormat<cr>', { desc = 'CodeFormatN', noremap = true, buffer = true, silent = true } )
-        end, 
-    } )
 end
 
 return global
