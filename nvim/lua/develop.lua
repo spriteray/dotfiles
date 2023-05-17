@@ -5,7 +5,7 @@ local global = require( 'global' )
 function develop.load( cppfilelist )
     return {
         -- A
-        { 
+        {
             'vim-scripts/a.vim', ft = cppfilelist,
             dependencies = { 'SirVer/ultisnips' },
         },
@@ -106,24 +106,23 @@ function develop.load( cppfilelist )
         },
 
         -- clang-format
-        { 
-            'rhysd/vim-clang-format', 
+        {
+            'rhysd/vim-clang-format',
             config = function()
-                vim.api.nvim_create_autocmd( 'FileType', { 
-                    pattern = { 'c','cpp','objc' }, 
-                    callback = function() 
+                vim.api.nvim_create_autocmd( 'FileType', {
+                    pattern = { 'c','cpp','objc' },
+                    callback = function()
                         vim.keymap.set( 'v', '<F3>', ':ClangFormat<cr>', { desc = 'CodeFormatV', noremap = true, buffer = true, silent = true } )
                         vim.keymap.set( 'n', '<F3>', ':<C-u>ClangFormat<cr>', { desc = 'CodeFormatN', noremap = true, buffer = true, silent = true } )
-                    end, 
+                    end,
                 } )
             end
         },
 
         -- you complete me
         {
-            dir = '/home/ryan/app/YouCompleteMe', ft = cppfilelist, 
+            dir = '/home/ryan/app/YouCompleteMe', ft = cppfilelist,
             config = function()
-                vim.opt.completeopt = { 'menuone', 'menu', 'longest' }
                 vim.g.ycm_error_symbol = 'X'
                 vim.g.ycm_warning_symbol = '?'
                 vim.g.ycm_confirm_extra_conf = 0

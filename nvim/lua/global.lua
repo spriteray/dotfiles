@@ -35,6 +35,23 @@ function global:selection()
 end
 
 function global:register()
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*",
+        callback = function()
+            vim.api.nvim_exec( [[
+                function! NoWhitespace()
+                    let l:save = winsaveview()
+                    keeppatterns %s/\s\+$//e
+                    call winrestview(l:save)
+                endfunction
+                call NoWhitespace()
+            ]], true )
+        end,
+    })
+    vim.cmd([[
+        hi WhitespaceEOF ctermbg=grey guibg=grey
+        match WhitespaceEOF /\s\+$/
+    ]])
     vim.keymap.set( 'n', '<leader>c',  '<cmd>nohls<cr>', { desc = 'Clear HighLight' } )
     vim.keymap.set( 'n', '<leader>co', '<cmd>:copen<cr>', { desc = 'Open qf Window' } )
     vim.keymap.set( 'n', '<leader>cc', '<cmd>:cclose<cr>', { desc = 'Close qf Window' } )

@@ -4,7 +4,7 @@ vim.g.mapleader = ','
 -- Hint: use `:h <option>` to figure out the meaning if needed
 -- vim.opt.clipboard = 'unnamedplus' -- use system clipboard
 vim.opt.wildmenu = true
-vim.opt.completeopt = menu, menuone, noselect
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'longest' }
 vim.opt.mouse = 'a' -- allow the mouse to be used in Nvim
 vim.opt.selection = 'inclusive'
 vim.opt.magic = true
@@ -13,7 +13,7 @@ vim.opt.mousemodel = popup
 vim.opt.formatoptions= 'tcqmM'
 vim.opt.autoindent = true
 vim.opt.smartindent = true
-vim.opt.whichwrap = 'b,s,<,>,[,]' -- 方向键换行
+vim.opt.whichwrap:append( 'b,s,<,>,[,],h,l' ) -- 方向键换行
 
 -- Tab
 vim.opt.tabstop = 4 -- number of visual spaces per TAB
@@ -26,11 +26,11 @@ vim.opt.showtabline = 1
 vim.opt.number = true -- show absolute number
 vim.opt.relativenumber = true -- add numbers to each line on the left side
 vim.opt.cursorline = true -- highlight cursor line underneath the cursor horizontally
+vim.opt.cursorcolumn = true
 vim.opt.splitbelow = true -- open new vertical split bottom
 vim.opt.splitright = true -- open new horizontal splits right
 vim.opt.termguicolors = true        -- enabl 24-bit RGB color in the TUI
 vim.opt.showmode = false -- we are experienced, wo don't need the "-- INSERT --" mode hint
-vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes'
 vim.opt.ruler = true
 vim.opt.foldenable = true
@@ -39,6 +39,8 @@ vim.opt.foldlevel = 100
 vim.opt.showmatch = true
 vim.opt.scrolloff = 3
 vim.opt.sidescrolloff = 3
+-- vim.opt.colorcolumn = "120"
+--vim.opt.showbreak = ↳
 
 -- Searching
 vim.opt.incsearch = true -- search as characters are entered
@@ -57,6 +59,6 @@ vim.opt.writebackup = false
 vim.opt.swapfile = false
 
 -- split window 从上边和左边边出现
-vim.opt.splitbelow = true 
-vim.opt.splitright = false 
+vim.opt.splitbelow = true
+vim.opt.splitright = false
 
