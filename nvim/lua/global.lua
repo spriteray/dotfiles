@@ -34,9 +34,15 @@ function global:selection()
     end
 end
 
-function global:register()
-    vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern = "*",
+function global:autocmd()
+    -- 高亮显示行末空白
+    vim.cmd([[
+        hi WhitespaceEOF ctermbg=grey guibg=grey
+        match WhitespaceEOF /\s\+$/
+    ]])
+    -- 自动移除行末空白
+    vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '*',
         callback = function()
             vim.api.nvim_exec( [[
                 function! NoWhitespace()
@@ -48,16 +54,31 @@ function global:register()
             ]], true )
         end,
     })
-    vim.cmd([[
-        hi WhitespaceEOF ctermbg=grey guibg=grey
-        match WhitespaceEOF /\s\+$/
-    ]])
+    -- 跳到退出之前的光标处
+    vim.api.nvim_create_autocmd( 'BufReadPost', {
+        pattern = '*',
+        callback = function()
+            vim.api.nvim_exec( [[
+                if line("'\"") > 0 && line("'\"") <= line("$")
+                    exe "normal! g`\""
+                endif
+            ]], true )
+        end,
+    })
+end
+
+function global:keymap()
     vim.keymap.set( 'n', '<leader>c',  '<cmd>nohls<cr>', { desc = 'Clear HighLight' } )
     vim.keymap.set( 'n', '<leader>co', '<cmd>:copen<cr>', { desc = 'Open qf Window' } )
     vim.keymap.set( 'n', '<leader>cc', '<cmd>:cclose<cr>', { desc = 'Close qf Window' } )
     vim.keymap.set( 'n', '<leader>fd', '<cmd>:set ff=dos<cr>',{ desc = 'Set File-Format DOS' } )
     vim.keymap.set( 'n', '<leader>fu', '<cmd>:set ff=unix<cr>', { desc = 'Set File-Format UNIX' } )
     vim.keymap.set( 'n', '<leader>fm', '<cmd>:set ff=mac<cr>', { desc = 'Set File-Format MAC' } )
+end
+
+function global:register()
+    self:keymap()
+    self:autocmd()
 end
 
 return global

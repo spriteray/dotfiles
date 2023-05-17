@@ -18,7 +18,7 @@ local plugins = require('plugins')
 plugins.init( pluginpath )
 plugins.load( pluginpath, cppfilelist )
 
--- 注册快捷键
+-- 注册快捷键以及自动命令
 global:register()
 
 -- 应用配色

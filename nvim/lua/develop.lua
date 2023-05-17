@@ -20,6 +20,12 @@ function develop.load( cppfilelist )
             },
         },
 
+        -- comment
+        {
+            'numToStr/Comment.nvim',
+            opts = { },
+        },
+
         -- highlight
         {
             'octol/vim-cpp-enhanced-highlight', ft = cppfilelist,
@@ -100,8 +106,7 @@ function develop.load( cppfilelist )
         {
             'akinsho/toggleterm.nvim',
             opts = {
-                open_mapping = [[<C-/>]],
-                direction = 'float',
+                open_mapping = [[<F2>]], direction = 'float',
             },
         },
 
