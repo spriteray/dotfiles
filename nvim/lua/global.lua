@@ -34,12 +34,17 @@ function global:selection()
     end
 end
 
-function global:autocmd()
+function global:autocmd( cppfilelist )
     -- 高亮显示行末空白
-    vim.cmd([[
-        hi WhitespaceEOF ctermbg=grey guibg=grey
-        match WhitespaceEOF /\s\+$/
-    ]])
+    vim.api.nvim_create_autocmd( 'FileType', {
+        pattern = cppfilelist,
+        callback = function()
+            vim.api.nvim_exec( [[
+                hi WhitespaceEOF ctermbg=grey guibg=grey
+                match WhitespaceEOF /\s\+$/
+            ]], true )
+        end
+    } )
     -- 自动移除行末空白
     vim.api.nvim_create_autocmd('BufWritePre', {
         pattern = '*',
@@ -52,7 +57,7 @@ function global:autocmd()
                 endfunction
                 call NoWhitespace()
             ]], true )
-        end,
+        end
     })
     -- 跳到退出之前的光标处
     vim.api.nvim_create_autocmd( 'BufReadPost', {
@@ -63,7 +68,7 @@ function global:autocmd()
                     exe "normal! g`\""
                 endif
             ]], true )
-        end,
+        end
     })
 end
 
@@ -76,9 +81,9 @@ function global:keymap()
     vim.keymap.set( 'n', '<leader>fm', '<cmd>:set ff=mac<cr>', { desc = 'Set File-Format MAC' } )
 end
 
-function global:register()
+function global:register( cppfilelist )
     self:keymap()
-    self:autocmd()
+    self:autocmd( cppfilelist )
 end
 
 return global

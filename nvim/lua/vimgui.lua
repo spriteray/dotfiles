@@ -18,10 +18,7 @@ function vimgui.load()
         },
 
         {
-            'sindrets/diffview.nvim',
-            opts = {
-
-            },
+            'sindrets/diffview.nvim', opts = { },
         },
 
         -- rainbow
@@ -81,9 +78,9 @@ function vimgui.load()
                         custom_filter = function(buf, buf_numbers)
                             local buf_type = vim.bo[buf].filetype
                             if buf_type == 'gitcommit' or buf_type == 'help' then
-                                return false 
+                                return false
                             end
-                            return true 
+                            return true
                         end
                     },
                 } )
