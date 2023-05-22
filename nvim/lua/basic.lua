@@ -26,7 +26,7 @@ vim.opt.showtabline = 1
 vim.opt.number = true -- show absolute number
 vim.opt.relativenumber = true -- add numbers to each line on the left side
 vim.opt.cursorline = true -- highlight cursor line underneath the cursor horizontally
-vim.opt.cursorcolumn = true
+-- vim.opt.cursorcolumn = true
 vim.opt.splitbelow = true -- open new vertical split bottom
 vim.opt.splitright = true -- open new horizontal splits right
 vim.opt.termguicolors = true        -- enabl 24-bit RGB color in the TUI
@@ -40,7 +40,15 @@ vim.opt.showmatch = true
 vim.opt.scrolloff = 3
 vim.opt.sidescrolloff = 3
 -- vim.opt.colorcolumn = "120"
---vim.opt.showbreak = ↳
+vim.opt.list = true
+vim.opt.listchars = {
+    tab = '▸ ',
+    space = '·',
+    extends = '⟩',
+    trail = '·',
+    precedes = '⟨',
+    eol = '↵',
+}
 
 -- Searching
 vim.opt.incsearch = true -- search as characters are entered
