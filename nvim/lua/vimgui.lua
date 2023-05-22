@@ -14,6 +14,7 @@ function vimgui.load()
                     week_header = { enable = true },
                     project = { enable = false },
                 },
+                hide = { statusline, tabline, winbar },
             },
         },
 

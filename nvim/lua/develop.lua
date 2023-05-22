@@ -98,7 +98,7 @@ function develop.load( cppfilelist )
                         builtin.live_grep({ default_text = data })
                     end
                 end, opt )
-                vim.keymap.set('n', '<leader>fs', builtin.grep_string, {})
+                vim.keymap.set('n', '<leader>fc', builtin.grep_string, {})
             end,
         },
 
