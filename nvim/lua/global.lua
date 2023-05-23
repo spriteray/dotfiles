@@ -70,19 +70,21 @@ function global:autocmd( cppfilelist )
             ]], true )
         end
     })
-    -- CursorColumn
-    vim.api.nvim_create_autocmd( {'InsertLeave', 'WinEnter', 'BufReadPost'}, {
-        pattern = '*',
+    -- visual mode
+    vim.api.nvim_create_autocmd( 'ModeChanged', {
+        pattern = '[vV\x16]*:*',
         callback = function()
+            vim.opt.list = false
+            vim.opt.cursorcolumn = false
+        end
+    })
+    vim.api.nvim_create_autocmd( 'ModeChanged', {
+        pattern = '*:[vV\x16]*',
+        callback = function()
+            vim.opt.list = true
             vim.opt.cursorcolumn = true
         end
     })
-    vim.api.nvim_create_autocmd( {'InsertEnter', 'WinLeave'}, {
-        pattern = '*',
-        callback = function()
-            vim.opt.cursorcolumn = false
-        end
-    } )
 end
 
 function global:keymap()
