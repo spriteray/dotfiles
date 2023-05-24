@@ -92,6 +92,8 @@ function develop.load( cppfilelist )
                 vim.keymap.set({'n','v'}, '<leader>bb', builtin.buffers, {})
                 vim.keymap.set({'n','v'}, '<leader>ff', function()
                     local data = global:selection()
+                    vim.opt.list = false
+                    vim.opt.cursorcolumn = false
                     if data == '' then
                         builtin.live_grep({})
                     else

@@ -78,7 +78,7 @@ function vimgui.load()
                         },
                         custom_filter = function(buf, buf_numbers)
                             local buf_type = vim.bo[buf].filetype
-                            if buf_type == 'gitcommit' or buf_type == 'help' then
+                            if buf_type == 'gitcommit' or buf_type == 'help' or buf_type == 'qf' then
                                 return false
                             end
                             return true
@@ -95,19 +95,9 @@ function vimgui.load()
             opts = {
                 options = {
                     theme = 'nightfox',
-                    disabled_filetypes = { statusline = { 'gitcommit' }, winbar = {} },
-                },
-                setions = {
-                    lualine_a = {
-                        'diff',
-                        colored = true,
-                        diff_color = {
-                            added    = 'DiffAdd',
-                            modified = 'DiffChange',
-                            removed  = 'DiffDelete',
-                        },
-                        source = nil,
-                        symbols = {added = '+', modified = '~', removed = '-'},
+                    disabled_filetypes = {
+                        winbar = {}, tabline = {},
+                        statusline = { 'gitcommit' },
                     },
                 },
             },
