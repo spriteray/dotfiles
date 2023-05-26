@@ -34,11 +34,15 @@ function global:selection()
     end
 end
 
-function global:autocmd( cppfilelist )
+function global:autocmd( cppfilelist, scriptfilelist )
     -- 高亮显示行末空白
     vim.api.nvim_create_autocmd( 'FileType', {
-        pattern = cppfilelist,
+        pattern = cppfilelist, scriptfilelist,
         callback = function()
+            -- number of spacesin tab when editing
+            vim.opt.softtabstop = 4
+            -- tabs are spaces, mainly because of python
+            vim.opt.expandtab = true
             vim.api.nvim_exec( [[
                 hi WhitespaceEOF ctermbg=grey guibg=grey
                 match WhitespaceEOF /\s\+$/

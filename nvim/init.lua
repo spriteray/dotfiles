@@ -4,6 +4,7 @@ local scheme = require( 'colorscheme' )
 
 -- cpp文件类型列表
 local cppfilelist = { 'cpp', 'c', 'h', 'cc', 'hpp', 'objc' }
+local scriptfilelist = { 'py', 'lua' }
 -- 插件根目录
 local pluginpath = vim.fn.stdpath( 'data' ) .. '/plugin'
 
@@ -19,7 +20,7 @@ plugins.init( pluginpath )
 plugins.load( pluginpath, cppfilelist )
 
 -- 注册快捷键以及自动命令
-global:register( cppfilelist )
+global:register( cppfilelist, scriptfilelist )
 
 -- 应用配色
 scheme.apply_scheme()
