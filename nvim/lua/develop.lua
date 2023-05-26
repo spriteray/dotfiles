@@ -89,8 +89,8 @@ function develop.load( cppfilelist )
                 })
                 local builtin = require('telescope.builtin')
                 vim.keymap.set({'n','v'}, '<C-p>', builtin.find_files, {})
-                vim.keymap.set({'n','v'}, '<leader>bb', builtin.buffers, {})
-                vim.keymap.set({'n','v'}, '<leader>ff', function()
+                vim.keymap.set({'n','v'}, '<leader>fb', builtin.buffers, {})
+                vim.keymap.set({'n','v'}, '<leader>fs', function()
                     local data = global:selection()
                     vim.opt.list = false
                     vim.opt.cursorcolumn = false
@@ -100,7 +100,7 @@ function develop.load( cppfilelist )
                         builtin.live_grep({ default_text = data })
                     end
                 end, opt )
-                vim.keymap.set('n', '<leader>fc', builtin.grep_string, {})
+                vim.keymap.set('n', '<leader>ff', builtin.grep_string, {})
             end,
         },
 
