@@ -1,6 +1,7 @@
 
 local develop = {}
 local global = require( 'global' )
+local localpath = vim.fn.stdpath( 'data' )
 
 function develop.load( cppfilelist )
     return {
@@ -128,7 +129,7 @@ function develop.load( cppfilelist )
 
         -- you complete me
         {
-            dir = '/home/ryan/app/YouCompleteMe', ft = cppfilelist,
+            dir = localpath .. '/YouCompleteMe', ft = cppfilelist,
             config = function()
                 vim.g.ycm_error_symbol = 'X'
                 vim.g.ycm_warning_symbol = '?'
