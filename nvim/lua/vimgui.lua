@@ -34,6 +34,14 @@ function vimgui.load()
             end
         },
 
+		{
+			'lukas-reineke/indent-blankline.nvim',
+			opts = {
+				show_current_context = false,
+				show_current_context_start = false,
+			},
+		},
+
         -- nvim-neo-tree
         {
             'nvim-neo-tree/neo-tree.nvim',

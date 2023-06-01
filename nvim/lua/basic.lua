@@ -38,10 +38,10 @@ vim.opt.showmatch = true
 vim.opt.scrolloff = 3
 vim.opt.sidescrolloff = 3
 -- vim.opt.colorcolumn = "120"
---vim.opt.list = true
+vim.opt.list = true
 vim.opt.listchars = {
     tab = '▸ ',
-    space = '·',
+    space = '⋅',
     extends = '⟩',
     trail = '·',
     precedes = '⟨',
@@ -55,7 +55,7 @@ vim.opt.smartcase = true -- but make it case sensitive if an uppercase is entere
 vim.opt.syntax = 'on'
 
 -- Python3
-vim.g.python3_host_prog = '/usr/bin/python3'
+vim.g.python3_host_prog = vim.env['PYTHON3_BIN']
 
 -- file
 vim.opt.autoread = true

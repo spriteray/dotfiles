@@ -23,8 +23,7 @@ function develop.load( cppfilelist )
 
         -- comment
         {
-            'numToStr/Comment.nvim',
-            opts = { },
+            'numToStr/Comment.nvim', opts = { },
         },
 
         -- highlight
@@ -93,8 +92,6 @@ function develop.load( cppfilelist )
                 vim.keymap.set({'n','v'}, '<leader>fb', builtin.buffers, {})
                 vim.keymap.set({'n','v'}, '<leader>fs', function()
                     local data = global:selection()
-                    vim.opt.list = false
-                    vim.opt.cursorcolumn = false
                     if data == '' then
                         builtin.live_grep({})
                     else

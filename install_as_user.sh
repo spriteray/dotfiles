@@ -45,6 +45,8 @@ echo "alias tailf='tail -n 300 -f'" >> .zshrc
 echo "alias tnew='tmux new -s'" >> .zshrc
 echo "alias tattach='tmux attach -t'" >> .zshrc
 sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster-light\"/g" .zshrc
+echo "export PYTHON2_BIN='/usr/bin/python2'" >> .zshrc
+echo "export PYTHON3_BIN='/usr/bin/python3'" >> .zshrc
 
 sed -i 's/^# set -gu prefix2/set -gu prefix2/g' .tmux.conf.local
 sed -i 's/^# unbind C-a/unbind C-a/g' .tmux.conf.local

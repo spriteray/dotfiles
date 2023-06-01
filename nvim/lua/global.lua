@@ -74,21 +74,6 @@ function global:autocmd( cppfilelist, scriptfilelist )
             ]], true )
         end
     })
-    -- visual mode
-    vim.api.nvim_create_autocmd( 'ModeChanged', {
-        pattern = '[vV\x16]*:*',
-        callback = function()
-            vim.opt.list = false
-            vim.opt.cursorcolumn = false
-        end
-    })
-    vim.api.nvim_create_autocmd( 'ModeChanged', {
-        pattern = '*:[vV\x16]*',
-        callback = function()
-            vim.opt.list = true
-            vim.opt.cursorcolumn = true
-        end
-    })
 end
 
 function global:keymap()
