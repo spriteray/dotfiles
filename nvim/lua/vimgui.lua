@@ -1,7 +1,7 @@
 
 local vimgui = {}
 
-function vimgui.load()
+function vimgui.load( cppfilelist, scriptfilelist )
     return {
         -- dashboard
         {
@@ -35,7 +35,7 @@ function vimgui.load()
         },
 
 		{
-			'lukas-reineke/indent-blankline.nvim',
+			'lukas-reineke/indent-blankline.nvim', ft = cppfilelist, scriptsfilelist,
 			opts = {
 				show_current_context = false,
 				show_current_context_start = false,

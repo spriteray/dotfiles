@@ -17,7 +17,7 @@ require('basic')
 -- 加载插件
 local plugins = require('plugins')
 plugins.init( pluginpath )
-plugins.load( pluginpath, cppfilelist )
+plugins.load( pluginpath, cppfilelist, scriptfilelist )
 
 -- 注册快捷键以及自动命令
 global:register( cppfilelist, scriptfilelist )
