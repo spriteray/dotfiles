@@ -9,7 +9,7 @@ apt install -y net-tools sudo curl unzip wget
 echo "Install Develop Environment ..."
 apt install -y build-essential openssh-server openssh-client cmake clang-format ripgrep
 apt install -y zsh git gdb tmux vim bash-completion language-pack-en language-pack-zh-hans language-pack-zh-hant
-apt install -y libssl-dev libpython3-dev python3-dev man libmysqlclient-dev libcurl4-openssl-dev
+apt install -y libssl-dev libpython3-dev python3-dev python3-pip man libmysqlclient-dev libcurl4-openssl-dev
 
 echo "Install Manual ..."
 apt install -y manpages-de  manpages-de-dev  manpages-dev glibc-doc manpages-posix-dev manpages-posix manpages-zh
