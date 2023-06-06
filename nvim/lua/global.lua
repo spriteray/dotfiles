@@ -83,6 +83,7 @@ function global:keymap()
     vim.keymap.set( 'n', '<leader>fd', '<cmd>:set ff=dos<cr>',{ desc = 'Set File-Format DOS' } )
     vim.keymap.set( 'n', '<leader>fu', '<cmd>:set ff=unix<cr>', { desc = 'Set File-Format UNIX' } )
     vim.keymap.set( 'n', '<leader>fm', '<cmd>:set ff=mac<cr>', { desc = 'Set File-Format MAC' } )
+    vim.keymap.set( 'n', '<space>', "@=((foldclosed(line('.')) < 0) ? 'zc':'zo')<cr>", { desc = 'Code Fold', noremap = true } )
 end
 
 function global:register( cppfilelist )
