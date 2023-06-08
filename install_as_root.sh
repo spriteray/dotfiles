@@ -25,10 +25,10 @@ git clone https://github.com/ycm-core/YouCompleteMe.git /usr/src/YouCompleteMe
 cd /usr/src/YouCompleteMe && git submodule update --init --recursive && ./install.py  --clangd-completer
 
 echo "Install Protobuf ..."
-wget https://github.com/protocolbuffers/protobuf/releases/download/v3.19.4/protobuf-all-3.19.4.zip
-unzip protobuf-all-3.19.4.zip
-mv protobuf-3.19.4 /usr/src/
-cd /usr/src/protobuf-3.19.4 && ./configure && make && make install
+wget https://github.com/protocolbuffers/protobuf/releases/download/v3.20.3/protobuf-all-3.20.3.zip
+unzip protobuf-all-3.20.3.zip
+mv protobuf-3.20.3 /usr/src/
+cd /usr/src/protobuf-3.20.3 && ./configure && make && make install
 
 # 安装wsl工具
 # add-apt-repository ppa:wslutilities/wslu
