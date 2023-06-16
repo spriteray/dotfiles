@@ -17,9 +17,9 @@ cd $HOME
 git clone https://github.com/gpakosz/.tmux.git
 ln -s .tmux/.tmux.conf .tmux.conf && cp .tmux/.tmux.conf.local .tmux.conf.local
 
-echo "Clone dotvim ..."
-git clone https://github.com/spriteray/dotvim.git
-cd dotvim
+echo "Clone dotfiles ..."
+git clone https://github.com/spriteray/dotfiles.git
+cd dotfiles
 git submodule update --init --recursive
 cp _vimrc ~/.vimrc
 cp -r dircolors-solarized ~/.dircolors-solarized
