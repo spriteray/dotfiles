@@ -37,9 +37,9 @@ cp -a zsh-osx-autoproxy ~/.oh-my-zsh/plugins/
 cd $HOME
 mkdir -p .vim/bundle
 mkdir -p .local/share/nvim
-ln -s /usr/src/YouCompleteMe .vim/bundle/YouCompleteMe
-ln -s /usr/src/YouCompleteMe .local/share/nvim/YouCompleteMe
-echo "PATH=$PATH:$HOME/bin"
+ln -s $HOME/app/YouCompleteMe .vim/bundle/YouCompleteMe
+ln -s $HOME/app/YouCompleteMe .local/share/nvim/YouCompleteMe
+echo "PATH=$PATH:$HOME/bin" >> .zshrc
 echo "plugins+=(zsh-osx-autoproxy)" >> .zshrc
 echo "export LESSCHARSET=utf-8" >> .zshrc
 echo "export LANG=\"zh_CN.UTF-8\"" >> .zshrc
