@@ -1,7 +1,14 @@
 #!/bin/bash
 
 cd $HOME
-mkdir -p bin
+mkdir -p bin app
+
+echo "Install YouCompleteMe ..."
+cd app
+git clone https://github.com/ycm-core/YouCompleteMe.git YouCompleteMe
+cd YouCompleteMe && git submodule update --init --recursive && ./install.py  --clangd-completer
+
+cd $HOME
 echo "Install oh_my_zsh ..."
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 

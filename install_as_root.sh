@@ -20,10 +20,6 @@ echo "*               soft    core            unlimited" >> /etc/security/limits
 echo "*               hard 	  core            unlimited" >> /etc/security/limits.conf
 sysctl -w kernel.core_pattern=core.%e.%p.%t
 
-echo "Install YouCompleteMe ..."
-git clone https://github.com/ycm-core/YouCompleteMe.git /usr/src/YouCompleteMe
-cd /usr/src/YouCompleteMe && git submodule update --init --recursive && ./install.py  --clangd-completer
-
 echo "Install Protobuf ..."
 wget https://github.com/protocolbuffers/protobuf/releases/download/v3.20.3/protobuf-all-3.20.3.zip
 unzip protobuf-all-3.20.3.zip
