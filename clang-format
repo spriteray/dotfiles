@@ -1,4 +1,4 @@
-Language: cpp
+Language: Cpp
 BasedOnStyle: webkit
 Standard : Latest
 SortIncludes : false
@@ -14,7 +14,9 @@ AllowShortFunctionsOnASingleLine : Inline
 AllowShortIfStatementsOnASingleLine : WithoutElse
 AlwaysBreakTemplateDeclarations : true
 PointerAlignment : Middle
-AlignTrailingComments : true
+AlignTrailingComments: true
+AlignArrayOfStructures: Left
+#AlignConsecutiveAssignments: Consecutive
 BinPackArguments : false
 FixNamespaceComments : true
 NamespaceIndentation : Inner
@@ -27,8 +29,34 @@ SpaceBeforeAssignmentOperators : true
 SpaceBeforeInheritanceColon : true
 SpaceBeforeCtorInitializerColon : true
 SpaceBeforeRangeBasedForLoopColon : true
+SpaceBeforeCaseColon: true
+SpaceBeforeCpp11BracedList: true
 IndentCaseBlocks : false
 IndentCaseLabels : true
+IndentGotoLabels: false
 BreakBeforeBinaryOperators : All
 BreakConstructorInitializers : BeforeColon
-BreakBeforeBraces : Mozilla
+CompactNamespaces: false
+IndentPPDirectives: AfterHash
+#BreakBeforeBraces : Mozilla
+BreakBeforeBraces : Custom
+BraceWrapping:
+  AfterEnum: false
+  AfterClass: true
+  AfterStruct: false
+  AfterUnion: false
+  AfterFunction: true
+  AfterExternBlock: false
+  AfterCaseLabel: false
+  AfterControlStatement: Never
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  IndentBraces: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+PointerAlignment : Middle
+ReferenceAlignment : Middle
+Cpp11BracedListStyle : false
