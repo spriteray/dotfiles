@@ -23,7 +23,7 @@ function colorscheme.load()
             opts = {
                 options = {
                     styles = {
-                        comments = 'italic',
+                        -- comments = 'italic',
                         keywords = "bold",
                         types = "bold",
                     },
