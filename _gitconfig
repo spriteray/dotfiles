@@ -9,6 +9,8 @@
 	quotepath = false
 	editor = vim
 	pager = less -FRSX
+	autocrlf = false
+	safecrlf = true
 
 [status]
 	submodulesummary = 1
@@ -29,7 +31,7 @@
 	merges = merge --squash --allow-unrelated-histories
 	commita = commit --amend
 	unstage = reset HEAD --
-	pulls = pull --recurse-submodule 
+	pulls = pull --recurse-submodule
 	relink = !sh -c 'git checkout $0 && git pull'
 	checkouts = checkout --recurse-submodules=yes
 
