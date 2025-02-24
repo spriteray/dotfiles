@@ -26,6 +26,16 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     end
     --default_prog = { 'wsl', '-u', 'ryan', '--cd', '~' }
     default_prog = {'powershell.exe', '-NoLogo'}
+elseif wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == 'aarch64-apple-darwin' then
+    table.insert( launch_menu, {
+        label = 'LOCAL:Zsh',
+        args = {'zsh'}
+    } )
+    table.insert( launch_menu, {
+        label = 'REMOTE:tssh(s)',
+        args = { 'tssh' }
+    } )
+    default_prog = {'zsh'}
 end
 
 --
