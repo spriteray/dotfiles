@@ -93,7 +93,10 @@ return {
     default_prog = default_prog,
     keys = keys,
     mouse_bindings = bingings,
+
+    -- window
     --window_background_opacity = 0.95,
+    initial_cols = 120, initial_rows = 30,
     
     -- cursor
     animation_fps = 120,
