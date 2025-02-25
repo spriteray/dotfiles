@@ -7,8 +7,27 @@ local wsl2_options = { 'wsl', '-u', 'ryan', '--cd', '~' }
 -- local config = wezterm.config_builder()
 local wsl_domains = wezterm.default_wsl_domains()
 
+--
+-- 字体选择
+--
+--local font_options = { family = 'Comic Mono', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
+--local font_options = { family = 'PragmataPro', weight = 'Regular', size = 16, width = 0.88, height = 1.0 }
+--local font_options = { family = 'Lilex Medium', weight = 'Regular', size = 14.5, width = 0.88, height = 1.0 }
+--local font_options = { family = 'NanumGothicCoding', weight = 'Regular', size = 16, width = 0.88, height = 1.0 }
+--local font_options = { family = 'Droid Sans Mono', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
+--local font_options = { family = 'Cascadia Code SemiLight', weight = 'Regular', size = 14.7, width = 0.88, height = 1.0 }
+--local font_options = { family = 'Hasklig Medium', weight = 'Regular', size = 15, width = 0.83, height = 1.0 }
+--local font_options = { family = 'Conta Mono', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
+--local font_options = { family = 'Operator Mono SSm Light', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
+local font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 14, width = 0.9, height = 1.0 }
+
+-- 
+-- 系统相关
+-- 
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
-    -- windows下启用powershell
+    --
+    -- windows
+    --
     term = '' -- Set to empty so FZF works on windows
     table.insert( launch_menu, {
         label = 'LOCAL:PowerShell',
@@ -24,9 +43,11 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
             args = wsl2_options 
         } )
     end
-    --default_prog = { 'wsl', '-u', 'ryan', '--cd', '~' }
     default_prog = {'powershell.exe', '-NoLogo'}
 elseif wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == 'aarch64-apple-darwin' then
+    --
+    -- macos
+    --
     table.insert( launch_menu, {
         label = 'LOCAL:Zsh',
         args = {'zsh'}
@@ -36,26 +57,14 @@ elseif wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple =
         args = { 'tssh' }
     } )
     default_prog = {'zsh'}
+    font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 16, width = 0.88, height = 1.0 }
 end
-
---
--- 字体选择
---
---local font_options = { family = 'Comic Mono', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
---local font_options = { family = 'PragmataPro', weight = 'Regular', size = 16, width = 0.88, height = 1.0 }
---local font_options = { family = 'Lilex Medium', weight = 'Regular', size = 14.5, width = 0.88, height = 1.0 }
---local font_options = { family = 'NanumGothicCoding', weight = 'Regular', size = 16, width = 0.88, height = 1.0 }
---local font_options = { family = 'Droid Sans Mono', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
---local font_options = { family = 'Cascadia Code SemiLight', weight = 'Regular', size = 14.7, width = 0.88, height = 1.0 }
---local font_options = { family = 'Hasklig Medium', weight = 'Regular', size = 15, width = 0.83, height = 1.0 }
---local font_options = { family = 'Conta Mono', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
---local font_options = { family = 'Operator Mono SSm Light', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
-local font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 14, width = 0.9, height = 1.0 }
 
 --
 -- 快捷键
 --
 local keys = {
+    { key = 'L', mods = 'CTRL', action = wezterm.action.ShowDebugOverlay },
     { key = '`', mods = 'CTRL', action = wezterm.action.SpawnCommandInNewWindow { args = wsl2_options } },
     { key = 'b', mods = 'ALT', action = wezterm.action.ShowLauncherArgs { flags = 'LAUNCH_MENU_ITEMS' }, },
 }
