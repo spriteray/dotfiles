@@ -36,6 +36,7 @@ function vimgui.load( cppfilelist, scriptfilelist )
 
 		{
 			'lukas-reineke/indent-blankline.nvim', ft = cppfilelist, scriptsfilelist,
+			tag = "v2.20.8",
 			opts = {
 				show_current_context = false,
 				show_current_context_start = false,
