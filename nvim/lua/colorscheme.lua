@@ -17,9 +17,13 @@ function colorscheme.load()
             main = { theme = 'neovim' },
         },
 
+		'Shatur/neovim-ayu',
+
         -- nightfox
         {
             'EdenEast/nightfox.nvim',
+			transparent = false,
+			terminal_colors = true,
             opts = {
                 options = {
                     styles = {
@@ -41,7 +45,6 @@ function colorscheme.load()
         {
             'folke/tokyonight.nvim',
             opts = {
-                style = 'storm',
                 transparent = false,
             },
         },
@@ -49,7 +52,10 @@ function colorscheme.load()
 end
 
 function colorscheme.apply( scheme )
-    local cmd = string.format( "set background=%s\ncolorscheme %s", scheme.background, scheme.scheme )
+    local cmd = string.format( "colorscheme %s", scheme.scheme )
+	if scheme.background then
+    	cmd = string.format( "set background=%s\ncolorscheme %s", scheme.background, scheme.scheme )
+	end
     local is_ok,_ = pcall( vim.cmd, cmd )
     if not is_ok then
         vim.notify( 'colorscheme ' .. scheme.scheme .. ' not found !' )
