@@ -48,22 +48,18 @@ function colorscheme.load()
     }
 end
 
-function colorscheme.apply( scheme, bg )
-    local cmd = string.format( "set background=%s\ncolorscheme %s", bg, scheme )
+function colorscheme.apply( scheme )
+    local cmd = string.format( "set background=%s\ncolorscheme %s", scheme.background, scheme.scheme )
     local is_ok,_ = pcall( vim.cmd, cmd )
     if not is_ok then
-        vim.notify( 'colorscheme ' .. scheme .. ' not found !' )
+        vim.notify( 'colorscheme ' .. scheme.scheme .. ' not found !' )
     end
 end
 
 -- 选择主题
-function colorscheme.apply_scheme()
+function colorscheme.apply_scheme( scheme )
     local global = require( 'global' )
-    if global.is_mac then
-        colorscheme.apply( 'solarized', 'light' )
-    else
-        colorscheme.apply( 'nightfox', 'dark' )
-    end
+	colorscheme.apply( scheme )
 end
 
 return colorscheme

@@ -1,7 +1,7 @@
 
 local vimgui = {}
 
-function vimgui.load( cppfilelist, scriptfilelist )
+function vimgui.load( cppfilelist, scriptfilelist, scheme )
     return {
         -- dashboard
         {
@@ -35,7 +35,7 @@ function vimgui.load( cppfilelist, scriptfilelist )
         },
 
 		{
-			'lukas-reineke/indent-blankline.nvim', ft = cppfilelist, scriptsfilelist,
+			'lukas-reineke/indent-blankline.nvim', main = 'ibl', ft = cppfilelist, scriptsfilelist,
 			opts = {
 				show_current_context = false,
 				show_current_context_start = false,
@@ -102,7 +102,7 @@ function vimgui.load( cppfilelist, scriptfilelist )
             dependencies = { 'nvim-tree/nvim-web-devicons', opt=true },
             opts = {
                 options = {
-                    theme = 'nightfox',
+                    theme = scheme,
                     disabled_filetypes = {
                         winbar = {}, tabline = {},
                         statusline = { 'gitcommit' },

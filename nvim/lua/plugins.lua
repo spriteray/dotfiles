@@ -16,12 +16,12 @@ function plugins.init( rootpath )
     vim.opt.rtp:prepend( lazypath )
 end
 
-function plugins.load( rootpath, cppfilelist, scriptfilelist )
+function plugins.load( rootpath, cppfilelist, scriptfilelist, scheme )
     require('lazy').setup( {
         -- colorschemes
         require( 'colorscheme' ).load(),
         -- vimgui
-        require( 'vimgui' ).load( cppfilelist, scriptfilelist ),
+        require( 'vimgui' ).load( cppfilelist, scriptfilelist, scheme ),
         -- develop
         require( 'develop' ).load( cppfilelist ),
     }, {

@@ -2,6 +2,14 @@
 local global = require( 'global' )
 local scheme = require( 'colorscheme' )
 
+-- 个性设置
+local profile = {
+	status_line_scheme = 'solarized_light',
+	color_scheme = {
+		scheme = 'solarized', background = 'light',
+	},
+}
+
 -- cpp文件类型列表
 local cppfilelist = { 'cpp', 'c', 'h', 'cc', 'hpp', 'objc' }
 local scriptfilelist = { 'py', 'lua' }
@@ -17,10 +25,10 @@ require('basic')
 -- 加载插件
 local plugins = require('plugins')
 plugins.init( pluginpath )
-plugins.load( pluginpath, cppfilelist, scriptfilelist )
+plugins.load( pluginpath, cppfilelist, scriptfilelist, profile.status_line_scheme )
 
 -- 注册快捷键以及自动命令
 global:register( cppfilelist, scriptfilelist )
 
 -- 应用配色
-scheme.apply_scheme()
+scheme.apply_scheme( profile.color_scheme )

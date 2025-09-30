@@ -22,7 +22,7 @@ vim.opt.showtabline = 1
 
 -- UI config
 vim.opt.number = true -- show absolute number
-vim.opt.relativenumber = true -- add numbers to each line on the left side
+--vim.opt.relativenumber = true -- add numbers to each line on the left side
 vim.opt.cursorline = true -- highlight cursor line underneath the cursor horizontally
 -- vim.opt.cursorcolumn = true
 vim.opt.splitbelow = true -- open new vertical split bottom

@@ -124,6 +124,21 @@ function develop.load( cppfilelist )
             end
         },
 
+		-- asyncrun
+		{
+			'skywind3000/asyncrun.vim', ft = cppfilelist,
+			config = function()
+				vim.g.asyncrun_open = 6
+				vim.g.asyncrun_bell = 1
+			end,
+			keys = {
+                { '<F10>', ':call asyncrun#quickfix_toggle(6) <cr>', mode = 'n', desc = 'AsyncQuickfix', noremap = true, silent = true },
+                { '<F7>', ':AsyncRun ./buildproject.sh<cr>', mode = 'n', desc = 'AsyncBuild', noremap = true, silent = true },
+                { '<F8>', ':AsyncRun ./buildproject.sh -e<cr>', mode = 'n', desc = 'AsyncBuildExportConfig', noremap = true, silent = true },
+                { '<F9>', ':AsyncRun ./buildproject.sh -s<cr>', mode = 'n', desc = 'AsyncBuildSqlbind', noremap = true, silent = true },
+			},
+		},
+
         -- you complete me
         {
             dir = localpath .. '/YouCompleteMe', ft = cppfilelist,
@@ -132,6 +147,7 @@ function develop.load( cppfilelist )
                 vim.g.ycm_warning_symbol = '?'
                 vim.g.ycm_confirm_extra_conf = 0
                 vim.g.ycm_show_diagnostics_ui = 1
+				vim.g.ycm_max_diagnostics_to_display = 0
                 vim.g.ycm_min_num_identifier_candidate_chars = 2
                 vim.g.ycm_collect_identifiers_from_comments_and_strings = 1
                 vim.g.ycm_seed_identifiers_with_syntax = 1
@@ -143,7 +159,7 @@ function develop.load( cppfilelist )
             end,
             keys = {
                 { '<F11>', ':YcmCompleter GoTo<cr>', mode = 'n', desc = 'YouCompleteMeGoto1', noremap = true, silent = true },
-                { '<F12>', ':YcmCompleter GoToDeclaration<cr>', mode = 'n', desc = 'YouCompleteMeGoto2', noremap = true, silent = true },
+                { '<F12>', ':YcmCompleter GoToImplementation<cr>', mode = 'n', desc = 'YouCompleteMeGoto2', noremap = true, silent = true },
             },
         },
     }
