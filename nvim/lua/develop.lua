@@ -140,28 +140,28 @@ function develop.load( cppfilelist )
 		},
 
         -- you complete me
-        {
-            dir = localpath .. '/YouCompleteMe', ft = cppfilelist,
-            config = function()
-                vim.g.ycm_error_symbol = 'X'
-                vim.g.ycm_warning_symbol = '?'
-                vim.g.ycm_confirm_extra_conf = 0
-                vim.g.ycm_show_diagnostics_ui = 1
-				vim.g.ycm_max_diagnostics_to_display = 0
-                vim.g.ycm_min_num_identifier_candidate_chars = 2
-                vim.g.ycm_collect_identifiers_from_comments_and_strings = 1
-                vim.g.ycm_seed_identifiers_with_syntax = 1
-                vim.g.ycm_min_num_of_chars_for_completion = 1
-                vim.g.ycm_key_invoke_completion = '<c-z>'
-                vim.g.ycm_filetype_blacklist = "'tagbar' : 1,\
-                    'qf' : 1, 'notes' : 1, 'markdown' : 1, 'unite' : 1, \
-                    'text' : 1, 'vimwiki' : 1, 'pandoc' : 1, 'infolog' : 1, 'gitcommit' : 1, 'mail' : 1"
-            end,
-            keys = {
-                { '<F11>', ':YcmCompleter GoTo<cr>', mode = 'n', desc = 'YouCompleteMeGoto1', noremap = true, silent = true },
-                { '<F12>', ':YcmCompleter GoToImplementation<cr>', mode = 'n', desc = 'YouCompleteMeGoto2', noremap = true, silent = true },
-            },
-        },
+        --{
+        --    dir = localpath .. '/YouCompleteMe', ft = cppfilelist,
+        --    config = function()
+        --        vim.g.ycm_error_symbol = 'X'
+        --        vim.g.ycm_warning_symbol = '?'
+        --        vim.g.ycm_confirm_extra_conf = 0
+        --        vim.g.ycm_show_diagnostics_ui = 1
+		--		vim.g.ycm_max_diagnostics_to_display = 0
+        --        vim.g.ycm_min_num_identifier_candidate_chars = 2
+        --        vim.g.ycm_collect_identifiers_from_comments_and_strings = 1
+        --        vim.g.ycm_seed_identifiers_with_syntax = 1
+        --        vim.g.ycm_min_num_of_chars_for_completion = 1
+        --        vim.g.ycm_key_invoke_completion = '<c-z>'
+        --        vim.g.ycm_filetype_blacklist = "'tagbar' : 1,\
+        --            'qf' : 1, 'notes' : 1, 'markdown' : 1, 'unite' : 1, \
+        --            'text' : 1, 'vimwiki' : 1, 'pandoc' : 1, 'infolog' : 1, 'gitcommit' : 1, 'mail' : 1"
+        --    end,
+        --    keys = {
+        --        { '<F11>', ':YcmCompleter GoTo<cr>', mode = 'n', desc = 'YouCompleteMeGoto1', noremap = true, silent = true },
+        --        { '<F12>', ':YcmCompleter GoToImplementation<cr>', mode = 'n', desc = 'YouCompleteMeGoto2', noremap = true, silent = true },
+        --    },
+        --},
     }
 end
 

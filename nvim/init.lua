@@ -4,14 +4,14 @@ local scheme = require( 'colorscheme' )
 
 -- 个性设置
 local profile = {
-	--status_line_scheme = 'solarized_light',
-	-- status_line_scheme = 'nightfox',
-	status_line_scheme = 'ayu',
+	status_line_scheme = 'solarized_light',
+	--status_line_scheme = 'nightfox',
+	--status_line_scheme = 'ayu',
 	color_scheme = {
-		-- scheme = 'solarized', background = 'light',
+		scheme = 'solarized', background = 'light',
 		-- scheme = 'nightfox', background = 'dark',
 		-- scheme = 'tokyonight', background = 'light',
-		scheme = 'ayu', background = 'light',
+		-- scheme = 'ayu', background = 'light',
 	},
 }
 
