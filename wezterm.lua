@@ -27,9 +27,9 @@ local is_mac = wezterm.target_triple:find("apple-darwin") ~= nil
 local font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 14.3, width = 0.85, height = 1.0 }
 --local font_options = { family = 'Monaspace Argon NF Light', weight = 'Regular', size = 14.5, width = 0.85, height = 1.0 }
 
--- 
+--
 -- 系统相关
--- 
+--
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     --
     -- windows
@@ -48,13 +48,13 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
         args = { 'tssh' }
     } )
     for idx, dom in ipairs( wsl_domains ) do
-        table.insert( launch_menu, { 
+        table.insert( launch_menu, {
             label = dom.name,
-            args = wsl2_options 
+            args = wsl2_options
         } )
     end
     default_prog = {'powershell.exe', '-NoLogo'}
-else 
+else
     --
     -- macos
     --
@@ -67,7 +67,7 @@ else
         args = { 'tssh' }
     } )
     default_prog = {'zsh'}
-    font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 16, width = 0.88, height = 1.0 }
+    font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 18, width = 0.88, height = 1.0 }
 end
 
 --
@@ -100,11 +100,6 @@ local bingings = {
         mods = 'CTRL',
         action = 'OpenLinkAtMouseCursor'
     },
-    {
-        event = { Up = { streak = 1, button = 'Right' } },
-        mods = is_mac and 'CMD' or 'ALT', -- 加个修饰键，防止误删
-        action = wezterm.action.CloseCurrentTab { confirm = true },
-    },
 }
 
 -- wezterm.on('gui-startup', function(cmd)
@@ -133,7 +128,7 @@ local function get_env()
     }
 end
 
-local options =  {
+local core_options =  {
 	launch_menu = launch_menu,
     default_prog = default_prog,
     keys = keys,
@@ -142,7 +137,7 @@ local options =  {
     -- window
     -- window_background_opacity = 0.95,
     initial_cols = 120, initial_rows = 30,
-    
+
     -- cursor
     animation_fps = 120,
     cursor_blink_ease_in = 'EaseOut',
@@ -159,30 +154,57 @@ local options =  {
         freetype_load_flags = 'FORCE_AUTOHINT',
         --freetype_load_target = 'VerticalLcd', freetype_render_target = 'Light',
         freetype_load_target = 'HorizontalLcd', freetype_render_target = 'Light',
-    }, 
-    font_size = font_options.size, 
+    },
+    font_size = font_options.size,
     cell_width = font_options.width, line_height = font_options.height,
-  	
+
     color_scheme = "Solarized (light) (terminal.sexy)",
   	--color_scheme = "Ayu Light (Gogh)",
     --color_scheme = "nightfox",
-      	
+
     -- tab bar
     enable_tab_bar = true,
     use_fancy_tab_bar = false,
-    show_new_tab_button_in_tab_bar = true,
   	hide_tab_bar_if_only_one_tab = true,
+	show_tab_index_in_tab_bar = false,      -- 隐藏标签前的序号 [1/2/3]，保持干净
+    show_new_tab_button_in_tab_bar = false, -- 隐藏右上角的 [+] 号，用 Cmd+T 新建更顺手
+	-- 2. 极简配色逻辑 (完全适配 Solarized Light)
+	colors = {
+        tab_bar = {
+            background = '#fdf6e3',
+
+            active_tab = {
+                bg_color = '#eee8d5', -- 微微加深，凸显层级
+                fg_color = '#073642',
+                intensity = 'Bold',
+            },
+
+            inactive_tab = {
+                bg_color = '#fdf6e3', -- 与背景融为一体
+                fg_color = '#93a1a1',
+            },
+
+            inactive_tab_hover = {
+                bg_color = '#eee8d5',
+                fg_color = '#586e75',
+            },
+
+            -- 即使隐藏了 [+] 按钮，也需要配置以防颜色突兀
+            new_tab = { bg_color = '#fdf6e3', fg_color = '#93a1a1' },
+            new_tab_hover = { bg_color = '#eee8d5', fg_color = '#586e75' },
+        }
+    },
     --tab_bar_at_bottom=true,
     tab_max_width=40,
     switch_to_last_active_tab_when_closing_tab = true,
     set_environment_variables = get_env(),
 
     window_decorations = "INTEGRATED_BUTTONS|RESIZE",
-    integrated_title_button_style = is_windows and "Windows" or "MacNative",
+    integrated_title_button_style = is_windows and "Windows" or "MacOsNative",
 }
 
 -- 循环注入
-for k,v in pairs(options) do
+for k,v in pairs(core_options) do
     config[k] = v
 end
 
