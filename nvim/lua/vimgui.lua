@@ -37,8 +37,11 @@ function vimgui.load( cppfilelist, scriptfilelist, scheme )
 		{
 			'lukas-reineke/indent-blankline.nvim', main = 'ibl', ft = cppfilelist, scriptsfilelist,
 			opts = {
-				show_current_context = false,
-				show_current_context_start = false,
+				scope = {
+					enabled = true,
+					show_start = true, -- 这就是报错提示的对应项
+					show_end = false,
+				},
 			},
 		},
 
