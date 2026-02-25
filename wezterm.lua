@@ -102,13 +102,37 @@ local bingings = {
     },
 }
 
--- wezterm.on('gui-startup', function(cmd)
---     local tab, pane, window = mux.spawn_window(cmd or {})
---     window:gui_window():perform_action( wezterm.action.ShowLauncher, pane )
--- end)
+local tab_bar_style = {
+    background = '#fdf6e3', -- 与终端背景色完全一致，消除割裂感
+    active_tab = {
+        bg_color = '#eee8d5', -- 激活时微微下沉的底色
+        fg_color = '#073642', -- 深色强调字体
+        intensity = 'Bold',   
+    },
+    inactive_tab = {
+        bg_color = '#fdf6e3', -- 未激活时完全融入背景
+        fg_color = '#93a1a1', -- 浅灰色字体，降低视觉干扰
+    },
+    inactive_tab_hover = {
+        bg_color = '#eee8d5', 
+        fg_color = '#586e75',
+    },
+}
+
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+    local title = tab.active_pane.title
+    -- 如果 title 是一长串路径，只截取最后一个文件夹或程序名 (例如 nvim, zsh, cmake)
+    local short_title = title:match("([^/\\]+)$") or title
+    -- 如果有多个 Tab，可以在前面加个数字序号方便你 Cmd+数字 切换
+    local index = tab.tab_index + 1
+    -- 左右留出适当的空格作为内边距，保持呼吸感
+    return {
+        { Text = '  ' .. tostring(index) .. '  ' .. short_title .. '  ' }
+    }
+end)
 
 -- 环境变量
-local function get_env()
+local function register()
     local extra_paths = {}
     local path_sep = is_windows and ";" or ":"
     if is_windows then
@@ -158,6 +182,9 @@ local core_options =  {
     font_size = font_options.size,
     cell_width = font_options.width, line_height = font_options.height,
 
+    -- 配色
+    colors = { tab_bar = tab_bar_style },
+    -- 主题
     color_scheme = "Solarized (light) (terminal.sexy)",
   	--color_scheme = "Ayu Light (Gogh)",
     --color_scheme = "nightfox",
@@ -168,44 +195,18 @@ local core_options =  {
   	hide_tab_bar_if_only_one_tab = true,
 	show_tab_index_in_tab_bar = false,      -- 隐藏标签前的序号 [1/2/3]，保持干净
     show_new_tab_button_in_tab_bar = false, -- 隐藏右上角的 [+] 号，用 Cmd+T 新建更顺手
-	-- 2. 极简配色逻辑 (完全适配 Solarized Light)
-	colors = {
-        tab_bar = {
-            background = '#fdf6e3',
-
-            active_tab = {
-                bg_color = '#eee8d5', -- 微微加深，凸显层级
-                fg_color = '#073642',
-                intensity = 'Bold',
-            },
-
-            inactive_tab = {
-                bg_color = '#fdf6e3', -- 与背景融为一体
-                fg_color = '#93a1a1',
-            },
-
-            inactive_tab_hover = {
-                bg_color = '#eee8d5',
-                fg_color = '#586e75',
-            },
-
-            -- 即使隐藏了 [+] 按钮，也需要配置以防颜色突兀
-            new_tab = { bg_color = '#fdf6e3', fg_color = '#93a1a1' },
-            new_tab_hover = { bg_color = '#eee8d5', fg_color = '#586e75' },
-        }
-    },
-    --tab_bar_at_bottom=true,
     tab_max_width=40,
     switch_to_last_active_tab_when_closing_tab = true,
-    set_environment_variables = get_env(),
 
-    window_decorations = "INTEGRATED_BUTTONS|RESIZE",
+    -- 环境变量
+    set_environment_variables = register(),
+
+    -- 窗口设置
+    window_decorations = is_windows and "TITLE | RESIZE" or "INTEGRATED_BUTTONS|RESIZE",
     integrated_title_button_style = is_windows and "Windows" or "MacOsNative",
 }
 
 -- 循环注入
-for k,v in pairs(core_options) do
-    config[k] = v
-end
+for k,v in pairs(core_options) do config[k] = v end
 
 return config
