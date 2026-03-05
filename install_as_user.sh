@@ -44,6 +44,7 @@ echo "plugins+=(zsh-osx-autoproxy)" >> .zshrc
 echo "export LESSCHARSET=utf-8" >> .zshrc
 echo "export LANG=\"zh_CN.UTF-8\"" >> .zshrc
 echo "export LC_ALL=\"zh_CN.UTF-8\"" >> .zshrc
+echo "export TERM=\"xterm-256color\"" >> .zshrc
 echo "eval \"\`dircolors -b $HOME/.dircolors-solarized/dircolors.ansi-light\`\"" >> .zshrc
 echo "alias ls='ls -F --color'" >> .zshrc
 echo "alias ll='ls -l'" >> .zshrc
@@ -62,6 +63,7 @@ sed -i 's/^# set -g prefix C-a/set -g prefix C-x/g' .tmux.conf.local
 sed -i 's/^# bind C-a send-prefix/bind C-x send-prefix/g' .tmux.conf.local
 sed -i 's/^#set -g status-position top/set -g status-position top/g' .tmux.conf.local
 sed -i 's/^#set -g mouse on/set -g mouse on/g' .tmux.conf.local
+cat tmux_color_theme >> .tmux_conf.local
 
 vim +PlugInstall +qall
 sed -i 's/" colorscheme solarized/colorscheme solarized/g' .vimrc
