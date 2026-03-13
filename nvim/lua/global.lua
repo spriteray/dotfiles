@@ -74,6 +74,15 @@ function global:autocmd( cppfilelist, scriptfilelist )
             ]], true )
         end
     })
+	vim.api.nvim_create_autocmd("ColorScheme", {
+		pattern = "solarized", -- 确保这里的模式名与你的配色一致
+		callback = function()
+			-- 将不可见字符设置为较浅的颜色，适配 Solarized Light 背景
+			-- guifg 为十六进制颜色，ctermfg 为终端颜色码
+			vim.api.nvim_set_hl(0, "NonText", { fg = "#93a1a1", ctermfg = 246 })
+			vim.api.nvim_set_hl(0, "SpecialKey", { fg = "#93a1a1", ctermfg = 246 })
+		end,
+	})
 end
 
 function global:keymap()

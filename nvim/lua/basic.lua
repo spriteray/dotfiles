@@ -42,12 +42,14 @@ vim.opt.sidescrolloff = 3
 -- vim.opt.colorcolumn = "120"
 vim.opt.list = true
 vim.opt.listchars = {
-	tab='▸ ',
-    space = '⋅',
-	trail = '·',
-	precedes= '«',
-	extends = '»',
-	-- eol='↲',
+--	tab='▸ ',
+--  space = '⋅',
+--  eol='↲',
+    tab = "▏ ",
+    trail = "·",
+    nbsp = "␣",
+    extends = "⟩",
+    precedes = "⟨"
 }
 
 -- Searching
