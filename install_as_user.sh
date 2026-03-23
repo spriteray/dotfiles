@@ -14,8 +14,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 echo "Install tmux ..."
 cd $HOME
-git clone https://github.com/gpakosz/.tmux.git
-ln -s .tmux/.tmux.conf .tmux.conf && cp .tmux/.tmux.conf.local .tmux.conf.local
+curl -fsSL "https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh#$(date +%s)" | bash
 
 echo "Clone dotfiles ..."
 git clone https://github.com/spriteray/dotfiles.git
@@ -56,14 +55,13 @@ sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster-light\"/g" .zshrc
 echo "export PYTHON2_BIN='/usr/bin/python2'" >> .zshrc
 echo "export PYTHON3_BIN='/usr/bin/python3'" >> .zshrc
 
-sed -i 's/^# set -gu prefix2/set -gu prefix2/g' .tmux.conf.local
-sed -i 's/^# unbind C-a/unbind C-a/g' .tmux.conf.local
-sed -i 's/^# unbind C-b/unbind C-x/g' .tmux.conf.local
-sed -i 's/^# set -g prefix C-a/set -g prefix C-x/g' .tmux.conf.local
-sed -i 's/^# bind C-a send-prefix/bind C-x send-prefix/g' .tmux.conf.local
-sed -i 's/^#set -g status-position top/set -g status-position top/g' .tmux.conf.local
-sed -i 's/^#set -g mouse on/set -g mouse on/g' .tmux.conf.local
-cat tmux_color_theme >> .tmux_conf.local
+sed -i 's/^# set -gu prefix2/set -gu prefix2/g' .config/tmux/tmux.conf.local
+sed -i 's/^# unbind C-a/unbind C-a/g' .config/tmux/tmux.conf.local
+sed -i 's/^# unbind C-b/unbind C-x/g' .config/tmux/tmux.conf.local
+sed -i 's/^# set -g prefix C-a/set -g prefix C-x/g' .config/tmux/tmux.conf.local
+sed -i 's/^# bind C-a send-prefix/bind C-x send-prefix/g' .config/tmux/tmux.conf.local
+sed -i 's/^#set -g status-position top/set -g status-position top/g' .config/tmux/tmux.conf.local
+sed -i 's/^#set -g mouse on/set -g mouse on/g' .config/tmux/tmux.conf.local
 
 vim +PlugInstall +qall
 sed -i 's/" colorscheme solarized/colorscheme solarized/g' .vimrc
