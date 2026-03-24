@@ -1,0 +1,27 @@
+
+# fzf 核心配置 (适用于 Ubuntu apt 安装后的手动集成)
+# 引入系统自带的快捷键绑定 (Ctrl+R, Ctrl+T)
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+
+# fzf 适配 Solarized Light 的环境变量
+export FZF_DEFAULT_OPTS='
+  --color=fg:#657b83,bg:#fdf6e3,hl:#268bd2
+  --color=fg+:#073642,bg+:#eee8d5,hl+:#268bd2
+  --color=info:#b58900,prompt:#b58900,pointer:#073642
+  --color=marker:#073642,spinner:#b58900,header:#586e75
+  --reverse --height 40%
+'
+
+# fzf-tab 深度集成配置
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview \
+    'ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3:wrap'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+
+# 性能优化：使用 fd 替代 find (如果已安装 fd-find)
+if command -v fdfind >/dev/null; then
+    alias fd='fdfind'
+    export FZF_DEFAULT_COMMAND='fdfind --type f --strip-cwd-prefix --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi

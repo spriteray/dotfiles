@@ -54,6 +54,10 @@ echo "alias tattach='tmux attach -t'" >> .zshrc
 sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster-light\"/g" .zshrc
 echo "export PYTHON2_BIN='/usr/bin/python2'" >> .zshrc
 echo "export PYTHON3_BIN='/usr/bin/python3'" >> .zshrc
+cat fzf_custom.txt >> .zshrc
+
+# 克隆插件到 oh-my-zsh 目录
+git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
 
 sed -i 's/^# set -gu prefix2/set -gu prefix2/g' .config/tmux/tmux.conf.local
 sed -i 's/^# unbind C-a/unbind C-a/g' .config/tmux/tmux.conf.local
