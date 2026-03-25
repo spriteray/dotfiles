@@ -22,7 +22,7 @@ add_newline = false
 
 [os]
 format = "[$symbol]($style) "
-style = "bold #2aa198"
+style = "bold #56b6c2"
 disabled = false
 
 [os.symbols]
@@ -39,7 +39,7 @@ Unknown = "󱚝"
 
 [directory]
 format = "[ 󰉋 $path]($style)[$read_only]($read_only_style) "
-style = "bold #2aa198"
+style = "bold #56b6c2"
 read_only = " 󰌾"
 read_only_style = "bold #dc322f"
 truncation_length = 3
