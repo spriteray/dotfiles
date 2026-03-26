@@ -50,7 +50,7 @@ home_symbol = "~"
 
 [git_branch]
 #format = " on [$symbol$branch]($style)"
-format = "[ on ](#93a1a1)[$symbol$branch]($style) "
+format = "[ on ](#93a1a1)[$symbol$branch]($style)"
 symbol = "ψ "
 style = "bold #859900"
 truncation_length = 30
@@ -64,7 +64,8 @@ ahead       = "⇡${count}"
 behind      = "⇣${count}"
 diverged    = "⇕⇡${ahead_count}⇣${behind_count}"
 untracked   = "?"
-stashed     = "≡"
+#stashed     = "≡"
+stashed     = ""
 modified    = "!"
 staged      = "+"
 renamed     = "»"
@@ -77,7 +78,7 @@ deleted     = "✘"
 disabled = true
 
 [time]
-format = "at [⊙ $time]($style) "
+format = "[ at ](#93a1a1)[⊙ $time]($style) "
 style = "#b58900"
 disabled = false
 time_format = "%H:%M:%S"
