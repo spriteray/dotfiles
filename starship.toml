@@ -22,7 +22,7 @@ add_newline = false
 
 [os]
 format = "[$symbol]($style) "
-style = "bold #56b6c2"
+style = "bold #586e75"
 disabled = false
 
 [os.symbols]
@@ -38,8 +38,8 @@ Unknown = "󱚝"
 # -- 目录 ---------------------------------------------------------------------
 
 [directory]
-format = "[ 󰉋 $path]($style)[$read_only]($read_only_style) "
-style = "bold #56b6c2"
+format = "[󰉋 $path]($style)[$read_only]($read_only_style)"
+style = "bold #268bd2"
 read_only = " 󰌾"
 read_only_style = "bold #dc322f"
 truncation_length = 3
@@ -49,15 +49,15 @@ home_symbol = "~"
 # -- Git 分支 -----------------------------------------------------------------
 
 [git_branch]
-format = "on [$symbol$branch]($style) "
-symbol = " ψ "
+format = " on [$symbol$branch]($style)"
+symbol = "ψ "
 style = "bold #859900"
 truncation_length = 30
 truncation_symbol = "…"
 
 [git_status]
 format = '([$all_status$ahead_behind]($style))'
-style = "bold #b58900"
+style = "bold #d33682"
 conflicted  = "~"
 ahead       = "⇡${count}"
 behind      = "⇣${count}"
@@ -89,9 +89,9 @@ disable = true
 # -- 提示符 -------------------------------------------------------------------
 
 [character]
-success_symbol = "[❯](#859900 bold)"
-error_symbol   = "[❯](#dc322f bold)"
-vimcmd_symbol  = "[❮](#268bd2 bold)"
+success_symbol = " [❯](#268bd2 bold)"
+error_symbol   = " [❯](#dc322f bold)"
+vimcmd_symbol  = " [❮](#268bd2 bold)"
 
 
 # -- 关闭不需要的模块 ---------------------------------------------------------
