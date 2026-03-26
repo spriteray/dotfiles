@@ -49,7 +49,8 @@ home_symbol = "~"
 # -- Git 分支 -----------------------------------------------------------------
 
 [git_branch]
-format = " on [$symbol$branch]($style)"
+#format = " on [$symbol$branch]($style)"
+format = "[ on ](#93a1a1)[$symbol$branch]($style) "
 symbol = "ψ "
 style = "bold #859900"
 truncation_length = 30
