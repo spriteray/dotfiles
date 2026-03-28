@@ -1,0 +1,94 @@
+layout {
+	pane_template name="bleach_pane" {
+        cwd "$HOME/bleachserver"
+    }
+	pane_template name="gameserver_pane" {
+        cwd "$HOME/gameserver-v4.0"
+    }
+
+    // 定义所有 Tab 共享的顶部和底部状态栏
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    // Tab 1: 逻辑开发 (Logic)
+    tab name="Editor" focus=true {
+        // pane edit="engine/src/VisibilityLogic.cpp" // 启动时直接打开你的核心逻辑
+    }
+
+    // Tab 2: 编译与性能监控 (Build & Perf)
+    tab name="Console" {
+		// 第一层：垂直拆分 (70/30)
+        pane split_direction="vertical"  {
+            // 左半部分：60% 宽度，用于写代码
+            pane size="60%" name="Console" cwd="$HOME/bleachserver/bin" {
+            }
+
+            // 右半部分 40% 宽度，进一步进行水平拆分
+            pane size="40%" split_direction="horizontal" {
+                // 右上部分：70% 高度
+                pane size="70%" name="Status" cwd="$HOME/bleachserver/bin" {
+                    command "./top.sh"
+                }
+                // 右下部分：30% 高度
+                pane size="30%" name="Commands" cwd="$HOME/bleachserver/bin" {
+                }
+            }
+        }
+    }
+
+    // Tab 3: 系统状态 (Proxy/Network)
+    tab name="Status" {
+		pane name="System Status" {
+			command "btop"
+		}
+    }
+
+    // Tab 4: Admin ()
+    tab name="Admin" {
+    }
+
+    // Tab 5: SSH ()
+    tab name="SSH" {
+    }
+
+    // Tab 6: GameServer01 ()
+    tab name="GameServer01" {
+		gameserver_pane
+    }
+
+    // Tab 7: GameServer02 ()
+    tab name="GameServer02" {
+		gameserver_pane
+    }
+
+    // Tab 8: GameServer03 ()
+    tab name="GameServer03" {
+		gameserver_pane
+    }
+
+    // Tab 9: GameServer04 ()
+    tab name="GameServer04" {
+		gameserver_pane
+    }
+
+    // Tab 10: GameServer05 ()
+    tab name="GameServer05" {
+		gameserver_pane
+    }
+
+    // Tab 11: Libevlite ()
+    tab name="Libevlite" {
+    }
+
+    // Tab 12: Libevlite ()
+    tab name="Libevlite" {
+    }
+}
+
