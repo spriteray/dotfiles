@@ -1,0 +1,60 @@
+
+# ==========================================
+# 1. 基础环境变量
+# ==========================================
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin
+export PYTHON2_BIN='/usr/bin/python2'
+export PYTHON3_BIN='/usr/bin/python3'
+
+# ==========================================
+# 2. 核心：加载 Sheldon 插件管理器
+# ==========================================
+eval "$(sheldon source)"
+
+# ==========================================
+# 3. 别名与外观配置
+# ==========================================
+eval "`dircolors -b /home/ryan/.dircolors-solarized/dircolors.ansi-light`"
+
+alias ls='eza --group --time-style=long-iso --color-scale=all --icons'
+alias ll='ls -l'
+alias la='ls -A'
+alias tailf='tail -n 300 -f'
+alias tnew='tmux new -s'
+alias tattach='tmux attach -t'
+
+# ==========================================
+# 4. FZF 核心按键绑定与 Solarized 配色
+# ==========================================
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+
+export FZF_DEFAULT_OPTS='
+  --color=fg:#657b83,bg:#fdf6e3,hl:#268bd2
+  --color=fg+:#073642,bg+:#eee8d5,hl+:#268bd2
+  --color=info:#b58900,prompt:#b58900,pointer:#073642
+  --color=marker:#073642,spinner:#b58900,header:#586e75
+  --reverse --height 40%
+'
+
+# ==========================================
+# 5. fzf-tab 深度集成配置
+# ==========================================
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3:wrap'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+
+# ==========================================
+# 6. fd 性能优化配置
+# ==========================================
+# 替代 find (如果已安装 fd-find) [cite: 7]
+if command -v fdfind >/dev/null; then
+    alias fd='fdfind'
+    export FZF_DEFAULT_COMMAND='fdfind --type f --strip-cwd-prefix --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+# ==========================================
+# 7. 加载 Starship 提示符 (放在最后)
+# ==========================================
+eval "$(starship init zsh)"
