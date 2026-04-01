@@ -140,41 +140,41 @@ function develop.load( cppfilelist )
 		},
 
 		-- you complete me
-		-- {
-		-- 	dir = localpath .. '/YouCompleteMe', ft = cppfilelist,
-		-- 	config = function()
-		-- 		vim.g.ycm_error_symbol = 'X'
-		-- 		vim.g.ycm_warning_symbol = '?'
-		-- 		vim.g.ycm_confirm_extra_conf = 0
-		-- 		vim.g.ycm_show_diagnostics_ui = 1
-		-- 		vim.g.ycm_max_diagnostics_to_display = 0
-		-- 		vim.g.ycm_min_num_identifier_candidate_chars = 2
-		-- 		vim.g.ycm_collect_identifiers_from_comments_and_strings = 1
-		-- 		vim.g.ycm_seed_identifiers_with_syntax = 1
-		-- 		vim.g.ycm_min_num_of_chars_for_completion = 1
-		-- 		vim.g.ycm_key_invoke_completion = '<c-z>'
-		-- 		if global.is_mac then
-		-- 			-- macOS: 使用 xcrun 动态获取 Xcode clangd 路径
-		-- 			local xcode_clangd = vim.fn.trim(vim.fn.system('xcrun -f clangd'))
-		-- 			if vim.fn.executable(xcode_clangd) == 1 then
-		-- 				vim.g.ycm_clangd_binary_path = xcode_clangd
-		-- 			end
-		-- 		elseif global.is_linux then
-		-- 			-- Linux: 优先检查系统路径，如果不指定，YCM 将使用自带的 (如果是用 --clangd-completer 编译的话)
-		-- 			local linux_clangd = '/usr/bin/clangd'
-		-- 			if vim.fn.executable(linux_clangd) == 1 then
-		-- 				vim.g.ycm_clangd_binary_path = linux_clangd
-		-- 			end
-		-- 		end
-		-- 		vim.g.ycm_filetype_blacklist = "'tagbar' : 1,\
-		-- 			'qf' : 1, 'notes' : 1, 'markdown' : 1, 'unite' : 1, \
-		-- 			'text' : 1, 'vimwiki' : 1, 'pandoc' : 1, 'infolog' : 1, 'gitcommit' : 1, 'mail' : 1"
-		-- 	end,
-		-- 	keys = {
-		-- 		{ '<F11>', ':YcmCompleter GoTo<cr>', mode = 'n', desc = 'YouCompleteMeGoto1', noremap = true, silent = true },
-		-- 		{ '<F12>', ':YcmCompleter GoToImplementation<cr>', mode = 'n', desc = 'YouCompleteMeGoto2', noremap = true, silent = true },
-		-- 	},
-		-- },
+		{
+			dir = localpath .. '/YouCompleteMe', ft = cppfilelist,
+			config = function()
+				vim.g.ycm_error_symbol = 'X'
+				vim.g.ycm_warning_symbol = '?'
+				vim.g.ycm_confirm_extra_conf = 0
+				vim.g.ycm_show_diagnostics_ui = 1
+				vim.g.ycm_max_diagnostics_to_display = 0
+				vim.g.ycm_min_num_identifier_candidate_chars = 2
+				vim.g.ycm_collect_identifiers_from_comments_and_strings = 1
+				vim.g.ycm_seed_identifiers_with_syntax = 1
+				vim.g.ycm_min_num_of_chars_for_completion = 1
+				vim.g.ycm_key_invoke_completion = '<c-z>'
+				if global.is_mac then
+					-- macOS: 使用 xcrun 动态获取 Xcode clangd 路径
+					local xcode_clangd = vim.fn.trim(vim.fn.system('xcrun -f clangd'))
+					if vim.fn.executable(xcode_clangd) == 1 then
+						vim.g.ycm_clangd_binary_path = xcode_clangd
+					end
+				elseif global.is_linux then
+					-- Linux: 优先检查系统路径，如果不指定，YCM 将使用自带的 (如果是用 --clangd-completer 编译的话)
+					local linux_clangd = '/usr/bin/clangd'
+					if vim.fn.executable(linux_clangd) == 1 then
+						vim.g.ycm_clangd_binary_path = linux_clangd
+					end
+				end
+				vim.g.ycm_filetype_blacklist = "'tagbar' : 1,\
+					'qf' : 1, 'notes' : 1, 'markdown' : 1, 'unite' : 1, \
+					'text' : 1, 'vimwiki' : 1, 'pandoc' : 1, 'infolog' : 1, 'gitcommit' : 1, 'mail' : 1"
+			end,
+			keys = {
+				{ '<F11>', ':YcmCompleter GoTo<cr>', mode = 'n', desc = 'YouCompleteMeGoto1', noremap = true, silent = true },
+				{ '<F12>', ':YcmCompleter GoToImplementation<cr>', mode = 'n', desc = 'YouCompleteMeGoto2', noremap = true, silent = true },
+			},
+		},
     }
 end
 
