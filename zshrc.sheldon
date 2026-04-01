@@ -37,6 +37,8 @@ export FZF_DEFAULT_OPTS='
   --reverse --height 40%
 '
 
+export FZF_DEFAULT_OPTS='--color=fg:#657b83,bg:#fdf6e3,hl:#268bd2 ...'
+
 # ==========================================
 # 5. fzf-tab 深度集成配置
 # ==========================================

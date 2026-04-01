@@ -70,4 +70,13 @@ sed -i 's/^#set -g mouse on/set -g mouse on/g' .config/tmux/tmux.conf.local
 vim +PlugInstall +qall
 sed -i 's/" colorscheme solarized/colorscheme solarized/g' .vimrc
 
+# 安装sheldon
+#brew install sheldon
+curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
+    | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
 
+# 安装zoxide
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+# 更新配置
+sheldon lock --update

@@ -3,21 +3,13 @@
 
 shell = "zsh"
 
-# 1. 引入 Oh My Zsh 基础库 (很多 OMZ 插件依赖这些基础函数)
-[plugins.omz-lib]
-github = "ohmyzsh/ohmyzsh"
-dir = "lib"
-use = ["{aliases,completion,functions,history,key-bindings,misc,spectrum,termsupport,theme-and-appearance}.zsh"]
-
-# 2. 迁移原有的 OMZ git 插件
-[plugins.git]
-github = "ohmyzsh/ohmyzsh"
-dir = "plugins/git"
-
-# 3. 迁移 fzf-tab
+# 1. fzf-tab
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
 
-# 4. 迁移语法高亮 (建议放在最后加载)
+[plugins.zoxide]
+inline = 'eval "$(zoxide init zsh)"'
+
+# 2. 语法高亮 (建议放在最后加载)
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
