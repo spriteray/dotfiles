@@ -2,6 +2,7 @@
 # ==========================================
 # 1. 基础环境变量
 # ==========================================
+export TERM=xterm-256color
 export PATH=$PATH:$HOME/bin:$HOME/.local/bin
 export PYTHON2_BIN='/usr/bin/python2'
 export PYTHON3_BIN='/usr/bin/python3'
@@ -14,7 +15,7 @@ eval "$(sheldon source)"
 # ==========================================
 # 3. 别名与外观配置
 # ==========================================
-eval "`dircolors -b /home/ryan/.dircolors-solarized/dircolors.ansi-light`"
+eval "`dircolors -b $HOME/.dircolors-solarized/dircolors.ansi-light`"
 
 alias ls='eza --group --time-style=long-iso --color-scale=all --icons'
 alias ll='ls -l'
@@ -37,8 +38,6 @@ export FZF_DEFAULT_OPTS='
   --reverse --height 40%
 '
 
-export FZF_DEFAULT_OPTS='--color=fg:#657b83,bg:#fdf6e3,hl:#268bd2 ...'
-
 # ==========================================
 # 5. fzf-tab 深度集成配置
 # ==========================================
@@ -55,6 +54,8 @@ if command -v fdfind >/dev/null; then
     export FZF_DEFAULT_COMMAND='fdfind --type f --strip-cwd-prefix --exclude .git'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
+
+eval "$(zoxide init zsh)"
 
 # ==========================================
 # 7. 加载 Starship 提示符 (放在最后)
