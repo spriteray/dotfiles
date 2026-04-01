@@ -7,7 +7,7 @@ shell = "zsh"
 [plugins.omz-lib]
 github = "ohmyzsh/ohmyzsh"
 dir = "lib"
-use = ["*.zsh"]
+use = ["{aliases,completion,functions,history,key-bindings,misc,spectrum,termsupport,theme-and-appearance}.zsh"]
 
 # 2. 迁移原有的 OMZ git 插件
 [plugins.git]
