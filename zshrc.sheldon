@@ -2,6 +2,11 @@
 # ==========================================
 # 1. 基础环境变量
 # ==========================================
+# 基础路径定义
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 export TERM=xterm-256color
 export PATH=$PATH:$HOME/bin:$HOME/.local/bin
 export PYTHON2_BIN='/usr/bin/python2'
@@ -10,6 +15,8 @@ export PYTHON3_BIN='/usr/bin/python3'
 # ==========================================
 # 2. 核心：加载 Sheldon 插件管理器
 # ==========================================
+autoload -Uz compinit
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 eval "$(sheldon source)"
 
 # ==========================================
@@ -44,6 +51,7 @@ export FZF_DEFAULT_OPTS='
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3:wrap'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompdump"
 
 # ==========================================
 # 6. fd 性能优化配置
