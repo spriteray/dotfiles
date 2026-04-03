@@ -41,7 +41,7 @@
 	cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 
 [commit]
-	template = ~/.git-commit-template
+	template = ~/.config/git/commit-template
 
 [pull]
 	rebase = false
