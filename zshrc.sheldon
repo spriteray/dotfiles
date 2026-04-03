@@ -1,30 +1,64 @@
-
 # ==========================================
-# 1. 基础环境变量
+# 1. 基础环境变量 (XDG & 系统层)
 # ==========================================
-# 基础路径定义
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
+
+# 确保目录存在 (避免工具写入报错)
+mkdir -p "$XDG_CACHE_HOME/zsh"
+
 export TERM=xterm-256color
-export PATH=$PATH:$HOME/bin:$HOME/.local/bin
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PYTHON2_BIN='/usr/bin/python2'
 export PYTHON3_BIN='/usr/bin/python3'
 
 # ==========================================
-# 2. 核心：加载 Sheldon 插件管理器
+# 2. 补全系统初始化 (必须在 Sheldon 之前)
 # ==========================================
 autoload -Uz compinit
+# 使用 XDG 目录存放补全缓存
 compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+
+# ==========================================
+# 3. 加载 Sheldon 插件管理器
+# ==========================================
 eval "$(sheldon source)"
 
 # ==========================================
-# 3. 别名与外观配置
+# 4. FZF 路径自动探测 (核心优化)
 # ==========================================
-eval "`dircolors -b $HOME/.dircolors-solarized/dircolors.ansi-light`"
+# 这里的逻辑会根据系统自动寻找 key-bindings 和 completion
+_fzf_paths=(
+    "/usr/local/opt/fzf/shell"      # macOS Intel (Homebrew)
+    "/opt/homebrew/opt/fzf/shell"   # macOS Apple Silicon
+    "/usr/share/doc/fzf/examples"   # Ubuntu/Xubuntu
+)
 
-alias ls='eza --group --time-style=long-iso --color-scale=all --icons'
+for _dir in $_fzf_paths; do
+    if [[ -d "$_dir" ]]; then
+        [[ -f "$_dir/key-bindings.zsh" ]] && source "$_dir/key-bindings.zsh"
+        [[ -f "$_dir/completion.zsh" ]] && source "$_dir/completion.zsh"
+        break
+    fi
+done
+
+# 修复之前的换行符导致的 unknown option 报错
+export FZF_DEFAULT_OPTS="--color=fg:#657b83,bg:#fdf6e3,hl:#268bd2 --color=fg+:#073642,bg+:#eee8d5,hl+:#268bd2 --color=info:#b58900,prompt:#b58900,pointer:#073642 --color=marker:#073642,spinner:#b58900,header:#586e75 --reverse --height 40%"
+
+# ==========================================
+# 5. 外观与别名 (Solarized Light)
+# ==========================================
+if [[ -f "$HOME/.dircolors-solarized/dircolors.ansi-light" ]]; then
+    eval "$(dircolors -b $HOME/.dircolors-solarized/dircolors.ansi-light)"
+fi
+
+# 使用 eza 替代 ls (如果已安装)
+if command -v eza >/dev/null; then
+    alias ls='eza --group --time-style=long-iso --color-scale=all --icons'
+fi
+
 alias ll='ls -l'
 alias la='ls -A'
 alias tailf='tail -n 300 -f'
@@ -32,40 +66,33 @@ alias tnew='tmux new -s'
 alias tattach='tmux attach -t'
 
 # ==========================================
-# 4. FZF 核心按键绑定与 Solarized 配色
+# 6. fzf-tab & 补全样式深度集成
 # ==========================================
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
-
-export FZF_DEFAULT_OPTS='
-  --color=fg:#657b83,bg:#fdf6e3,hl:#268bd2
-  --color=fg+:#073642,bg+:#eee8d5,hl+:#268bd2
-  --color=info:#b58900,prompt:#b58900,pointer:#073642
-  --color=marker:#073642,spinner:#b58900,header:#586e75
-  --reverse --height 40%
-'
-
-# ==========================================
-# 5. fzf-tab 深度集成配置
-# ==========================================
+# 针对 kill 进程的预览
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3:wrap'
+
+# 针对 cd 目录的预览 (Solarized 风格)
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+
+# 强制补全缓存路径
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompdump"
 
 # ==========================================
-# 6. fd 性能优化配置
+# 7. 搜索与跳转工具 (fd, zoxide)
 # ==========================================
-# 替代 find (如果已安装 fd-find) [cite: 7]
 if command -v fdfind >/dev/null; then
     alias fd='fdfind'
     export FZF_DEFAULT_COMMAND='fdfind --type f --strip-cwd-prefix --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+elif command -v fd >/dev/null; then
+    export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --exclude .git'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
 eval "$(zoxide init zsh)"
 
 # ==========================================
-# 7. 加载 Starship 提示符 (放在最后)
+# 8. 加载 Starship (最后加载保证渲染正确)
 # ==========================================
 eval "$(starship init zsh)"
