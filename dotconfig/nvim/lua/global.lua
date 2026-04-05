@@ -34,7 +34,36 @@ function global:selection()
     end
 end
 
+-- 定义一个函数来处理 clangd 的切换并支持分割窗口
+function global:clangd_switch(split_cmd)
+  local bufnr = vim.api.nvim_get_current_buf()
+  -- 调用 clangd 扩展 API
+  vim.lsp.buf_request(bufnr, 'textDocument/switchSourceHeader', { uri = vim.uri_from_bufnr(bufnr) }, function(err, result)
+    if err then
+      print("LSP error: " .. tostring(err))
+      return
+    end
+    if not result then
+      print("对应的头文件/源文件未找到")
+      return
+    end
+
+    -- 如果需要分割窗口 (如 AV, AS)
+    if split_cmd then
+      vim.cmd(split_cmd)
+    end
+
+    -- 跳转到目标文件
+    vim.api.nvim_command('edit ' .. vim.uri_to_fname(result))
+  end)
+end
+
 function global:autocmd( cppfilelist, scriptfilelist )
+	-- 注册模拟 a.vim 的命令
+	vim.api.nvim_create_user_command('A', function() global:clangd_switch() end, {})
+	vim.api.nvim_create_user_command('AV', function() global:clangd_switch('vsplit') end, {})
+	vim.api.nvim_create_user_command('AS', function() global:clangd_switch('split') end, {})
+	vim.api.nvim_create_user_command('AT', function() global:clangd_switch('tabedit') end, {})
     -- 高亮显示行末空白
     vim.api.nvim_create_autocmd( 'FileType', {
         pattern = cppfilelist, scriptfilelist,
@@ -81,6 +110,26 @@ function global:autocmd( cppfilelist, scriptfilelist )
 			-- guifg 为十六进制颜色，ctermfg 为终端颜色码
 			vim.api.nvim_set_hl(0, "NonText", { fg = "#93a1a1", ctermfg = 246 })
 			vim.api.nvim_set_hl(0, "SpecialKey", { fg = "#93a1a1", ctermfg = 246 })
+		end,
+	})
+	-- lsp
+	vim.api.nvim_create_autocmd('LspAttach', {
+		group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+		callback = function(ev)
+			-- 这里的 opts 确保快捷键只在当前开启了 LSP 的 buffer 中生效
+			local opts = { buffer = ev.buf }
+			-- 跳转到定义 (Definition)
+			vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+			-- 跳转到声明 (Declaration)
+			vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+			-- 跳转到实现 (Implementation) - 比如虚函数实现
+			vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+			-- 查看引用 (References)
+			vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+			-- 悬停显示文档 (Hover)
+			vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+			-- 符号重命名 (Rename)
+			vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
 		end,
 	})
 end

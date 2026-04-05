@@ -5,12 +5,6 @@ local localpath = vim.fn.stdpath( 'data' )
 
 function develop.load( cppfilelist )
     return {
-        -- A
-        {
-            'vim-scripts/a.vim', ft = cppfilelist,
-            dependencies = { 'SirVer/ultisnips' },
-        },
-
         -- todo
         {
             'folke/todo-comments.nvim',
@@ -198,7 +192,8 @@ function develop.load( cppfilelist )
 		-- 		vim.lsp.enable('clangd')
 		-- 	end,
 		-- },
-		-- -- 补全引擎 (替代 YCM 的 UI)
+
+		-- -- 2. 补全引擎 (替代 YCM 的 UI)
 		-- {
 		-- 	"hrsh7th/nvim-cmp",
 		-- 	event = "InsertEnter", -- 只有进入插入模式才加载，省内存
