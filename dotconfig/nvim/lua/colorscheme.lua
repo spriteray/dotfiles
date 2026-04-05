@@ -15,7 +15,7 @@ function colorscheme.load()
         {
             'maxmx03/solarized.nvim',
             main = { theme = 'neovim' },
-        },
+		},
 
 		'Shatur/neovim-ayu',
 
