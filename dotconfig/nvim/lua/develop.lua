@@ -171,67 +171,68 @@ function develop.load( cppfilelist )
 		-- },
 
 		-- LSP 基础配置
-		-- {
-		-- 	"neovim/nvim-lspconfig",
-		-- 	dependencies = {
-		-- 		"hrsh7th/cmp-nvim-lsp", -- 让 LSP 源码进入补全列表
-		-- 	},
-		-- 	config = function()
-		-- 		vim.lsp.config('clangd', {
-		-- 			cmd = {
-		-- 				"clangd",
-		-- 				"--background-index",
-		-- 				"--clang-tidy",
-		-- 				"--header-insertion=iwyu",
-		-- 				"-j=12"
-		-- 			},
-		-- 			-- 使用内置的 vim.fs 来寻找根目录，替代 lspconfig.util
-		-- 			root_dir = vim.fs.root(0, { "compile_commands.json", "build/compile_commands.json", ".git" }),
-		-- 		})
-		-- 		-- 显式启用该服务
-		-- 		vim.lsp.enable('clangd')
-		-- 	end,
-		-- },
+		{
+			"neovim/nvim-lspconfig",
+			dependencies = {
+				"hrsh7th/cmp-nvim-lsp", -- 让 LSP 源码进入补全列表
+			},
+			config = function()
+				vim.lsp.config('clangd', {
+					cmd = {
+						"clangd",
+						"--background-index",
+						"--clang-tidy",
+						"--header-insertion=iwyu",
+						"-j=12",
+						"--semantic-highlighting=false" -- 尝试从服务端关闭
+					},
+					-- 使用内置的 vim.fs 来寻找根目录，替代 lspconfig.util
+					root_dir = vim.fs.root(0, { "compile_commands.json", "build/compile_commands.json", ".git" }),
+				})
+				-- 显式启用该服务
+				vim.lsp.enable('clangd')
+			end,
+		},
 
-		-- -- 2. 补全引擎 (替代 YCM 的 UI)
-		-- {
-		-- 	"hrsh7th/nvim-cmp",
-		-- 	event = "InsertEnter", -- 只有进入插入模式才加载，省内存
-		-- 	dependencies = {
-		-- 		"hrsh7th/cmp-nvim-lsp",
-		-- 		"L3MON4D3/LuaSnip", -- 代码片段引擎
-		-- 		"onsails/lspkind.nvim",
-		-- 	},
-		-- 	config = function()
-		-- 		local cmp = require("cmp")
-		-- 		cmp.setup({
-		-- 			formatting = {
-		-- 				format = require("lspkind").cmp_format({
-		-- 					mode = 'symbol_text',  -- 显示图标 + 文字（如 󰊕 Function）
-		-- 					maxwidth = 50,         -- 自动截断长文本
-		-- 					ellipsis_char = '...', -- 截断后缀
-		-- 					show_labelDetails = true, -- 在较新的 nvim-cmp 中，可以把函数参数单列出来显示
-		-- 					-- 自定义源的名称
-		-- 					menu = ({
-		-- 						nvim_lsp = "●", buffer = "○", path = "󰉋", luasnip = "⋗",
-		-- 					})
-		-- 				})
-		-- 			},
-		-- 			snippet = {
-		-- 				expand = function(args) require("luasnip").lsp_expand(args.body) end,
-		-- 			},
-		-- 			mapping = cmp.mapping.preset.insert({
-		-- 				['<C-b>'] = cmp.mapping.scroll_docs(-4),
-		-- 				['<C-f>'] = cmp.mapping.scroll_docs(4),
-		-- 				['<C-Space>'] = cmp.mapping.complete(),
-		-- 				['<CR>'] = cmp.mapping.confirm({ select = true }),
-		-- 			}),
-		-- 			sources = cmp.config.sources({
-		-- 				{ name = 'nvim_lsp' },
-		-- 			})
-		-- 		})
-		-- 	end,
-		-- },
+		-- 2. 补全引擎 (替代 YCM 的 UI)
+		{
+			"hrsh7th/nvim-cmp",
+			event = "InsertEnter", -- 只有进入插入模式才加载，省内存
+			dependencies = {
+				"hrsh7th/cmp-nvim-lsp",
+				"L3MON4D3/LuaSnip", -- 代码片段引擎
+				"onsails/lspkind.nvim",
+			},
+			config = function()
+				local cmp = require("cmp")
+				cmp.setup({
+					formatting = {
+						format = require("lspkind").cmp_format({
+							mode = 'symbol_text',  -- 显示图标 + 文字（如 󰊕 Function）
+							maxwidth = 50,         -- 自动截断长文本
+							ellipsis_char = '...', -- 截断后缀
+							show_labelDetails = true, -- 在较新的 nvim-cmp 中，可以把函数参数单列出来显示
+							-- 自定义源的名称
+							menu = ({
+								nvim_lsp = "●", buffer = "○", path = "󰉋", luasnip = "⋗",
+							})
+						})
+					},
+					snippet = {
+						expand = function(args) require("luasnip").lsp_expand(args.body) end,
+					},
+					mapping = cmp.mapping.preset.insert({
+						['<C-b>'] = cmp.mapping.scroll_docs(-4),
+						['<C-f>'] = cmp.mapping.scroll_docs(4),
+						['<C-Space>'] = cmp.mapping.complete(),
+						['<CR>'] = cmp.mapping.confirm({ select = true }),
+					}),
+					sources = cmp.config.sources({
+						{ name = 'nvim_lsp' },
+					})
+				})
+			end,
+		},
 	}
 end
 

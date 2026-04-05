@@ -60,10 +60,10 @@ end
 
 function global:autocmd( cppfilelist, scriptfilelist )
 	-- 注册模拟 a.vim 的命令
-	vim.api.nvim_create_user_command('A', function() global:clangd_switch() end, {})
-	vim.api.nvim_create_user_command('AV', function() global:clangd_switch('vsplit') end, {})
-	vim.api.nvim_create_user_command('AS', function() global:clangd_switch('split') end, {})
-	vim.api.nvim_create_user_command('AT', function() global:clangd_switch('tabedit') end, {})
+	vim.api.nvim_create_user_command('A', function() self:clangd_switch() end, {})
+	vim.api.nvim_create_user_command('AV', function() self:clangd_switch('vsplit') end, {})
+	vim.api.nvim_create_user_command('AS', function() self:clangd_switch('split') end, {})
+	vim.api.nvim_create_user_command('AT', function() self:clangd_switch('tabedit') end, {})
     -- 高亮显示行末空白
     vim.api.nvim_create_autocmd( 'FileType', {
         pattern = cppfilelist, scriptfilelist,
@@ -132,6 +132,27 @@ function global:autocmd( cppfilelist, scriptfilelist )
 			vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
 		end,
 	})
+	-- 实现“光标移动到报错行，在底部显示错误描述”
+	vim.api.nvim_create_autocmd("CursorHold", {
+		callback = function()
+			-- 获取当前光标下的所有诊断信息
+			local opts = {
+				focusable = false,
+				close_events = { "CursorMoved", "CursorMovedI", "BufHidden", "InsertEnter" },
+				scope = 'line',
+			}
+			-- 方式 A：弹出悬浮窗（体验最好，不遮挡代码）
+			-- vim.diagnostic.open_float(nil, opts)
+
+			-- 方式 B：直接在最底部的 echo 区域显示（满足你的需求）
+			local diagnostics = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })
+			if #diagnostics > 0 then
+				local msg = diagnostics[1].message
+				-- 加上颜色高亮（根据严重程度）
+				vim.api.nvim_echo({{msg, "Normal"}}, false, {})
+			end
+		end
+	})
 end
 
 function global:keymap()
@@ -142,6 +163,22 @@ function global:keymap()
     vim.keymap.set( 'n', '<leader>fu', '<cmd>:set ff=unix<cr>', { desc = 'Set File-Format UNIX' } )
     vim.keymap.set( 'n', '<leader>fm', '<cmd>:set ff=mac<cr>', { desc = 'Set File-Format MAC' } )
     vim.keymap.set( 'n', '<space>', "@=((foldclosed(line('.')) < 0) ? 'zc':'zo')<cr>", { desc = 'Code Fold', noremap = true } )
+end
+
+function global:diagnostic()
+	local icons = {
+        [vim.diagnostic.severity.ERROR] = "✘",
+        [vim.diagnostic.severity.WARN]  = "▲",
+        [vim.diagnostic.severity.HINT]  = "⚑",
+        [vim.diagnostic.severity.INFO]  = "",
+    }
+    vim.diagnostic.config({
+        signs = { text = icons },
+        virtual_text = false,
+        underline = true,
+        -- 强制刷新当前缓冲区的显示
+        update_in_insert = false,
+    })
 end
 
 function global:register( cppfilelist )

@@ -72,3 +72,5 @@ vim.opt.swapfile = false
 vim.opt.splitbelow = true
 vim.opt.splitright = false
 
+-- 调快 CursorHold 的触发速度
+vim.opt.updatetime = 500

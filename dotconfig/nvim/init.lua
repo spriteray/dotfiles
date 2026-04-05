@@ -27,6 +27,9 @@ global:init()
 -- 加载基础配置
 require('basic')
 
+-- 全局调试信息配置
+global:diagnostic()
+
 -- 加载插件
 local plugins = require('plugins')
 plugins.init( pluginpath )
