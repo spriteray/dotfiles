@@ -185,13 +185,8 @@ function develop.load( cppfilelist )
 						"--header-insertion=iwyu",
 						"-j=12",
 					},
-					cwapabilities = caps, -- 将自定义的 capabilities 传入
 					-- 使用内置的 vim.fs 来寻找根目录，替代 lspconfig.util
 					root_dir = vim.fs.root(0, { "compile_commands.json", "build/compile_commands.json", ".git" }),
-					on_attach = function(client, bufnr)
-						-- 双重保险：再次确保 provider 被禁用
-						client.server_capabilities.semanticTokensProvider = nil
-					end,
 				})
 				-- 显式启用该服务
 				vim.lsp.enable('clangd')

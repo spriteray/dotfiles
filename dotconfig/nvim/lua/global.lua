@@ -153,6 +153,21 @@ function global:autocmd( cppfilelist, scriptfilelist )
 			end
 		end
 	})
+	vim.api.nvim_create_autocmd("LspAttach", {
+		callback = function(args)
+			local client = vim.lsp.get_client_by_id(args.data.client_id)
+			if client then
+				-- 1. 显式关闭能力
+				client.server_capabilities.semanticTokensProvider = nil
+				-- 2. 关键：注销处理语义高亮的所有事件回调
+				for _, handler in pairs(client.handlers) do
+					if type(handler) == "table" and handler.method == "textDocument/semanticTokens/full" then
+						handler.method = "disabled"
+					end
+				end
+			end
+		end,
+	})
 end
 
 function global:keymap()
