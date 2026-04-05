@@ -140,42 +140,104 @@ function develop.load( cppfilelist )
 		},
 
 		-- you complete me
-		{
-			dir = localpath .. '/YouCompleteMe', ft = cppfilelist,
-			config = function()
-				vim.g.ycm_error_symbol = 'X'
-				vim.g.ycm_warning_symbol = '?'
-				vim.g.ycm_confirm_extra_conf = 0
-				vim.g.ycm_show_diagnostics_ui = 1
-				vim.g.ycm_max_diagnostics_to_display = 0
-				vim.g.ycm_min_num_identifier_candidate_chars = 2
-				vim.g.ycm_collect_identifiers_from_comments_and_strings = 1
-				vim.g.ycm_seed_identifiers_with_syntax = 1
-				vim.g.ycm_min_num_of_chars_for_completion = 1
-				vim.g.ycm_key_invoke_completion = '<c-z>'
-				if global.is_mac then
-					-- macOS: 使用 xcrun 动态获取 Xcode clangd 路径
-					local xcode_clangd = vim.fn.trim(vim.fn.system('xcrun -f clangd'))
-					if vim.fn.executable(xcode_clangd) == 1 then
-						vim.g.ycm_clangd_binary_path = xcode_clangd
-					end
-				elseif global.is_linux then
-					-- Linux: 优先检查系统路径，如果不指定，YCM 将使用自带的 (如果是用 --clangd-completer 编译的话)
-					local linux_clangd = '/usr/bin/clangd'
-					if vim.fn.executable(linux_clangd) == 1 then
-						vim.g.ycm_clangd_binary_path = linux_clangd
-					end
-				end
-				vim.g.ycm_filetype_blacklist = "'tagbar' : 1,\
-					'qf' : 1, 'notes' : 1, 'markdown' : 1, 'unite' : 1, \
-					'text' : 1, 'vimwiki' : 1, 'pandoc' : 1, 'infolog' : 1, 'gitcommit' : 1, 'mail' : 1"
-			end,
-			keys = {
-				{ '<F11>', ':YcmCompleter GoTo<cr>', mode = 'n', desc = 'YouCompleteMeGoto1', noremap = true, silent = true },
-				{ '<F12>', ':YcmCompleter GoToImplementation<cr>', mode = 'n', desc = 'YouCompleteMeGoto2', noremap = true, silent = true },
-			},
-		},
-    }
+		-- {
+		-- 	dir = localpath .. '/YouCompleteMe', ft = cppfilelist,
+		-- 	config = function()
+		-- 		vim.g.ycm_error_symbol = 'X'
+		-- 		vim.g.ycm_warning_symbol = '?'
+		-- 		vim.g.ycm_confirm_extra_conf = 0
+		-- 		vim.g.ycm_show_diagnostics_ui = 1
+		-- 		vim.g.ycm_max_diagnostics_to_display = 0
+		-- 		vim.g.ycm_min_num_identifier_candidate_chars = 2
+		-- 		vim.g.ycm_collect_identifiers_from_comments_and_strings = 1
+		-- 		vim.g.ycm_seed_identifiers_with_syntax = 1
+		-- 		vim.g.ycm_min_num_of_chars_for_completion = 1
+		-- 		vim.g.ycm_key_invoke_completion = '<c-z>'
+		-- 		if global.is_mac then
+		-- 			-- macOS: 使用 xcrun 动态获取 Xcode clangd 路径
+		-- 			local xcode_clangd = vim.fn.trim(vim.fn.system('xcrun -f clangd'))
+		-- 			if vim.fn.executable(xcode_clangd) == 1 then
+		-- 				vim.g.ycm_clangd_binary_path = xcode_clangd
+		-- 			end
+		-- 		elseif global.is_linux then
+		-- 			-- Linux: 优先检查系统路径，如果不指定，YCM 将使用自带的 (如果是用 --clangd-completer 编译的话)
+		-- 			local linux_clangd = '/usr/bin/clangd'
+		-- 			if vim.fn.executable(linux_clangd) == 1 then
+		-- 				vim.g.ycm_clangd_binary_path = linux_clangd
+		-- 			end
+		-- 		end
+		-- 		vim.g.ycm_filetype_blacklist = "'tagbar' : 1,\
+		-- 			'qf' : 1, 'notes' : 1, 'markdown' : 1, 'unite' : 1, \
+		-- 			'text' : 1, 'vimwiki' : 1, 'pandoc' : 1, 'infolog' : 1, 'gitcommit' : 1, 'mail' : 1"
+		-- 	end,
+		-- 	keys = {
+		-- 		{ '<F11>', ':YcmCompleter GoTo<cr>', mode = 'n', desc = 'YouCompleteMeGoto1', noremap = true, silent = true },
+		-- 		{ '<F12>', ':YcmCompleter GoToImplementation<cr>', mode = 'n', desc = 'YouCompleteMeGoto2', noremap = true, silent = true },
+		-- 	},
+		-- },
+
+		-- LSP 基础配置
+		-- {
+		-- 	"neovim/nvim-lspconfig",
+		-- 	dependencies = {
+		-- 		"hrsh7th/cmp-nvim-lsp", -- 让 LSP 源码进入补全列表
+		-- 	},
+		-- 	config = function()
+		-- 		vim.lsp.config('clangd', {
+		-- 			cmd = {
+		-- 				"clangd",
+		-- 				"--background-index",
+		-- 				"--clang-tidy",
+		-- 				"--header-insertion=iwyu",
+		-- 				"-j=12"
+		-- 			},
+		-- 			-- 使用内置的 vim.fs 来寻找根目录，替代 lspconfig.util
+		-- 			root_dir = vim.fs.root(0, { "compile_commands.json", "build/compile_commands.json", ".git" }),
+		-- 		})
+		-- 		-- 显式启用该服务
+		-- 		vim.lsp.enable('clangd')
+		-- 	end,
+		-- },
+		-- -- 补全引擎 (替代 YCM 的 UI)
+		-- {
+		-- 	"hrsh7th/nvim-cmp",
+		-- 	event = "InsertEnter", -- 只有进入插入模式才加载，省内存
+		-- 	dependencies = {
+		-- 		"hrsh7th/cmp-nvim-lsp",
+		-- 		"L3MON4D3/LuaSnip", -- 代码片段引擎
+		-- 		"onsails/lspkind.nvim",
+		-- 	},
+		-- 	config = function()
+		-- 		local cmp = require("cmp")
+		-- 		cmp.setup({
+		-- 			formatting = {
+		-- 				format = require("lspkind").cmp_format({
+		-- 					mode = 'symbol_text',  -- 显示图标 + 文字（如 󰊕 Function）
+		-- 					maxwidth = 50,         -- 自动截断长文本
+		-- 					ellipsis_char = '...', -- 截断后缀
+		-- 					show_labelDetails = true, -- 在较新的 nvim-cmp 中，可以把函数参数单列出来显示
+		-- 					-- 自定义源的名称
+		-- 					menu = ({
+		-- 						nvim_lsp = "●", buffer = "○", path = "󰉋", luasnip = "⋗",
+		-- 					})
+		-- 				})
+		-- 			},
+		-- 			snippet = {
+		-- 				expand = function(args) require("luasnip").lsp_expand(args.body) end,
+		-- 			},
+		-- 			mapping = cmp.mapping.preset.insert({
+		-- 				['<C-b>'] = cmp.mapping.scroll_docs(-4),
+		-- 				['<C-f>'] = cmp.mapping.scroll_docs(4),
+		-- 				['<C-Space>'] = cmp.mapping.complete(),
+		-- 				['<CR>'] = cmp.mapping.confirm({ select = true }),
+		-- 			}),
+		-- 			sources = cmp.config.sources({
+		-- 				{ name = 'nvim_lsp' },
+		-- 			})
+		-- 		})
+		-- 	end,
+		-- },
+	}
 end
 
 return develop
