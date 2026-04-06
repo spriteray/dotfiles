@@ -1,76 +1,65 @@
-
+-- ── Leader ────────────────────────────────────────────────────────────────
 vim.g.mapleader = ','
 
--- Hint: use `:h <option>` to figure out the meaning if needed
--- vim.opt.clipboard = 'unnamedplus' -- use system clipboard
-vim.opt.wildmenu = true
+-- ── 编辑行为 ───────────────────────────────────────────────────────────────
+vim.opt.mouse       = 'a'
+vim.opt.mousemodel  = 'popup'           -- 修复：原来缺少引号
+vim.opt.selection   = 'inclusive'
+vim.opt.magic       = true
+vim.opt.wildmenu    = true
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'longest' }
-vim.opt.mouse = 'a' -- allow the mouse to be used in Nvim
-vim.opt.selection = 'inclusive'
-vim.opt.magic = true
--- vim.opt.selectmode
-vim.opt.mousemodel = popup
-vim.opt.formatoptions= 'tcqmM'
-vim.opt.autoindent = true
+vim.opt.formatoptions = 'tcqmM'
+vim.opt.autoindent  = true
 vim.opt.smartindent = true
-vim.opt.whichwrap:append( 'b,s,<,>,[,],h,l' ) -- 方向键换行
+vim.opt.whichwrap:append('b,s,<,>,[,],h,l')
 
--- Tab
-vim.opt.tabstop = 4 -- number of visual spaces per TAB
-vim.opt.shiftwidth = 4 -- insert 4 spaces on a tab
+-- ── Tab / 缩进 ─────────────────────────────────────────────────────────────
+vim.opt.tabstop    = 4
+vim.opt.shiftwidth = 4
 vim.opt.showtabline = 1
 
--- UI config
-vim.opt.number = true -- show absolute number
---vim.opt.relativenumber = true -- add numbers to each line on the left side
-vim.opt.cursorline = true -- highlight cursor line underneath the cursor horizontally
--- vim.opt.cursorcolumn = true
-vim.opt.splitbelow = true -- open new vertical split bottom
-vim.opt.splitright = true -- open new horizontal splits right
-vim.opt.termguicolors = true        -- enabl 24-bit RGB color in the TUI
-vim.opt.showmode = false -- we are experienced, wo don't need the "-- INSERT --" mode hint
-vim.opt.signcolumn = 'yes'
-vim.opt.ruler = true
-vim.opt.foldenable = true
-vim.opt.foldlevel = 100
-vim.opt.foldmethod= 'indent'
-vim.opt.foldexpr=''
--- vim.opt.backspace = 'indent, eol, start'
-vim.opt.showmatch = true
-vim.opt.scrolloff = 3
-vim.opt.sidescrolloff = 3
--- vim.opt.colorcolumn = "120"
+-- ── 文件 ───────────────────────────────────────────────────────────────────
+vim.opt.autoread   = true
+vim.opt.autowrite  = true
+vim.opt.backup     = false
+vim.opt.writebackup = false
+vim.opt.swapfile   = false
+
+-- ── 搜索 ───────────────────────────────────────────────────────────────────
+vim.opt.incsearch  = true
+vim.opt.ignorecase = true
+vim.opt.smartcase  = true
+vim.opt.syntax     = 'on'
+
+-- ── UI ────────────────────────────────────────────────────────────────────
+vim.opt.number         = true
+vim.opt.cursorline     = true
+vim.opt.splitbelow     = true
+vim.opt.splitright     = false
+vim.opt.termguicolors  = true
+vim.opt.showmode       = false
+vim.opt.signcolumn     = 'yes'
+vim.opt.ruler          = true
+vim.opt.showmatch      = true
+vim.opt.scrolloff      = 3
+vim.opt.sidescrolloff  = 3
+vim.opt.updatetime     = 500        -- 加快 CursorHold 触发
+
+-- ── 折叠 ───────────────────────────────────────────────────────────────────
+vim.opt.foldenable  = true
+vim.opt.foldlevel   = 100
+vim.opt.foldmethod  = 'indent'
+vim.opt.foldexpr    = ''
+
+-- ── 不可见字符 ─────────────────────────────────────────────────────────────
 vim.opt.list = true
 vim.opt.listchars = {
---	tab='▸ ',
---  space = '⋅',
---  eol='↲',
-    tab = "▏ ",
-    trail = "·",
-    nbsp = "␣",
-    extends = "⟩",
-    precedes = "⟨"
+    tab      = '▏ ',
+    trail    = '·',
+    nbsp     = '␣',
+    extends  = '⟩',
+    precedes = '⟨',
 }
 
--- Searching
-vim.opt.incsearch = true -- search as characters are entered
-vim.opt.ignorecase = true -- ignore case in searches by default
-vim.opt.smartcase = true -- but make it case sensitive if an uppercase is entered
-vim.opt.syntax = 'on'
-
--- Python3
+-- ── Python ─────────────────────────────────────────────────────────────────
 vim.g.python3_host_prog = vim.env['PYTHON3_BIN']
-
--- file
-vim.opt.autoread = true
-vim.opt.autowrite = true
-vim.opt.backup = false
-vim.opt.writebackup = false
-vim.opt.swapfile = false
-
--- split window 从上边和左边边出现
-vim.opt.splitbelow = true
-vim.opt.splitright = false
-
--- 调快 CursorHold 的触发速度
-vim.opt.updatetime = 500

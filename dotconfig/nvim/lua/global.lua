@@ -1,204 +1,180 @@
-
 local global = {}
 
+-- ── 平台信息 ───────────────────────────────────────────────────────────────
 function global:init()
-    self.os_name = vim.loop.os_uname().sysname
-    self.is_mac = self.os_name == 'Darwin'
-    self.is_linux = self.os_name == 'Linux'
+    self.os_name   = vim.loop.os_uname().sysname
+    self.is_mac    = self.os_name == 'Darwin'
+    self.is_linux  = self.os_name == 'Linux'
     self.is_windows = self.os_name == 'Windows_NT'
-    self.is_wsl = vim.fn.has( 'wsl' ) == 1
+    self.is_wsl    = vim.fn.has('wsl') == 1
 end
 
-function global:install( app )
+-- ── 包管理器安装 ───────────────────────────────────────────────────────────
+function global:install(app)
     if self.is_mac then
-        vim.fn.system( { 'brew', 'install', app } )
-    elseif self.is_linux then
-        vim.fn.system( { 'apt', 'install', app } )
-    elseif self.is_wsl then
-        vim.fn.system( { 'apt', 'install', app } )
+        vim.fn.system({ 'brew', 'install', app })
+    elseif self.is_linux or self.is_wsl then
+        vim.fn.system({ 'apt', 'install', app })
     else
-        vim.notify( 'install ' .. app .. ' failed!' )
+        vim.notify('install ' .. app .. ' not supported on this platform')
     end
 end
 
+-- ── 获取 visual 选中文本 ───────────────────────────────────────────────────
 function global:selection()
     vim.cmd('noau normal! "vy"')
-    local text = vim.fn.getreg("v")
-    vim.fn.setreg("v", {})
-
-    text = string.gsub(text, "\n", "")
-    if #text > 0 then
-        return text
-    else
-        return ""
-    end
+    local text = vim.fn.getreg('v')
+    vim.fn.setreg('v', {})
+    text = string.gsub(text, '\n', '')
+    return #text > 0 and text or ''
 end
 
--- 定义一个函数来处理 clangd 的切换并支持分割窗口
+-- ── clangd 头文件/源文件互跳 ──────────────────────────────────────────────
 function global:clangd_switch(split_cmd)
-  local bufnr = vim.api.nvim_get_current_buf()
-  -- 调用 clangd 扩展 API
-  vim.lsp.buf_request(bufnr, 'textDocument/switchSourceHeader', { uri = vim.uri_from_bufnr(bufnr) }, function(err, result)
-    if err then
-      print("LSP error: " .. tostring(err))
-      return
-    end
-    if not result then
-      print("对应的头文件/源文件未找到")
-      return
-    end
-
-    -- 如果需要分割窗口 (如 AV, AS)
-    if split_cmd then
-      vim.cmd(split_cmd)
-    end
-
-    -- 跳转到目标文件
-    vim.api.nvim_command('edit ' .. vim.uri_to_fname(result))
-  end)
+    local bufnr = vim.api.nvim_get_current_buf()
+    local params = { uri = vim.uri_from_bufnr(bufnr) }
+    vim.lsp.buf_request(bufnr, 'textDocument/switchSourceHeader', params,
+        function(err, result)
+            if err then
+                vim.notify('LSP error: ' .. tostring(err), vim.log.levels.ERROR)
+                return
+            end
+            if not result then
+                vim.notify('对应的头文件/源文件未找到', vim.log.levels.WARN)
+                return
+            end
+            if split_cmd then vim.cmd(split_cmd) end
+            vim.cmd('edit ' .. vim.uri_to_fname(result))
+        end
+    )
 end
 
-function global:autocmd( cppfilelist, scriptfilelist )
-	-- 注册模拟 a.vim 的命令
-	vim.api.nvim_create_user_command('A', function() self:clangd_switch() end, {})
-	vim.api.nvim_create_user_command('AV', function() self:clangd_switch('vsplit') end, {})
-	vim.api.nvim_create_user_command('AS', function() self:clangd_switch('split') end, {})
-	vim.api.nvim_create_user_command('AT', function() self:clangd_switch('tabedit') end, {})
-    -- 高亮显示行末空白
-    vim.api.nvim_create_autocmd( 'FileType', {
-        pattern = cppfilelist, scriptfilelist,
-        callback = function()
-            -- number of spacesin tab when editing
-            vim.opt.softtabstop = 4
-            -- tabs are spaces, mainly because of python
-            vim.opt.expandtab = true
-            vim.api.nvim_exec( [[
-                hi WhitespaceEOF ctermbg=grey guibg=grey
-                match WhitespaceEOF /\s\+$/
-            ]], true )
-        end
-    } )
-    -- 自动移除行末空白
-    vim.api.nvim_create_autocmd('BufWritePre', {
-        pattern = '*',
-        callback = function()
-            vim.api.nvim_exec( [[
-                function! NoWhitespace()
-                    let l:save = winsaveview()
-                    keeppatterns %s/\s\+$//e
-                    call winrestview(l:save)
-                endfunction
-                call NoWhitespace()
-            ]], true )
-        end
-    })
-    -- 跳到退出之前的光标处
-    vim.api.nvim_create_autocmd( 'BufReadPost', {
-        pattern = '*',
-        callback = function()
-            vim.api.nvim_exec( [[
-                if line("'\"") > 0 && line("'\"") <= line("$")
-                    exe "normal! g`\""
-                endif
-            ]], true )
-        end
-    })
-	vim.api.nvim_create_autocmd("ColorScheme", {
-		pattern = "solarized", -- 确保这里的模式名与你的配色一致
-		callback = function()
-			-- 将不可见字符设置为较浅的颜色，适配 Solarized Light 背景
-			-- guifg 为十六进制颜色，ctermfg 为终端颜色码
-			vim.api.nvim_set_hl(0, "NonText", { fg = "#93a1a1", ctermfg = 246 })
-			vim.api.nvim_set_hl(0, "SpecialKey", { fg = "#93a1a1", ctermfg = 246 })
-		end,
-	})
-	-- lsp
-	vim.api.nvim_create_autocmd('LspAttach', {
-		group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-		callback = function(ev)
-			-- 这里的 opts 确保快捷键只在当前开启了 LSP 的 buffer 中生效
-			local opts = { buffer = ev.buf }
-			-- 跳转到定义 (Definition)
-			vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-			-- 跳转到声明 (Declaration)
-			vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-			-- 跳转到实现 (Implementation) - 比如虚函数实现
-			vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-			-- 查看引用 (References)
-			vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-			-- 悬停显示文档 (Hover)
-			vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-			-- 符号重命名 (Rename)
-			vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-		end,
-	})
-	-- 实现“光标移动到报错行，在底部显示错误描述”
-	vim.api.nvim_create_autocmd("CursorHold", {
-		callback = function()
-			-- 获取当前光标下的所有诊断信息
-			local opts = {
-				focusable = false,
-				close_events = { "CursorMoved", "CursorMovedI", "BufHidden", "InsertEnter" },
-				scope = 'line',
-			}
-			-- 方式 A：弹出悬浮窗（体验最好，不遮挡代码）
-			-- vim.diagnostic.open_float(nil, opts)
-
-			-- 方式 B：直接在最底部的 echo 区域显示（满足你的需求）
-			local diagnostics = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })
-			if #diagnostics > 0 then
-				local msg = diagnostics[1].message
-				-- 加上颜色高亮（根据严重程度）
-				vim.api.nvim_echo({{msg, "Normal"}}, false, {})
-			end
-		end
-	})
-	vim.api.nvim_create_autocmd("LspAttach", {
-		callback = function(args)
-			local client = vim.lsp.get_client_by_id(args.data.client_id)
-			if client then
-				-- 1. 显式关闭能力
-				client.server_capabilities.semanticTokensProvider = nil
-				-- 2. 关键：注销处理语义高亮的所有事件回调
-				for _, handler in pairs(client.handlers) do
-					if type(handler) == "table" and handler.method == "textDocument/semanticTokens/full" then
-						handler.method = "disabled"
-					end
-				end
-			end
-		end,
-	})
-end
-
-function global:keymap()
-    vim.keymap.set( 'n', '<leader>c',  '<cmd>nohls<cr>', { desc = 'Clear HighLight' } )
-    vim.keymap.set( 'n', '<leader>co', '<cmd>:copen<cr>', { desc = 'Open qf Window' } )
-    vim.keymap.set( 'n', '<leader>cc', '<cmd>:cclose<cr>', { desc = 'Close qf Window' } )
-    vim.keymap.set( 'n', '<leader>fd', '<cmd>:set ff=dos<cr>',{ desc = 'Set File-Format DOS' } )
-    vim.keymap.set( 'n', '<leader>fu', '<cmd>:set ff=unix<cr>', { desc = 'Set File-Format UNIX' } )
-    vim.keymap.set( 'n', '<leader>fm', '<cmd>:set ff=mac<cr>', { desc = 'Set File-Format MAC' } )
-    vim.keymap.set( 'n', '<space>', "@=((foldclosed(line('.')) < 0) ? 'zc':'zo')<cr>", { desc = 'Code Fold', noremap = true } )
-end
-
+-- ── 诊断 UI ────────────────────────────────────────────────────────────────
 function global:diagnostic()
-	local icons = {
-        [vim.diagnostic.severity.ERROR] = "✘",
-        [vim.diagnostic.severity.WARN]  = "▲",
-        [vim.diagnostic.severity.HINT]  = "⚑",
-        [vim.diagnostic.severity.INFO]  = "",
-    }
     vim.diagnostic.config({
-        signs = { text = icons },
-        virtual_text = false,
-        underline = true,
-        -- 强制刷新当前缓冲区的显示
-        update_in_insert = false,
+        signs = {
+            text = {
+                [vim.diagnostic.severity.ERROR] = '✘',
+                [vim.diagnostic.severity.WARN]  = '▲',
+                [vim.diagnostic.severity.HINT]  = '⚑',
+                [vim.diagnostic.severity.INFO]  = '',
+            },
+        },
+        virtual_text    = false,
+        underline       = true,
+        update_in_insert = false, -- 强制刷新当前缓冲区的显示
     })
 end
 
-function global:register( cppfilelist )
+-- ── 快捷键 ─────────────────────────────────────────────────────────────────
+function global:keymap()
+    local k = vim.keymap.set
+    k('n', '<leader>c',  '<cmd>nohls<cr>', { desc = 'Clear HighLight' })
+    k('n', '<leader>co', '<cmd>copen<cr>', { desc = 'Open qf Window' })
+    k('n', '<leader>cc', '<cmd>cclose<cr>', { desc = 'Close qf Window' })
+    k('n', '<leader>fd', '<cmd>set ff=dos<cr>', { desc = 'Set File-Format DOS' })
+    k('n', '<leader>fu', '<cmd>set ff=unix<cr>', { desc = 'Set File-Format UNIX' })
+    k('n', '<leader>fm', '<cmd>set ff=mac<cr>', { desc = 'Set File-Format MAC' })
+    k('n', '<space>', "@=((foldclosed(line('.')) < 0) ? 'zc':'zo')<cr>", { desc = 'Code Fold', noremap = true })
+end
+
+-- ── autocmd ────────────────────────────────────────────────────────────────
+function global:autocmd(cppfilelist, scriptfilelist)
+    -- 修复：原来 register 调用时漏传 scriptfilelist
+
+    -- a.vim 风格的 clangd 跳转命令
+    vim.api.nvim_create_user_command('A',  function() self:clangd_switch() end, {})
+    vim.api.nvim_create_user_command('AV', function() self:clangd_switch('vsplit') end, {})
+    vim.api.nvim_create_user_command('AS', function() self:clangd_switch('split') end, {})
+    vim.api.nvim_create_user_command('AT', function() self:clangd_switch('tabedit') end, {})
+
+    -- cpp/script 文件：软 tab + 行末空白高亮
+    local editgroup = vim.api.nvim_create_augroup('FileEditSettings', { clear = true })
+    local allfiles = {}
+    vim.list_extend(allfiles, cppfilelist)
+    vim.list_extend(allfiles, scriptfilelist)
+
+    vim.api.nvim_create_autocmd('FileType', {
+        group   = editgroup,
+        pattern = allfiles,     -- 修复：原来语法错误，两个列表要合并
+        callback = function()
+            vim.opt_local.softtabstop = 4
+            vim.opt_local.expandtab   = true
+            vim.api.nvim_set_hl(0, 'WhitespaceEOF', { bg = 'grey' })
+            vim.fn.matchadd('WhitespaceEOF', [[\s\+$]])
+        end,
+    })
+
+    -- 保存时自动清除行末空白
+    vim.api.nvim_create_autocmd('BufWritePre', {
+        group = editgroup,
+        pattern = '*',
+        callback = function()
+            local view = vim.fn.winsaveview()
+            vim.cmd([[keeppatterns %s/\s\+$//e]])
+            vim.fn.winrestview(view)
+        end,
+    })
+
+    -- 恢复上次光标位置
+    vim.api.nvim_create_autocmd('BufReadPost', {
+        group = editgroup,
+        pattern = '*',
+        callback = function()
+            local line = vim.fn.line('\'"')
+            if line > 0 and line <= vim.fn.line('$') then
+                vim.cmd('normal! g`"')
+            end
+        end,
+    })
+
+    -- Solarized Light：不可见字符颜色
+    vim.api.nvim_create_autocmd('ColorScheme', {
+        group   = editgroup,
+        pattern = 'solarized',
+        callback = function()
+            vim.api.nvim_set_hl(0, 'NonText',    { fg = '#93a1a1', ctermfg = 246 })
+            vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#93a1a1', ctermfg = 246 })
+        end,
+    })
+
+    -- LSP attach：快捷键 + 关闭语义高亮（合并两个 LspAttach）
+    vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
+        callback = function(ev)
+            local opts = { buffer = ev.buf }
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition,     opts)
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration,    opts)
+            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation,  opts)
+            vim.keymap.set('n', 'gr', vim.lsp.buf.references,     opts)
+            vim.keymap.set('n', 'K',  vim.lsp.buf.hover,          opts)
+            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+
+            -- 关闭语义高亮，避免覆盖 colorscheme
+            local client = vim.lsp.get_client_by_id(ev.data.client_id)
+            if client then
+                client.server_capabilities.semanticTokensProvider = nil
+            end
+        end,
+    })
+
+    -- 光标停留时在底部显示诊断信息
+    vim.api.nvim_create_autocmd('CursorHold', {
+        group = editgroup,
+        callback = function()
+            local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+            local diagnostics = vim.diagnostic.get(0, { lnum = lnum })
+            if #diagnostics > 0 then
+                vim.api.nvim_echo({ { diagnostics[1].message, 'Normal' } }, false, {})
+            end
+        end,
+    })
+end
+
+-- ── 对外入口 ───────────────────────────────────────────────────────────────
+function global:register(cppfilelist, scriptfilelist)
     self:keymap()
-    self:autocmd( cppfilelist )
+    self:autocmd(cppfilelist, scriptfilelist)
 end
 
 return global
