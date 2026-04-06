@@ -128,16 +128,6 @@ function global:autocmd(cppfilelist, scriptfilelist)
         end,
     })
 
-    -- Solarized Light：不可见字符颜色
-    vim.api.nvim_create_autocmd('ColorScheme', {
-        group   = editgroup,
-        pattern = 'solarized',
-        callback = function()
-            vim.api.nvim_set_hl(0, 'NonText',    { fg = '#93a1a1', ctermfg = 246 })
-            vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#93a1a1', ctermfg = 246 })
-        end,
-    })
-
     -- LSP attach：快捷键 + 关闭语义高亮（合并两个 LspAttach）
     vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
@@ -149,12 +139,11 @@ function global:autocmd(cppfilelist, scriptfilelist)
             vim.keymap.set('n', 'gr', vim.lsp.buf.references,     opts)
             vim.keymap.set('n', 'K',  vim.lsp.buf.hover,          opts)
             vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-
             -- 关闭语义高亮，避免覆盖 colorscheme
-            local client = vim.lsp.get_client_by_id(ev.data.client_id)
-            if client then
-                client.server_capabilities.semanticTokensProvider = nil
-            end
+            -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
+            -- if client then
+            --     client.server_capabilities.semanticTokensProvider = nil
+            -- end
         end,
     })
 

@@ -187,6 +187,10 @@ function develop.load(cppfilelist)
                         'build/compile_commands.json',
                         '.git',
                     }),
+                    -- 在握手阶段就关闭语义高亮，不会有任何闪烁
+                    on_init = function(client)
+                        client.server_capabilities.semanticTokensProvider = nil
+                    end,
                 })
                 vim.lsp.enable('clangd')                -- 显式启用该服务
             end,

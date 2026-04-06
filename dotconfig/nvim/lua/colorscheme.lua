@@ -48,6 +48,18 @@ end
 
 -- ── 应用配色 ───────────────────────────────────────────────────────────────
 function colorscheme.apply_scheme(scheme)
+    -- Solarized Light 专属高亮修正
+    if scheme.scheme == 'solarized' and scheme.background == 'light' then
+        vim.api.nvim_create_autocmd('ColorScheme', {
+            pattern  = 'solarized',
+            once     = true,    -- 只触发一次，避免重复注册
+            callback = function()
+                vim.api.nvim_set_hl(0, 'NonText',    { fg = '#93a1a1', ctermfg = 246 })
+                vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#93a1a1', ctermfg = 246 })
+            end,
+        })
+    end
+
     local cmd
     if scheme.background then
         cmd = string.format(
