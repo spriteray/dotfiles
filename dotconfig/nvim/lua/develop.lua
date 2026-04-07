@@ -197,6 +197,7 @@ function develop.load(cppfilelist)
                         '--clang-tidy',
                         '--header-insertion=iwyu',
                         '-j=12',
+                        '--query-driver=/usr/bin/g++,/usr/bin/c++',
                     },
                     root_dir = vim.fs.root(0, {
                         'compile_commands.json',
