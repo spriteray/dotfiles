@@ -105,7 +105,14 @@ function develop.load(cppfilelist)
         -- ── clang-format ───────────────────────────────────────────────────
         {
             'rhysd/vim-clang-format', ft = cppfilelist,
-            init = function() global:install('clang-format') end,
+            init = function()
+				global:install( {
+					cmd  = 'clang-format',
+					brew = 'clang-format',
+					apt  = 'clang-format',
+					yum  = 'clang-tools-extra',
+				})
+			end,
             config = function()
                 vim.api.nvim_create_autocmd('FileType', {
                     pattern  = cppfilelist,
@@ -174,6 +181,14 @@ function develop.load(cppfilelist)
         {
             'neovim/nvim-lspconfig',
             dependencies = { 'hrsh7th/cmp-nvim-lsp' },  -- 让 LSP 源码进入补全列表
+            init = function()
+				global:install( {
+					cmd = 'clangd',
+					brew = 'llvm',
+					apt = 'clangd',
+					yum = 'clang-tools-extra'
+				})
+			end,
             config = function()
                 vim.lsp.config('clangd', {
                     cmd = {

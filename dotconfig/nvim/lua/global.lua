@@ -7,16 +7,62 @@ function global:init()
     self.is_linux  = self.os_name == 'Linux'
     self.is_windows = self.os_name == 'Windows_NT'
     self.is_wsl    = vim.fn.has('wsl') == 1
+	self.distro_name = self:distro()
+end
+
+function global:distro()
+    if self.is_mac then return 'mac' end
+    -- 读取 /etc/os-release 判断发行版
+    local f = io.open('/etc/os-release', 'r')
+    if not f then return 'unknown' end
+    local content = f:read('*a')
+    f:close()
+    if content:match('ubuntu') or content:match('debian') then return 'ubuntu' end
+    if content:match('centos') or content:match('rhel') or content:match('fedora') then return 'centos' end
+    return 'unknown'
 end
 
 -- ── 包管理器安装 ───────────────────────────────────────────────────────────
 function global:install(app)
-    if self.is_mac then
-        vim.fn.system({ 'brew', 'install', app })
-    elseif self.is_linux or self.is_wsl then
-        vim.fn.system({ 'apt', 'install', app })
+    local name
+    local brew_pkg, apt_pkg, yum_pkg
+    if type(app) == 'string' then
+        brew_pkg = app
+        apt_pkg  = app
+        yum_pkg  = app
+    elseif type(app) == 'table' then
+        -- dict：各平台单独指定，cmd 是检测命令，其余是包名
+        brew_pkg = app.brew
+        apt_pkg  = app.apt
+        yum_pkg  = app.yum
     else
-        vim.notify('install ' .. app .. ' not supported on this platform')
+        vim.notify('install: invalid argument', vim.log.levels.ERROR)
+        return
+    end
+    -- 检查是否已安装（用 cmd 字段，没有就用 brew_pkg 代替）
+    local cmd = (type(app) == 'table' and app.cmd) or brew_pkg
+    if vim.fn.executable(cmd) == 1 then return end
+    if self.distro_name == 'mac' and brew_pkg then
+        name = brew_pkg
+        vim.notify('Installing ' .. name .. ' via brew...', vim.log.levels.INFO)
+        vim.fn.system({ 'brew', 'install', name })
+    elseif self.distro_name == 'ubuntu' and apt_pkg then
+        name = apt_pkg
+        vim.notify('Installing ' .. name .. ' via apt...', vim.log.levels.INFO)
+        vim.fn.system({ 'sudo', 'apt', 'install', '-y', name })
+    elseif self.distro_name == 'centos' and yum_pkg then
+        name = yum_pkg
+        vim.notify('Installing ' .. name .. ' via yum...', vim.log.levels.INFO)
+        vim.fn.system({ 'sudo', 'yum', 'install', '-y', name })
+    else
+        vim.notify('Cannot install ' .. cmd .. ': unsupported platform or missing pkg name', vim.log.levels.WARN)
+        return
+    end
+    -- 验证安装结果
+    if vim.fn.executable(cmd) == 1 then
+        vim.notify(cmd .. ' installed successfully', vim.log.levels.INFO)
+    else
+        vim.notify(cmd .. ' install failed, please install manually', vim.log.levels.ERROR)
     end
 end
 
