@@ -56,6 +56,7 @@ function colorscheme.apply_scheme(scheme)
             callback = function()
                 vim.api.nvim_set_hl(0, 'NonText',    { fg = '#93a1a1', ctermfg = 246 })
                 vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#93a1a1', ctermfg = 246 })
+                vim.api.nvim_set_hl(0, "Whitespace", { fg = "#eee8d5" }) -- 针对 Solarized Light 的极浅灰色
             end,
         })
     end
