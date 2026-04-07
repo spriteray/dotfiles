@@ -105,6 +105,7 @@ function develop.load(cppfilelist)
         -- ── clang-format ───────────────────────────────────────────────────
         {
             'rhysd/vim-clang-format', ft = cppfilelist,
+            init = function() global:install('clang-format') end,
             config = function()
                 vim.api.nvim_create_autocmd('FileType', {
                     pattern  = cppfilelist,
