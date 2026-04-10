@@ -29,6 +29,7 @@ macos-titlebar-style = tabs
 window-padding-balance = true
 window-save-state = always
 window-colorspace = "display-p3"
+confirm-close-surface = false # 关闭 Tab 时不弹出二次确认，让 "取消即关" 更丝滑
 
 # 4. 光标与动画 (保持你喜欢的闪烁方块)
 cursor-style = block
@@ -49,6 +50,7 @@ unfocused-split-opacity = 0.85
 
 # 7. 快捷键
 keybind = global:alt+grave_accent=toggle_quick_terminal
+keybind = alt+b=new_tab:zsh -ic "tssh; exit"
 
 # 8. 更新
 auto-update = check
