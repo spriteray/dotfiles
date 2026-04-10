@@ -26,6 +26,7 @@ local is_mac = wezterm.target_triple:find("apple-darwin") ~= nil
 --local font_options = { family = 'Rec Mono Casual', weight = 'Regular', size = 14.5, width = 0.8, height = 1.0 }
 local font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 14.3, width = 0.85, height = 1.0 }
 --local font_options = { family = 'Monaspace Argon NF Light', weight = 'Regular', size = 14.5, width = 0.85, height = 1.0 }
+--local font_options = { family = 'Geist Mono', weight = 'Regular', size = 14.3, width = 0.85, height = 1.0 }
 
 --
 -- 系统相关
@@ -41,7 +42,7 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     } )
     table.insert( launch_menu, {
         label = 'LOCAL:PowerShell',
-        args = {'powershell.exe', '-NoLogo'}
+        args = {'pwsh.exe', '-NoLogo'}
     } )
     table.insert( launch_menu, {
         label = 'REMOTE:tssh(s)',
@@ -53,7 +54,7 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
             args = wsl2_options
         } )
     end
-    default_prog = {'powershell.exe', '-NoLogo'}
+    default_prog = {'pwsh.exe', '-NoLogo'}
 else
     --
     -- macos
@@ -102,21 +103,20 @@ local bingings = {
     },
 }
 
-local tab_bar_style = {
-    background = '#fdf6e3', -- 与终端背景色完全一致，消除割裂感
-    active_tab = {
-        bg_color = '#eee8d5', -- 激活时微微下沉的底色
-        fg_color = '#073642', -- 深色强调字体
-        intensity = 'Bold',   
+-- 定义样式映射表
+local theme_styles = {
+    ["Solarized (light) (terminal.sexy)"] = {
+        background = '#fdf6e3',
+        active_tab = { bg_color = '#eee8d5', fg_color = '#073642', intensity = 'Bold' },
+        inactive_tab = { bg_color = '#fdf6e3', fg_color = '#93a1a1' },
+        inactive_tab_hover = { bg_color = '#eee8d5', fg_color = '#586e75' },
     },
-    inactive_tab = {
-        bg_color = '#fdf6e3', -- 未激活时完全融入背景
-        fg_color = '#93a1a1', -- 浅灰色字体，降低视觉干扰
-    },
-    inactive_tab_hover = {
-        bg_color = '#eee8d5', 
-        fg_color = '#586e75',
-    },
+    ["Catppuccin Latte (Gogh)"] = {
+        background = '#eff1f5',
+        active_tab = { bg_color = '#ccd0da', fg_color = '#4c4f69', intensity = 'Bold' },
+        inactive_tab = { bg_color = '#eff1f5', fg_color = '#9ca0b0' },
+        inactive_tab_hover = { bg_color = '#ccd0da', fg_color = '#8c8fa1' },
+    }
 }
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
@@ -131,12 +131,15 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
     }
 end)
 
+    
 -- 环境变量
 local function register()
     local extra_paths = {}
     local path_sep = is_windows and ";" or ":"
     if is_windows then
         table.insert(extra_paths, "D:\\Applications\\nvim\\bin")
+        table.insert(extra_paths, "C:\\Python")
+        table.insert(extra_paths, "C:\\Users\\lei.zhang\\.local\\bin")
         -- 你可以继续添加 Windows 特有路径
     else
         -- 针对 macOS (M1/M2/M3 芯片路径)
@@ -150,6 +153,18 @@ local function register()
         -- 你也可以在这里统一管理其他变量
         MY_PROJECT_ROOT = is_windows and "D:\\Codes" or "/Users/ryan/Codes",
     }
+end
+
+-- 主题名
+--local theme_name = "Solarized (light) (terminal.sexy)"
+--local theme_name = "Ayu Light (Gogh)"
+--local theme_name = "Tokyo Night Day"
+local theme_name = "Catppuccin Latte (Gogh)"
+
+-- tab样式
+local tab_style = theme_styles[ theme_name ]
+if not tab_style then
+    tab_style = theme_styles["Solarized (light) (terminal.sexy)"]
 end
 
 local core_options =  {
@@ -176,18 +191,24 @@ local core_options =  {
         harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
         --freetype_load_flags = 'NO_AUTOHINT|MONOCHROME',
         freetype_load_flags = 'FORCE_AUTOHINT',
-        --freetype_load_target = 'VerticalLcd', freetype_render_target = 'Light',
-        freetype_load_target = 'HorizontalLcd', freetype_render_target = 'Light',
+        freetype_load_target = 'VerticalLcd', freetype_render_target = 'Light',
+        --freetype_load_target = 'HorizontalLcd', freetype_render_target = 'Light',
     },
     font_size = font_options.size,
     cell_width = font_options.width, line_height = font_options.height,
 
     -- 配色
-    colors = { tab_bar = tab_bar_style },
-    -- 主题
-    color_scheme = "Solarized (light) (terminal.sexy)",
-  	--color_scheme = "Ayu Light (Gogh)",
-    --color_scheme = "nightfox",
+    color_scheme = theme_name,
+    colors = {
+        tab_bar = {
+            background = tab_style.background,
+            active_tab = tab_style.active_tab,
+            inactive_tab = tab_style.inactive_tab,
+            inactive_tab_hover = tab_style.inactive_tab_hover,
+            new_tab = tab_style.inactive_tab,
+            new_tab_hover = tab_style.inactive_tab_hover,
+        }
+    },
 
     -- tab bar
     enable_tab_bar = true,
