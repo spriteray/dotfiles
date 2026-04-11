@@ -15,21 +15,28 @@ export PYTHON2_BIN='/usr/bin/python2'
 export PYTHON3_BIN='/usr/bin/python3'
 
 # ==========================================
-# 2. 补全系统初始化 (必须在 Sheldon 之前)
-# ==========================================
-autoload -Uz compinit
-# 使用 XDG 目录存放补全缓存
-compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
-
-# ==========================================
-# 3. 加载 Sheldon 插件管理器
+# 2. 加载 Sheldon 插件管理器
 # ==========================================
 eval "$(sheldon source)"
 
 # ==========================================
-# 4. FZF 路径自动探测 (核心优化)
+# 3. 补全系统初始化 (必须在 Sheldon 之后)
 # ==========================================
-# 这里的逻辑会根据系统自动寻找 key-bindings 和 completion
+# macOS: 移除 eza 的补全脚本，防止 ls 补全成 eza 参数
+if [[ "$(uname)" == "Darwin" ]]; then
+    fpath=("${fpath[@]:#/opt/homebrew/share/zsh/site-functions}")
+fi
+autoload -Uz compinit
+# 24小时内不重复初始化，加快启动速度
+if [[ -n "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"(#qN.mh+24) ]]; then
+    compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+else
+    compinit -C -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+fi
+
+# ==========================================
+# 4. FZF 路径自动探测
+# ==========================================
 _fzf_paths=(
     "/usr/local/opt/fzf/shell"      # macOS Intel (Homebrew)
     "/opt/homebrew/opt/fzf/shell"   # macOS Apple Silicon
@@ -38,14 +45,17 @@ _fzf_paths=(
 
 for _dir in $_fzf_paths; do
     if [[ -d "$_dir" ]]; then
-        [[ -f "$_dir/key-bindings.zsh" ]] && source "$_dir/key-bindings.zsh"
         [[ -f "$_dir/completion.zsh" ]] && source "$_dir/completion.zsh"
+        [[ -f "$_dir/key-bindings.zsh" ]] && source "$_dir/key-bindings.zsh"
         break
     fi
 done
 
-# 修复之前的换行符导致的 unknown option 报错
-export FZF_DEFAULT_OPTS="--color=fg:#657b83,bg:#fdf6e3,hl:#268bd2 --color=fg+:#073642,bg+:#eee8d5,hl+:#268bd2 --color=info:#b58900,prompt:#b58900,pointer:#073642 --color=marker:#073642,spinner:#b58900,header:#586e75 --reverse --height 40%"
+export FZF_DEFAULT_OPTS="--color=fg:#657b83,bg:#fdf6e3,hl:#268bd2 \
+    --color=fg+:#073642,bg+:#eee8d5,hl+:#268bd2 \
+    --color=info:#b58900,prompt:#b58900,pointer:#073642 \
+    --color=marker:#073642,spinner:#b58900,header:#586e75 \
+    --reverse --height 40%"
 
 # ==========================================
 # 5. 外观与别名 (Solarized Light)
@@ -64,6 +74,10 @@ alias la='ls -A'
 alias tailf='tail -n 300 -f'
 alias tnew='tmux new -s'
 alias tattach='tmux attach -t'
+if command -v nvim >/dev/null; then
+    alias vi='nvim'
+    alias vim='nvim'
+fi
 
 # ==========================================
 # 6. fzf-tab & 补全样式深度集成
@@ -73,7 +87,7 @@ zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3:wrap'
 
 # 针对 cd 目录的预览 (Solarized 风格)
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
 # 强制补全缓存路径
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompdump"
