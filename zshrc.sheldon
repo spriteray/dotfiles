@@ -56,7 +56,7 @@ fi
 
 # 使用 eza 替代 ls (如果已安装)
 if command -v eza >/dev/null; then
-    alias ls='eza --group --time-style=long-iso --color-scale=all --icons'
+    alias ls='COLUMNS=$(tput cols) eza --group --time-style=long-iso --color-scale=all --icons'
 fi
 
 alias ll='ls -l'
