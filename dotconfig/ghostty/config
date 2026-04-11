@@ -2,8 +2,9 @@
 
 
 # 1. 字体与粗体渲染 (完美复刻你的视觉习惯)
-font-family = "Recursive Monospace Casual"
-font-size = 18
+#font-family = "Recursive Monospace Casual"
+font-family = "RecMonoCasual Nerd Font Mono"
+font-size = 19
 font-thicken = true
 font-thicken-strength = 0
 # 开启合成样式，确保代码中的关键字能完美显示粗体和斜体
@@ -11,25 +12,25 @@ font-style-bold = "Regular"
 font-synthetic-style = true
 # 字体微调
 adjust-cell-width = -3
+#adjust-cell-height = 3
 font-feature = "-liga"
 font-feature = "-calt"
 
 # 2. 颜色主题
 # Ghostty 原生自带极其精准的 Solarized Light，无需手动配置色号
-theme = "Builtin Solarized Light"
+theme = "iTerm2 Solarized Light"
 
 # 3. 极简窗口外观 (打造绝对纯净的画框)
 window-decoration = true
-window-height = 30
+window-height = 36
 window-width = 120
 # 增加一点点内部留白，让代码有呼吸感，不会紧贴屏幕边缘
 window-padding-x = 10
 window-padding-y = 10
 macos-titlebar-style = tabs
 window-padding-balance = true
-window-save-state = always
+#window-save-state = always
 window-colorspace = "display-p3"
-confirm-close-surface = false # 关闭 Tab 时不弹出二次确认，让 "取消即关" 更丝滑
 
 # 4. 光标与动画 (保持你喜欢的闪烁方块)
 cursor-style = block
@@ -50,8 +51,8 @@ unfocused-split-opacity = 0.85
 
 # 7. 快捷键
 keybind = global:alt+grave_accent=toggle_quick_terminal
-keybind = alt+b=new_tab:zsh -ic "tssh; exit"
+keybind = alt+b=text:tssh\r
 
 # 8. 更新
 auto-update = check
-auto-update-channel = stable
+auto-update-channel = tip
