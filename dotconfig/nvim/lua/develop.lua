@@ -197,7 +197,7 @@ function develop.load(cppfilelist)
                         '--clang-tidy',
                         '--header-insertion=iwyu',
                         '-j=12',
-                        "--offset-encoding=utf-16",
+                        '--offset-encoding=utf-16',
                         '--query-driver=/usr/bin/g++,/usr/bin/c++',
                     },
                     root_dir = vim.fs.root(0, {
