@@ -89,10 +89,12 @@ function vimgui.load(cppfilelist, scriptfilelist, scheme)
         {
             'akinsho/bufferline.nvim',
             dependencies = 'nvim-tree/nvim-web-devicons',
+            event = 'VeryLazy',   -- 延迟加载，确保 colorscheme 先生效
             config = function()
                 local bl = require('bufferline')
                 bl.setup({
                     options = {
+                        separator_style = 'thin',  -- thin 比 slant 更兼容各种主题
                         style_preset = bl.style_preset.no_italic,
                         numbers      = true,
                         offsets = {
@@ -115,6 +117,7 @@ function vimgui.load(cppfilelist, scriptfilelist, scheme)
         -- ── 状态栏 ─────────────────────────────────────────────────────────
         {
             'nvim-lualine/lualine.nvim',
+            event        = 'VeryLazy',
             dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
             opts = {
                 options = {
