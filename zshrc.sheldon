@@ -44,22 +44,13 @@ else
 fi
 
 # ==========================================
-# 4. FZF 路径自动探测
+# 4. FZF 深度集成 (取代原有的路径探测循环)
 # ==========================================
-_fzf_paths=(
-    "/usr/local/opt/fzf/shell"      # macOS Intel (Homebrew)
-    "/opt/homebrew/opt/fzf/shell"   # macOS Apple Silicon
-    "/usr/share/doc/fzf/examples"   # Ubuntu/Xubuntu
-)
+if command -v fzf >/dev/null; then
+    source <(fzf --zsh)
+fi
 
-for _dir in $_fzf_paths; do
-    if [[ -d "$_dir" ]]; then
-        [[ -f "$_dir/completion.zsh" ]] && source "$_dir/completion.zsh"
-        [[ -f "$_dir/key-bindings.zsh" ]] && source "$_dir/key-bindings.zsh"
-        break
-    fi
-done
-
+# Solarized Light 配色方案
 export FZF_DEFAULT_OPTS="--color=fg:#657b83,bg:#fdf6e3,hl:#268bd2 \
     --color=fg+:#073642,bg+:#eee8d5,hl+:#268bd2 \
     --color=info:#b58900,prompt:#b58900,pointer:#073642 \
