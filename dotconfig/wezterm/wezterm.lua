@@ -24,9 +24,10 @@ local is_mac = wezterm.target_triple:find("apple-darwin") ~= nil
 --local font_options = { family = 'Conta Mono', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
 --local font_options = { family = 'Operator Mono SSm Light', weight = 'Regular', size = 14.5, width = 0.9, height = 1.0 }
 --local font_options = { family = 'Rec Mono Casual', weight = 'Regular', size = 14.5, width = 0.8, height = 1.0 }
-local font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 14.3, width = 0.85, height = 1.0 }
+--local font_options = { family = 'Recursive Monospace Casual', weight = 'Regular', size = 14.3, width = 0.85, height = 1.0 }
 --local font_options = { family = 'Monaspace Argon NF Light', weight = 'Regular', size = 14.5, width = 0.85, height = 1.0 }
 --local font_options = { family = 'Geist Mono', weight = 'Regular', size = 14.3, width = 0.85, height = 1.0 }
+local font_options = { family = 'RecMonoCasual Nerd Font', weight = 'Regular', size = 14.3, width = 0.85, height = 1.0 }
 
 --
 -- 系统相关
@@ -225,6 +226,12 @@ local core_options =  {
     -- 窗口设置
     window_decorations = is_windows and "TITLE | RESIZE" or "INTEGRATED_BUTTONS|RESIZE",
     integrated_title_button_style = is_windows and "Windows" or "MacOsNative",
+    window_padding = {
+        left   = 0,
+        right  = 0,
+        top    = 0,
+        bottom = 0,
+    },
 }
 
 -- 循环注入
