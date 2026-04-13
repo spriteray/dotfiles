@@ -8,11 +8,20 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 # 确保目录存在 (避免工具写入报错)
 mkdir -p "$XDG_CACHE_HOME/zsh"
+mkdir -p "$XDG_STATE_HOME/zsh"
 
 export TERM=xterm-256color
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PYTHON2_BIN='/usr/bin/python2'
 export PYTHON3_BIN='/usr/bin/python3'
+
+# 共享历史记录
+setopt SHARE_HISTORY        # 多个 tab 实时共享 history
+setopt HIST_IGNORE_DUPS     # 忽略连续重复命令
+setopt HIST_IGNORE_ALL_DUPS # 忽略所有重复命令
+setopt HIST_IGNORE_SPACE    # 以空格开头的命令不记录
+setopt HIST_REDUCE_BLANKS   # 去除多余空白
+setopt HIST_VERIFY          # 执行历史命令前先展开确认
 
 # ==========================================
 # 2. 加载 Sheldon 插件管理器
@@ -90,7 +99,7 @@ zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
 # 强制补全缓存路径
-zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompdump"
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
 
 # ==========================================
 # 7. 搜索与跳转工具 (fd, zoxide)
