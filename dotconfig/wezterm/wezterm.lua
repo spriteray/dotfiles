@@ -132,7 +132,6 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
     }
 end)
 
-    
 -- 环境变量
 local function register()
     local extra_paths = {}
@@ -227,10 +226,10 @@ local core_options =  {
     window_decorations = is_windows and "TITLE | RESIZE" or "INTEGRATED_BUTTONS|RESIZE",
     integrated_title_button_style = is_windows and "Windows" or "MacOsNative",
     window_padding = {
-        left   = 0,
-        right  = 0,
-        top    = 0,
-        bottom = 0,
+        left   = 5,
+        right  = 5,
+        top    = 5,
+        bottom = 5,
     },
 }
 
