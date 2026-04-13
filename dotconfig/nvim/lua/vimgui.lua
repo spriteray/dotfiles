@@ -94,7 +94,7 @@ function vimgui.load(cppfilelist, scriptfilelist, scheme)
                 local bl = require('bufferline')
                 bl.setup({
                     options = {
-                        separator_style = 'thin',  -- thin 比 slant 更兼容各种主题
+                        always_show_bufferline = false,  -- 只有多个 buffer 时才显示
                         style_preset = bl.style_preset.no_italic,
                         numbers      = true,
                         offsets = {
@@ -117,8 +117,8 @@ function vimgui.load(cppfilelist, scriptfilelist, scheme)
         -- ── 状态栏 ─────────────────────────────────────────────────────────
         {
             'nvim-lualine/lualine.nvim',
-            event        = 'VeryLazy',
             dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+            event = 'VeryLazy',   -- 延迟加载，确保 colorscheme 先生效
             opts = {
                 options = {
                     theme = scheme,
