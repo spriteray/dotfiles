@@ -47,7 +47,7 @@ fi
 # 4. FZF 深度集成 (取代原有的路径探测循环)
 # ==========================================
 if command -v fzf >/dev/null; then
-    source <(fzf --zsh)
+    source <(fzf --zsh) # fzf版本>0.50
 fi
 
 # Solarized Light 配色方案
