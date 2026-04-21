@@ -1,0 +1,135 @@
+# Starship - p10k lean style, Solarized Light
+# 字体要求：Nerd Font v3（Maple Mono NF 完全兼容）
+
+format = "$os$directory$git_branch$git_status$character"
+right_format = "$time"
+
+add_newline = false
+
+# Solarized Light 颜色变量（TOML 不支持变量，颜色直接写在各模块里）
+# base01  = #586e75  主前景（深）
+# base0   = #839496  正文
+# base1   = #93a1a1  辅助
+# yellow  = #b58900
+# orange  = #cb4b16
+# red     = #dc322f
+# blue    = #268bd2
+# cyan    = #2aa198
+# green   = #859900
+
+
+# -- OS 图标 ------------------------------------------------------------------
+
+[os]
+format = "[$symbol]($style) "
+style = "bold #586e75"
+disabled = false
+
+[os.symbols]
+Macos   = "󰀵"
+Ubuntu  = "󰕈"
+Debian  = "󰣚"
+Fedora  = "󰣛"
+Arch    = "󰣇"
+Windows = "󰍲"
+Unknown = "󱚝"
+
+
+# -- 目录 ---------------------------------------------------------------------
+
+[directory]
+format = "[󰉋 $path]($style)[$read_only]($read_only_style)"
+style = "bold #268bd2"
+read_only = " 󰌾"
+read_only_style = "bold #dc322f"
+truncation_length = 3
+truncate_to_repo = false
+home_symbol = "~"
+
+# -- Git 分支 -----------------------------------------------------------------
+
+[git_branch]
+#format = " on [$symbol$branch]($style)"
+format = "[ on ](#93a1a1)[$symbol$branch]($style)"
+symbol = "ψ "
+style = "bold #859900"
+truncation_length = 30
+truncation_symbol = "…"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style))'
+style = "bold #d33682"
+conflicted  = "~"
+ahead       = "⇡${count}"
+behind      = "⇣${count}"
+diverged    = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked   = "?"
+#stashed     = "≡"
+stashed     = ""
+modified    = "!"
+staged      = "+"
+renamed     = "»"
+deleted     = "✘"
+
+
+# -- 右侧：执行时间 -----------------------------------------------------------
+
+[cmd_duration]
+disabled = true
+
+[time]
+format = "[ at ](#93a1a1)[⊙ $time]($style) "
+style = "#b58900"
+disabled = false
+time_format = "%H:%M:%S"
+
+# -- 填充 ---------------------------------------------------------------------
+
+[fill]
+disable = true
+
+# -- 提示符 -------------------------------------------------------------------
+
+[character]
+success_symbol = " [❯](#268bd2 bold)"
+error_symbol   = " [❯](#dc322f bold)"
+vimcmd_symbol  = " [❮](#268bd2 bold)"
+
+
+# -- 关闭不需要的模块 ---------------------------------------------------------
+
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[battery]
+disabled = true
+
+[package]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[python]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[cmake]
+disabled = true
+
+[c]
+disabled = true
+
+[java]
+disabled = true
+
+[lua]
+disabled = true

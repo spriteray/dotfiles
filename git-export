@@ -1,3 +1,0 @@
-#!/bin/sh
-
-git archive "$1" | tar -x -C "$2"

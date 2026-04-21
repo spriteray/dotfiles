@@ -1,0 +1,19 @@
+
+# Solarized Light
+tmux_conf_theme_colour_1="#eee8d5"    # Base2 (浅背景次色)
+tmux_conf_theme_colour_2="#fdf6e3"    # Base3 (主背景色)
+tmux_conf_theme_colour_3="#93a1a1"    # Base1 (中等灰色，用于辅助文字)
+tmux_conf_theme_colour_4="#268bd2"    # Blue (主色调，用于高亮)
+tmux_conf_theme_colour_5="#b58900"    # Yellow
+tmux_conf_theme_colour_6="#fdf6e3"    # Base3
+tmux_conf_theme_colour_7="#586e75"    # Base01 (主前景深色)
+tmux_conf_theme_colour_8="#fdf6e3"    # Base3
+tmux_conf_theme_colour_9="#b58900"    # Yellow
+tmux_conf_theme_colour_10="#d33682"   # Magenta
+tmux_conf_theme_colour_11="#859900"   # Green
+tmux_conf_theme_colour_12="#586e75"   # Base01
+tmux_conf_theme_colour_13="#eee8d5"   # Base2
+tmux_conf_theme_colour_14="#073642"   # Base02 (极深色，用于强调或分隔)
+tmux_conf_theme_colour_15="#073642"   # Base02
+tmux_conf_theme_colour_16="#dc322f"   # Red
+tmux_conf_theme_colour_17="#eee8d5"   # Base2

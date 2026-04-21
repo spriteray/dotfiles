@@ -1,0 +1,13 @@
+#!/bin/sh
+
+user=`id -un`
+cwd=`pwd`
+pidlist=`pgrep -d ' ' -u $user $1`
+
+for pid in $pidlist
+do
+	path=`ls -l /proc/$pid/cwd | awk '{print $11}'`
+	if [ "$path" == "$cwd" ]; then
+		echo $cwd/$1 $pid
+	fi
+done
