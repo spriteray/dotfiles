@@ -1,10 +1,10 @@
 #!/bin/bash
 # ==============================================================================
-# tmux-launch.sh  —  tmux workspace launcher
+# tmux-spawn.sh  —  tmux workspace launcher
 #
 # 用法:
-#   tmux-launch.sh [config_file]
-#   tmux-launch.sh workspace.conf
+#   tmux-spawn.sh [config_file]
+#   tmux-spawn.sh workspace.conf
 #
 # 若不传参数，默认读取 ~/.config/tmux/workspace.conf
 #
