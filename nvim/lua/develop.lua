@@ -199,12 +199,13 @@ function develop.load(cppfilelist)
                         '-j=12',
                         '--offset-encoding=utf-16',
                         '--query-driver=/usr/bin/g++,/usr/bin/c++',
+                        '--compile-commands-dir=build',
                     },
-                    root_dir = vim.fs.root(0, {
+                    root_markers = {
                         'compile_commands.json',
-                        'build/compile_commands.json',
+                        '.clangd',
                         '.git',
-                    }),
+                    },
                     -- 在握手阶段就关闭语义高亮，不会有任何闪烁
                     on_init = function(client)
                         client.server_capabilities.semanticTokensProvider = nil
