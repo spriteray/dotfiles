@@ -198,14 +198,10 @@ function develop.load(cppfilelist)
                         '--header-insertion=iwyu',
                         '-j=12',
                         '--offset-encoding=utf-16',
-                        '--query-driver=/usr/bin/g++,/usr/bin/c++',
                         '--compile-commands-dir=build',
+                        '--query-driver=/usr/bin/g++,/usr/bin/c++',
                     },
-                    root_markers = {
-                        'compile_commands.json',
-                        '.clangd',
-                        '.git',
-                    },
+                    root_markers = { '.git', '.clangd', },
                     -- 在握手阶段就关闭语义高亮，不会有任何闪烁
                     on_init = function(client)
                         client.server_capabilities.semanticTokensProvider = nil
