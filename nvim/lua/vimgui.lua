@@ -85,61 +85,39 @@ function vimgui.load(cppfilelist, scriptfilelist, scheme)
             },
         },
 
-        -- ── 标签栏 ─────────────────────────────────────────────────────────
-        {
-            'akinsho/bufferline.nvim',
-            dependencies = 'nvim-tree/nvim-web-devicons',
-            config = function()
-                local bl = require('bufferline')
-                bl.setup({
-                    options = {
-                        separator_style = "thin",
-                        style_preset = bl.style_preset.no_italic,
-                        numbers = true,
-                        show_buffer_close_icons = false,
-                        show_close_icon = false,
-                        offsets = {
-                            {
-                                filetype   = 'neo-tree',
-                                text       = 'File Explorer',
-                                highlight  = 'Directory',
-                                text_align = 'center',
-                            },
-                        },
-                        custom_filter = function(buf)
-                            local ft = vim.bo[buf].filetype
-                            return ft ~= 'gitcommit' and ft ~= 'help' and ft ~= 'qf'
-                        end,
-                    },
-                    highlights = {
-                        fill = { bg = "#eee8d5" },
-                        background = { fg = "#93a1a1", bg = "#eee8d5", },
-                        buffer_selected = { fg = "#002b36", bg = "#fdf6e3", bold = true, italic = false, },
-                        numbers = { fg = "#93a1a1", bg = "#eee8d5", },
-                        numbers_visible = { fg = "#657b83", bg = "#eee8d5", },
-                        numbers_selected = { fg = "#002b36", bg = "#fdf6e3", bold = true, italic = false, },
-                        separator = { fg = "#eee8d5", bg = "#eee8d5", },
-                        separator_selected = { fg = "#eee8d5", bg = "#fdf6e3", },
-                    },
-                })
-            end,
-        },
-
-        -- ── 状态栏 ─────────────────────────────────────────────────────────
+        -- ── 状态栏, 标签栏 ────────────────────────────────────────────────────
         {
             'nvim-lualine/lualine.nvim',
-            dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+            dependencies = { 'nvim-tree/nvim-web-devicons' },
             opts = {
                 options = {
-                    theme = scheme,
+                    theme = 'auto',
+                    globalstatus = true,
                     disabled_filetypes = {
-                        winbar     = {},
-                        tabline    = {},
+                        winbar = {},
+                        tabline = {},
                         statusline = { 'gitcommit' },
                     },
                 },
+
+                sections = { lualine_c = { 'filename' }, },
+
+                tabline = {
+                    lualine_a = {
+                        {
+                            'buffers',
+                            mode = 2, -- 0: 只显示文件名, 2: 编号 + 文件名
+                            symbols = {
+                                modified = ' ●',
+                                alternate_file = '',
+                                directory = '',
+                            },
+                        },
+                    },
+                    lualine_z = { 'tabs', },
+                },
             },
-        },
+        }
     }
 end
 
