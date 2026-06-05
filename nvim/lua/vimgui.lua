@@ -89,14 +89,15 @@ function vimgui.load(cppfilelist, scriptfilelist, scheme)
         {
             'akinsho/bufferline.nvim',
             dependencies = 'nvim-tree/nvim-web-devicons',
-            event = 'VeryLazy',   -- 延迟加载，确保 colorscheme 先生效
             config = function()
                 local bl = require('bufferline')
                 bl.setup({
                     options = {
-                        always_show_bufferline = false,  -- 只有多个 buffer 时才显示
+                        separator_style = "thin",
                         style_preset = bl.style_preset.no_italic,
-                        numbers      = true,
+                        numbers = true,
+                        show_buffer_close_icons = false,
+                        show_close_icon = false,
                         offsets = {
                             {
                                 filetype   = 'neo-tree',
@@ -110,6 +111,16 @@ function vimgui.load(cppfilelist, scriptfilelist, scheme)
                             return ft ~= 'gitcommit' and ft ~= 'help' and ft ~= 'qf'
                         end,
                     },
+                    highlights = {
+                        fill = { bg = "#eee8d5" },
+                        background = { fg = "#93a1a1", bg = "#eee8d5", },
+                        buffer_selected = { fg = "#002b36", bg = "#fdf6e3", bold = true, italic = false, },
+                        numbers = { fg = "#93a1a1", bg = "#eee8d5", },
+                        numbers_visible = { fg = "#657b83", bg = "#eee8d5", },
+                        numbers_selected = { fg = "#002b36", bg = "#fdf6e3", bold = true, italic = false, },
+                        separator = { fg = "#eee8d5", bg = "#eee8d5", },
+                        separator_selected = { fg = "#eee8d5", bg = "#fdf6e3", },
+                    },
                 })
             end,
         },
@@ -118,7 +129,6 @@ function vimgui.load(cppfilelist, scriptfilelist, scheme)
         {
             'nvim-lualine/lualine.nvim',
             dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-            event = 'VeryLazy',   -- 延迟加载，确保 colorscheme 先生效
             opts = {
                 options = {
                     theme = scheme,
