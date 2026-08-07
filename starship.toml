@@ -1,4 +1,5 @@
-# Starship - p10k lean style, Solarized Light
+# Starship - p10k lean style
+# 配色跟随终端主题：只用 ANSI 名称与文字属性，不写死 hex
 # 字体要求：Nerd Font v3（Maple Mono NF 完全兼容）
 
 format = "$os$directory$git_branch$git_status$character"
@@ -6,23 +7,21 @@ right_format = "$time"
 
 add_newline = false
 
-# Solarized Light 颜色变量（TOML 不支持变量，颜色直接写在各模块里）
-# base01  = #586e75  主前景（深）
-# base0   = #839496  正文
-# base1   = #93a1a1  辅助
-# yellow  = #b58900
-# orange  = #cb4b16
-# red     = #dc322f
-# blue    = #268bd2
-# cyan    = #2aa198
-# green   = #859900
-
+# 配色约定
+#   （无颜色）  终端默认前景，配 bold 做强调
+#   dimmed      终端默认前景调暗，用于次要文本
+#   blue        路径、提示符
+#   green       git 分支
+#   purple      git 状态（ANSI magenta，Starship 里叫 purple）
+#   red         错误、只读
+#   yellow      时间
+# 避免使用 black / white / bright-*：浅深主题切换时会失效，
 
 # -- OS 图标 ------------------------------------------------------------------
 
 [os]
 format = "[$symbol]($style) "
-style = "bold #586e75"
+style = "bold"
 disabled = false
 
 [os.symbols]
@@ -39,32 +38,31 @@ Unknown = "󱚝"
 
 [directory]
 format = "[󰉋 $path]($style)[$read_only]($read_only_style)"
-style = "bold #268bd2"
+style = "bold blue"
 read_only = " 󰌾"
-read_only_style = "bold #dc322f"
+read_only_style = "bold red"
 truncation_length = 3
 truncate_to_repo = false
 home_symbol = "~"
 
+
 # -- Git 分支 -----------------------------------------------------------------
 
 [git_branch]
-#format = " on [$symbol$branch]($style)"
-format = "[ on ](#93a1a1)[$symbol$branch]($style)"
+format = "[ on ](dimmed)[$symbol$branch]($style)"
 symbol = "ψ "
-style = "bold #859900"
+style = "bold green"
 truncation_length = 30
 truncation_symbol = "…"
 
 [git_status]
 format = '([$all_status$ahead_behind]($style))'
-style = "bold #d33682"
+style = "bold purple"
 conflicted  = "~"
 ahead       = "⇡${count}"
 behind      = "⇣${count}"
 diverged    = "⇕⇡${ahead_count}⇣${behind_count}"
 untracked   = "?"
-#stashed     = "≡"
 stashed     = ""
 modified    = "!"
 staged      = "+"
@@ -78,22 +76,24 @@ deleted     = "✘"
 disabled = true
 
 [time]
-format = "[ at ](#93a1a1)[⊙ $time]($style) "
-style = "#b58900"
+format = "[ at ](dimmed)[⊙ $time]($style) "
+style = "yellow"
 disabled = false
 time_format = "%H:%M:%S"
+
 
 # -- 填充 ---------------------------------------------------------------------
 
 [fill]
-disable = true
+disabled = true
+
 
 # -- 提示符 -------------------------------------------------------------------
 
 [character]
-success_symbol = " [❯](#268bd2 bold)"
-error_symbol   = " [❯](#dc322f bold)"
-vimcmd_symbol  = " [❮](#268bd2 bold)"
+success_symbol = " [❯](blue bold)"
+error_symbol   = " [❯](red bold)"
+vimcmd_symbol  = " [❮](blue bold)"
 
 
 # -- 关闭不需要的模块 ---------------------------------------------------------
@@ -133,3 +133,4 @@ disabled = true
 
 [lua]
 disabled = true
+
