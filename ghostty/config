@@ -18,6 +18,7 @@ font-feature = "-calt"
 
 # 2. 颜色主题
 # Ghostty 原生自带极其精准的 Solarized Light，无需手动配置色号
+#theme = "Claude Light"
 theme = "iTerm2 Solarized Light"
 
 # 3. 极简窗口外观 (打造绝对纯净的画框)

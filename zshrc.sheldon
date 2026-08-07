@@ -50,12 +50,14 @@ if command -v fzf >/dev/null; then
     source <(fzf --zsh) # fzf版本>0.50
 fi
 
-# Solarized Light 配色方案
-export FZF_DEFAULT_OPTS="--color=fg:#657b83,bg:#fdf6e3,hl:#268bd2 \
-    --color=fg+:#073642,bg+:#eee8d5,hl+:#268bd2 \
-    --color=info:#b58900,prompt:#b58900,pointer:#073642 \
-    --color=marker:#073642,spinner:#b58900,header:#586e75 \
-    --reverse --height 40%"
+# 配色方案跟着终端走
+export FZF_DEFAULT_OPTS="
+  --color=16
+  --color=bg:-1,bg+:-1,gutter:-1,preview-bg:-1
+  --color=fg+:-1:bold,hl:blue,hl+:blue:bold
+  --color=pointer:red,marker:green,prompt:red,info:yellow
+  --border=rounded --height=60% --layout=reverse
+"
 
 # ==========================================
 # 5. 外观与别名 (Solarized Light)

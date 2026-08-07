@@ -43,6 +43,9 @@ function colorscheme.load()
 
         -- molokai
         'tomasr/molokai',
+
+        -- claude
+        'ThorstenRhau/token',
     }
 end
 
