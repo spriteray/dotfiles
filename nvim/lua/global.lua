@@ -2,7 +2,7 @@ local global = {}
 
 -- ── 平台信息 ───────────────────────────────────────────────────────────────
 function global:init()
-    self.os_name   = vim.loop.os_uname().sysname
+    self.os_name   = vim.uv.os_uname().sysname
     self.is_mac    = self.os_name == 'Darwin'
     self.is_linux  = self.os_name == 'Linux'
     self.is_windows = self.os_name == 'Windows_NT'
@@ -85,7 +85,7 @@ function global:clangd_switch(split_cmd)
                 vim.notify('LSP error: ' .. tostring(err), vim.log.levels.ERROR)
                 return
             end
-            if not result then
+            if result == nil or result == vim.NIL or result == '' then
                 vim.notify('对应的头文件/源文件未找到', vim.log.levels.WARN)
                 return
             end
@@ -115,6 +115,33 @@ end
 -- ── 快捷键 ─────────────────────────────────────────────────────────────────
 function global:keymap()
     local k = vim.keymap.set
+    -- gcc、gc{motion} 和 Visual gc 直接使用 Neovim 内置映射。
+    -- 补回原注释插件的插入注释快捷键；不再提供 gb/gbc 块注释。
+    local function insert_comment(where)
+        local left, right = vim.bo.commentstring:match('^(.-)%%s(.-)$')
+        if not left then
+            vim.notify('当前文件类型未设置有效的 commentstring', vim.log.levels.WARN)
+            return
+        end
+        left = vim.trim(left) .. ' '
+        local row = vim.api.nvim_win_get_cursor(0)[1]
+        local line = vim.api.nvim_get_current_line()
+        local prefix = where == 'end' and (line .. ' ') or line:match('^%s*')
+        local text = prefix .. left .. right
+        if where == 'end' then
+            vim.api.nvim_set_current_line(text)
+        else
+            local index = where == 'above' and (row - 1) or row
+            vim.api.nvim_buf_set_lines(0, index, index, false, { text })
+            row = index + 1
+        end
+        local col = #prefix + #left
+        vim.api.nvim_win_set_cursor(0, { row, math.min(col, #text - 1) })
+        vim.cmd.startinsert({ bang = col == #text })
+    end
+    k('n', 'gco', function() insert_comment('below') end, { desc = 'Insert comment below' })
+    k('n', 'gcO', function() insert_comment('above') end, { desc = 'Insert comment above' })
+    k('n', 'gcA', function() insert_comment('end') end, { desc = 'Append comment' })
     k('n', '<leader>c',  '<cmd>nohls<cr>', { desc = 'Clear HighLight' })
     k('n', '<leader>co', '<cmd>copen<cr>', { desc = 'Open qf Window' })
     k('n', '<leader>cc', '<cmd>cclose<cr>', { desc = 'Close qf Window' })
@@ -178,7 +205,7 @@ function global:autocmd(cppfilelist, scriptfilelist)
     vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
         callback = function(ev)
-            local opts = { buffer = ev.buf }
+            local opts = { buf = ev.buf }
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition,     opts)
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration,    opts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation,  opts)

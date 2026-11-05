@@ -3,7 +3,7 @@ local plugins = {}
 -- ── 初始化 lazy.nvim ───────────────────────────────────────────────────────
 function plugins.init(rootpath)
     local lazypath = rootpath .. '/lazy.nvim'
-    if not vim.loop.fs_stat(lazypath) then
+    if not vim.uv.fs_stat(lazypath) then
         vim.fn.system({
             'git', 'clone', '--filter=blob:none',
             'https://github.com/folke/lazy.nvim.git',

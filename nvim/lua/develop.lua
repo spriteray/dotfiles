@@ -14,11 +14,6 @@ function develop.load(cppfilelist)
             },
         },
 
-        -- ── 注释 ───────────────────────────────────────────────────────────
-        {
-            'numToStr/Comment.nvim', opts = {},
-        },
-
         -- ── C++ 增强高亮 ───────────────────────────────────────────────────
         {
             'octol/vim-cpp-enhanced-highlight', ft = cppfilelist,
@@ -117,7 +112,7 @@ function develop.load(cppfilelist)
                 vim.api.nvim_create_autocmd('FileType', {
                     pattern  = cppfilelist,
                     callback = function()
-                        local opts = { noremap = true, buffer = true, silent = true }
+                        local opts = { noremap = true, buf = 0, silent = true }
                         vim.keymap.set('v', '<F3>', ':ClangFormat<cr>',       vim.tbl_extend('force', opts, { desc = 'CodeFormatV' }))
                         vim.keymap.set('n', '<F3>', ':<C-u>ClangFormat<cr>',  vim.tbl_extend('force', opts, { desc = 'CodeFormatN' }))
                     end,
